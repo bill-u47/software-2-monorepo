@@ -36,9 +36,7 @@ replay_pid*
 
 # Folders that will not be committed to the repo, even if private
 bin/*
-homeworks/*
-labs/*
-projects/01-word-counter/*
+
 
 # A special case lab, which will not be ignored
 !labs/04-version-control

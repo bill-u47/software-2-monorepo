@@ -1,0 +1,15 @@
+{
+    "java.project.sourcePaths": [
+        "src"
+    ],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\bilye\\software-2-monorepo\\lib\\components.jar",
+        "c:\\Users\\bilye\\software-2-monorepo\\lib\\hamcrest-core-1.3.jar",
+        "c:\\Users\\bilye\\software-2-monorepo\\lib\\junit-4.13.2.jar",
+        "c:\\Users\\bilye\\software-2-monorepo\\lib\\binary-tree-utility.jar",
+        "c:\\Users\\bilye\\software-2-monorepo\\lib\\BWClient.jar",
+        "c:\\Users\\bilye\\software-2-monorepo\\lib\\BWServer.jar"
+    ]
+}
