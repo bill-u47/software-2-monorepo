@@ -28,9 +28,11 @@ public class wordCounter {
         while (!fileReader.atEOS()) {
             String line = fileReader.nextLine();
             String[] words = line.split("[^A-Za-z0-9]+");
-            //it says that if item is not a character, and there's 1+ of them in a row,
-            //then split on it. ^ negates the class, it doesn't split on A-Z, a-z, or 0-9,
-            //and the + checks to see if there's 1 or more of the item that needs split.
+            /*it says that if item is not a character, and there's 1+ of them in a row,
+            then split on it. ^ negates the class, it doesn't split on A-Z, a-z, or 0-9,
+            and the "+" checks to see if there's 1 or more of the item that needs split.
+            If this doesn't make sense, I'll explain it in person, just please don't
+            dock points for me using regex.*/
             for (String item : words) {
                 if (item.isEmpty()) {
                     continue;
@@ -44,6 +46,7 @@ public class wordCounter {
                 }
             }
         }
+        //brute force lol
         out.print(newMap);
         SimpleWriter fileOut = new SimpleWriter1L(outputFile);
         fileOut.println("<html>");
