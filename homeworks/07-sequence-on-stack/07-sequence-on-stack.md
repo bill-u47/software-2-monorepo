@@ -1,8 +1,8 @@
 # [Homework 7: Sequence Implementation on Stack][hw7]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **9/8 @ 1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -56,7 +56,23 @@ have to waste time entering your code during the lab.
  * </pre>
  */
 private static <T> void setLengthOfLeftStack(Stack<T> leftStack,
-        Stack<T> rightStack, int newLeftLength) {...}
+        Stack<T> rightStack, int newLeftLength) {
+
+        int leftLen = leftStack.length();
+        Stack<T> leftLenRev = new Stack1L<>();
+        leftStack.flip()
+        leftLenRev.transferFrom(leftStack);
+
+        while ((leftLen - newLeftLength) != 0) {
+            T nextVal = leftLenRev.pop();
+            rightStack.push(nextVal);
+            leftLen = leftStack.length();
+        }
+        leftStack.transferFrom(leftLenRev);
+        leftStack.flip();
+        rightStack.flip();
+
+        }
 ```
 
 > Note that setLengthOfLeftStack is a static, generic method:
@@ -100,6 +116,7 @@ public abstract class SequenceTest {
      * @return the new sequence
      * @ensures constructorRef = <>
      */
+
     protected abstract Sequence<String> constructorRef();
 
     /**
@@ -136,6 +153,77 @@ public abstract class SequenceTest {
             sequence.add(sequence.length(), s);
         }
         return sequence;
+    }
+
+    @Test
+    /**
+     *
+     * @updates
+     *      Sequence<String> addTest
+     * @ensures
+     *      Sequence<String> is filled with the given args
+     *
+     * @param args
+     *            the entries for the sequence
+     * @return the modified sequence
+     *  Sequence<String> = Sequence<String> + args;
+     */
+    private Sequence<String> addTest(String... args) {
+        Sequence<String> addTest = this.createFromArgsTest();
+        for (arg : args){
+            addTest.add(addTest.length(), arg);
+        }
+        return addTest;
+    }
+
+    @Test
+    /**
+     *
+     * @updates
+     *      Sequence<String> removeTest
+     * @ensures
+     *      Sequence<String> is now empty
+     *
+     * @param args
+     *            the entries for the sequence
+     * @return the empty sequence
+     *  Sequence<String> removeTest = <>;
+     */
+    private Sequence<String> remove(String... args) {
+        int i = 0;
+        Sequence<String> removeTest = this.createFromArgsTest();
+        for (String arg : args){
+            Iterator<String> it = removeTest.iterator();
+            i = 0;
+            while (it.hasNext() && !it.next().equals(arg)){
+                i = i + 1;
+            }
+            removeTest.remove(i);
+        }
+        return removeTest;
+    }
+
+    @Test
+    /**
+     *
+     *
+     *
+     * @param args
+     *            the input sequence
+     * @return the length of the sequence
+     *
+     * @ensures
+     *      |Sequence<String>| == |#Sequence<String>|
+     */
+    private int lengthTest(String... args) {
+        Sequence<String> lenTest = this.createFromArgsTest(args);
+        Iterator<String> it = lenTest.iterator();
+        int i = 0;
+        while (it.hasNext()){
+            it.Next();
+            i = i + 1;
+        }
+        return i;
     }
 
     // TODO - add test cases for constructor, add, remove, and length
