@@ -107,6 +107,7 @@ public class Queue3<T> extends QueueSecondary<T> {
     @Override
     public final int length() {
         Queue<T> newQueue = this.createNewRep();
+        newQueue.transferFrom(this);
         int i = 0;
         Iterator it = newQueue.iterator();
         while (it.hasNext()) {
