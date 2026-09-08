@@ -1,5 +1,6 @@
 import components.queue.Queue;
 import components.queue.Queue1L;
+import components.queue.Queue3;
 
 /**
  * Customized JUnit test fixture for {@code Queue3}.
