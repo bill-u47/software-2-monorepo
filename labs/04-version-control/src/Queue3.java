@@ -106,11 +106,15 @@ public class Queue3<T> extends QueueSecondary<T> {
 
     @Override
     public final int length() {
-
-        // TODO - fill in body
-
+        Queue<T> newQueue = this.createNewRep();
+        int i = 0;
+        Iterator it = newQueue.iterator();
+        while (it.hasNext()) {
+            it.next();
+            i = i + 1;
+        }
         // This line added just to make the component compilable.
-        return 0;
+        return i;
     }
 
     @Override
