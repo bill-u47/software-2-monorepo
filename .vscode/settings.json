@@ -46,6 +46,7 @@
     "java.project.sourcePaths": [
         "lib",
         "projects\\01-word-counter\\src",
-        "labs\\03-junit-testing\\test"
+        "labs\\03-junit-testing\\test",
+        "labs\\04-version-control\\test"
     ]
 }
