@@ -85,8 +85,12 @@ public class Queue3<T> extends QueueSecondary<T> {
     @Override
     public final void enqueue(T x) {
         assert x != null : "Violation of: x is not null";
-
-        // TODO - fill in body
+        Queue<T> testQ = this.newInstance();
+        testQ.transferFrom(this);
+        testQ.flip(); //1,2,3,4 - > 4,3,2,1
+        testQ.append(this, x); //4,3,2,1,x
+        testQ.flip(); //x,1,2,3,4
+        this.transferFrom(testQ);
 
     }
 
@@ -94,19 +98,26 @@ public class Queue3<T> extends QueueSecondary<T> {
     public final T dequeue() {
         assert this.length() > 0 : "Violation of: this /= <>";
 
-        // TODO - fill in body
+        Queue<T> testQ = this.newInstance();
+        testQ.transferFrom(this);
 
-        // This line added just to make the component compilable.
-        return null;
+        T result = testQ.remove(0);
+
+        return result;
     }
 
     @Override
     public final int length() {
-
-        // TODO - fill in body
-
+        Queue<T> newQueue = this.createNewRep();
+        newQueue.transferFrom(this);
+        int i = 0;
+        Iterator it = newQueue.iterator();
+        while (it.hasNext()) {
+            it.next();
+            i = i + 1;
+        }
         // This line added just to make the component compilable.
-        return 0;
+        return i;
     }
 
     @Override

@@ -57,10 +57,9 @@ have to waste time entering your code during the lab.
  */
 private static <T> void setLengthOfLeftStack(Stack<T> leftStack,
         Stack<T> rightStack, int newLeftLength) {
-
         int leftLen = leftStack.length();
         Stack<T> leftLenRev = new Stack1L<>();
-        leftStack.flip()
+        leftStack.flip();
         leftLenRev.transferFrom(leftStack);
 
         while ((leftLen - newLeftLength) != 0) {
