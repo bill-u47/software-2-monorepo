@@ -85,8 +85,12 @@ public class Queue3<T> extends QueueSecondary<T> {
     @Override
     public final void enqueue(T x) {
         assert x != null : "Violation of: x is not null";
-
-        // TODO - fill in body
+        Queue<T> testQ = this.newInstance();
+        testQ.transferFrom(this);
+        testQ.flip(); //1,2,3,4 - > 4,3,2,1
+        testQ.append(this, x); //4,3,2,1,x
+        testQ.flip(); //x,1,2,3,4
+        this.transferFrom(testQ);
 
     }
 
