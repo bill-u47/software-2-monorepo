@@ -1,8 +1,8 @@
 # [Homework 8: Set Implementation on Queue][hw8]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **09/10 @ 1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -49,8 +49,19 @@ have to waste time entering your code during the lab.
  * </pre>
  */
 private static <T> void moveToFront(Queue<T> q, T x) {...}
-```
 
+    Iterator it = q.iterator();
+    while (q.hasNext()){
+        T next = q.dequeue();
+        if (next.equals(x)){
+            q.enqueue("0");
+            q.flip();
+            q.replaceFront(x);
+            q.flip();
+        }
+        q.enqueue(next);
+    }
+```
 > Note that moveToFront is a static, generic method: it is parameterized
 > by the type T of the entries in the queue. You can use the type T
 > wherever you need to declare a variable that refers to an object of
@@ -98,6 +109,9 @@ public abstract class SetTest {
      * @return the new set
      * @ensures constructorRef = {}
      */
+    Set<String> newSet = Set3<>();
+    return newSet;
+
     protected abstract Set<String> constructorRef();
 
     /**
@@ -136,6 +150,115 @@ public abstract class SetTest {
             set.add(s);
         }
         return set;
+    }
+    /**
+    * Creates and returns a {@code Set<String> with the given args}
+    * @param args
+    *           the entries for the set
+    */
+    @Test
+    /**
+     * initializes both constructor test and ref, ensuring they're equal
+     * @ensures sTest == rTest
+     *
+     * @params args
+     *      the set entries
+     */
+    public final Set<String> constructor(){
+
+        Set<String> sTest = this.constructorTest();
+        Set<String> rTest = this.constructorRef();
+
+        assertEquals(sTest,rTest);
+    }
+    @Test
+    /**
+     * adds together a base Set<String> (this) and a specified argument
+     * @ensures addSet = #this + args
+     *
+     * @params args
+     *      the set entries
+     */
+    public final Set<String> add(String... args){
+        Set<String> addSet = this.createFromArgs();
+        for (String arg : args) {
+            addSet.add(arg);
+        }
+        return addSet;
+
+    }
+    @Test
+    /**
+     * removes a specified argument from #this
+     * @ensures removeSet = #this - args
+     *
+     * @params args
+     *      the set entries
+     */
+    public final Set<String> remove(String... args){
+        Set<String> removeSet = this.createFromArgs();
+        for (String arg : args) {
+            removeSet.remove(arg);
+        }
+        return removeSet;
+
+    }
+    @Test
+    /**
+     * removes a random item from #this
+     * @ensures this = #this - random arg
+     *
+     * @params args
+     *      the set entries
+     */
+    public final T removeAny(){
+        Set<String> randomSet = this.createFromArgs();
+        Iterator it = randomSet.iterator();
+        Random rand = new Random();
+        int randomInt = rand.nextInt();
+        while (i < randomInt && randomSet.hasNext()){
+            T x = it.Next()
+            i = i + 1;
+        }
+        this.remove(x);
+
+        return x;
+
+
+    }
+    @Test
+    /**
+
+     * @params args
+     *      the set entries
+     */
+    public final boolean contains(String... args){
+        boolean containing = False;
+        Set<String> containString = this.createFromArgs();
+        for (String arg : args) {
+            if (this.containString.contains(arg)) {
+                containing = True;
+            }
+
+        }
+        return containing;
+
+    }
+    @Test
+    /**
+     *
+     * @params args
+     *      the set entries
+     */
+    public final int size(String... args){
+        Set<String> sizeSet = this.createFromArgs();
+        Iterator it = sizeSet.iterator();
+        int i = 0;
+        while (it.hasNext()) {
+            it.next();
+            i = i + 1;
+        }
+        return i;
     }
 
     // TODO - add test cases for constructor, add, remove, removeAny, contains, and size
