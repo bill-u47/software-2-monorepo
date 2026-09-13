@@ -25,10 +25,12 @@
     "java.debug.settings.vmArgs": "-ea",
     "java.configuration.runtimes": [],
     "java.project.referencedLibraries": [
-        "c:\\Users\\bilye\\software-2-monorepo\\lib\\binary-tree-utility.jar",
-        "c:\\Users\\bilye\\software-2-monorepo\\lib\\components.jar",
-        "c:\\Users\\bilye\\software-2-monorepo\\lib\\junit-4.13.2.jar",
-        "c:\\Users\\bilye\\software-2-monorepo\\lib\\hamcrest-core-1.3.jar"
+        "c:\\Users\\Dennis\\Documents\\software-2-monorepo-Classes\\lib\\binary-tree-utility.jar",
+        "c:\\Users\\Dennis\\Documents\\software-2-monorepo-Classes\\lib\\BWClient.jar",
+        "c:\\Users\\Dennis\\Documents\\software-2-monorepo-Classes\\lib\\BWServer.jar",
+        "c:\\Users\\Dennis\\Documents\\software-2-monorepo-Classes\\lib\\components.jar",
+        "c:\\Users\\Dennis\\Documents\\software-2-monorepo-Classes\\lib\\hamcrest-core-1.3.jar",
+        "c:\\Users\\Dennis\\Documents\\software-2-monorepo-Classes\\lib\\junit-4.13.2.jar"
     ],
     "markdown-pdf.convertOnSave": true,
     "markdown-pdf.convertOnSaveExclude": [
@@ -44,11 +46,10 @@
     ],
     "print.sourcecode.colourScheme": "A11 Y",
     "java.project.sourcePaths": [
-        "lib",
-        "projects\\01-word-counter\\src",
         "labs\\03-junit-testing\\test",
         "labs\\04-version-control\\test",
         "labs\\06-set-on-queue\\test",
+        "projects\\01-word-counter\\src",
         "projects\\02-natural-number-on-string\\test"
     ]
 }
