@@ -1,17 +1,20 @@
+import org.junit.Test;
+
 import components.set.Set;
 import components.set.Set1L;
+import components.set.Set2;
 
 /**
  * Customized JUnit test fixture for {@code Set2}.
  */
 public class Set2Test extends SetTest {
 
-    @Override
+    @Override 
     protected final Set<String> constructorTest() {
         return new Set2<String>();
     }
 
-    @Override
+    @Override 
     protected final Set<String> constructorRef() {
         return new Set1L<String>();
     }
