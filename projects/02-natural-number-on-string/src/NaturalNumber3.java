@@ -33,7 +33,7 @@ public class NaturalNumber3 extends NaturalNumberSecondary {
      */
     private void createNewRep() {
 
-        // TODO - fill in body
+        this.rep = "";
 
     }
 
@@ -46,7 +46,7 @@ public class NaturalNumber3 extends NaturalNumberSecondary {
      */
     public NaturalNumber3() {
 
-        // TODO - fill in body
+        this.createNewRep();
 
     }
 
@@ -59,7 +59,12 @@ public class NaturalNumber3 extends NaturalNumberSecondary {
     public NaturalNumber3(int i) {
         assert i >= 0 : "Violation of: i >= 0";
 
-        // TODO - fill in body
+        this.createNewRep();
+        if (i > 0) {
+            this.rep = Integer.toString(i);
+        } else {
+            this.rep = "";
+        }
 
     }
 
@@ -73,8 +78,13 @@ public class NaturalNumber3 extends NaturalNumberSecondary {
         assert s != null : "Violation of: s is not null";
         assert s.matches("0|[1-9]\\d*") : ""
                 + "Violation of: there exists n: NATURAL (s = TO_STRING(n))";
+        this.createNewRep();
 
-        // TODO - fill in body
+        if (Integer.parseInt(s) != 0) {
+            this.rep = s;
+        } else {
+            this.rep = "";
+        }
 
     }
 
@@ -86,8 +96,14 @@ public class NaturalNumber3 extends NaturalNumberSecondary {
      */
     public NaturalNumber3(NaturalNumber n) {
         assert n != null : "Violation of: n is not null";
+        this.createNewRep();
 
-        // TODO - fill in body
+        if (!n.isZero()) {
+            this.rep = n.toString();
+        } else {
+            this.rep = "";
+        }
+
 
     }
 
@@ -134,26 +150,35 @@ public class NaturalNumber3 extends NaturalNumberSecondary {
         assert 0 <= k : "Violation of: 0 <= k";
         assert k < RADIX : "Violation of: k < 10";
 
-        // TODO - fill in body
+        if (!this.rep.equals("") && k > 0) {
+            this.rep.concat(Integer.toString(k));
+        } else if (!this.rep.equals("")) {
+            this.rep.concat(Integer.toString(k));
+        }
 
     }
 
     @Override
     public final int divideBy10() {
 
-        // TODO - fill in body
-
+        if (!this.rep.isEmpty()) {
+            String r = this.rep.substring(this.rep.length() - 1);
+            this.rep = this.rep.substring(0, this.rep.length() - 1);
+            return Integer.parseInt(r);
+        }
         // This line added just to make the component compilable.
         return 0;
     }
 
     @Override
     public final boolean isZero() {
-
-        // TODO - fill in body
+        boolean empty = false;
+        if (this.rep.isEmpty()){
+            empty = true;
+        }
 
         // This line added just to make the component compilable.
-        return false;
+        return empty;
     }
 
 }
