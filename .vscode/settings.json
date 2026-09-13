@@ -48,6 +48,7 @@
         "projects\\01-word-counter\\src",
         "labs\\03-junit-testing\\test",
         "labs\\04-version-control\\test",
-        "labs\\06-set-on-queue\\test"
+        "labs\\06-set-on-queue\\test",
+        "projects\\02-natural-number-on-string\\test"
     ]
 }
