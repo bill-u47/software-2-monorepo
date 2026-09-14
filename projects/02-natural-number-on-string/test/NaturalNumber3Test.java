@@ -68,11 +68,32 @@ public class NaturalNumber3Test extends NaturalNumberTest {
         assertEquals(nExpected, n);
     }
 
-    //Tests the constructor when an int is passed as an arguement
+    //Tests the constructor when a type int is passed as an arguement
     @Test
     public void testConstructorOnInt() {
         NaturalNumber n = this.constructorTest(5);
         NaturalNumber nExpected = this.constructorRef(5);
+
+        assertEquals(nExpected, n);
+    }
+
+    //Tests the constructor when a type string is passed as an arguement
+    @Test
+    public void testConstructorOnString() {
+        NaturalNumber n = this.constructorTest("5");
+        NaturalNumber nExpected = this.constructorRef("5");
+
+        assertEquals(nExpected, n);
+    }
+
+    //Tests the constructor when a naturalNumber object is passed as an arguement
+    @Test
+    public void testConstructorOnNN() {
+
+        NaturalNumber testNum = new NaturalNumber1L(5);
+
+        NaturalNumber n = this.constructorTest(testNum);
+        NaturalNumber nExpected = this.constructorRef(testNum);
 
         assertEquals(nExpected, n);
     }
