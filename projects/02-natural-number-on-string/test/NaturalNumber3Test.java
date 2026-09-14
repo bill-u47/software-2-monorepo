@@ -1,3 +1,7 @@
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import components.naturalnumber.NaturalNumber;
 import components.naturalnumber.NaturalNumber1L;
 import components.naturalnumber.NaturalNumber3;
@@ -54,3 +58,22 @@ public class NaturalNumber3Test extends NaturalNumberTest {
 
         return new NaturalNumber1L(n);
     }
+
+    //Tests the constructor without any passed arguments
+    @Test
+    public void testConstructorEmpty() {
+        NaturalNumber n = this.constructorTest();
+        NaturalNumber nExpected = this.constructorRef();
+
+        assertEquals(nExpected, n);
+    }
+
+    //Tests the constructor when an int is passed as an arguement
+    @Test
+    public void testConstructorOnInt() {
+        NaturalNumber n = this.constructorTest(5);
+        NaturalNumber nExpected = this.constructorRef(5);
+
+        assertEquals(nExpected, n);
+    }
+}

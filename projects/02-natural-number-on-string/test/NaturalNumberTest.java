@@ -99,4 +99,5 @@ public abstract class NaturalNumberTest {
 
     // TODO - add test cases for four constructors, multiplyBy10, divideBy10, isZero
 
+    //The test cases will be in NaturalNumber3Test.java file
 }
