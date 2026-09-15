@@ -8,6 +8,7 @@ import components.naturalnumber.NaturalNumber3;
 
 /**
  * Customized JUnit test fixture for {@code NaturalNumber3}.
+ * @author Dennis Huang
  */
 public class NaturalNumber3Test extends NaturalNumberTest {
 

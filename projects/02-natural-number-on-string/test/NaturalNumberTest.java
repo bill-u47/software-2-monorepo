@@ -6,6 +6,9 @@ import components.naturalnumber.NaturalNumber;
  *
  * @author Dennis Huang
  *
+ * NOTE - OUR TEST CASES ARE IN NN3TEST. JUNIT CANNOT TEST ABSTRACTS, THUS WE WERE
+ * INFORMED TO MOVE THEM TO NN3.
+ *
  */
 public abstract class NaturalNumberTest {
 
