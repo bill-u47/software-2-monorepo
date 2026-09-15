@@ -51,5 +51,6 @@
         "labs\\06-set-on-queue\\test",
         "projects\\01-word-counter\\src",
         "projects\\02-natural-number-on-string\\test"
-    ]
+    ],
+    "java.debug.settings.onBuildFailureProceed": true
 }

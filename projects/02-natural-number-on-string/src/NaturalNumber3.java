@@ -14,7 +14,7 @@ import components.naturalnumber.NaturalNumberSecondary;
  *         else the decimal number whose ordinary depiction is $this.rep]
  * </pre>
  *
- * @author Put your name here
+ * @author Andrew Bilyeu
  *
  */
 public class NaturalNumber3 extends NaturalNumberSecondary {
@@ -166,7 +166,6 @@ public class NaturalNumber3 extends NaturalNumberSecondary {
             this.rep = this.rep.substring(0, this.rep.length() - 1);
             return Integer.parseInt(r);
         }
-        // This line added just to make the component compilable.
         return 0;
     }
 
@@ -177,8 +176,8 @@ public class NaturalNumber3 extends NaturalNumberSecondary {
             empty = true;
         }
 
-        // This line added just to make the component compilable.
         return empty;
     }
+
 
 }
