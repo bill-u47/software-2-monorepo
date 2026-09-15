@@ -14,42 +14,42 @@ completed all the tasks for this assignment.
 
 ## Getting Started Tasks
 
-- [ ] We have followed the recommended approach for getting started
-  - [ ] We have read this document top to bottom
-  - [ ] We have reviewed the project instructions for this assignment
-  - [ ] We have reviewed the rubric for this assignment
-  - [ ] We have considered the estimated time to complete the assignment
-  - [ ] We have referred to testing resources that could help us write a systematic test plan
-    - [ ] We have referred to the [QueueOnSequence lab][queue-on-sequence]
-    - [ ] We have referred to the [5 Beginner Tricks for Writing Your Own Tests][5-tricks-for-testing] article
+- [x] We have followed the recommended approach for getting started
+  - [x] We have read this document top to bottom
+  - [x] We have reviewed the project instructions for this assignment
+  - [x] We have reviewed the rubric for this assignment
+  - [x] We have considered the estimated time to complete the assignment
+  - [x] We have referred to testing resources that could help us write a systematic test plan
+    - [x] We have referred to the [QueueOnSequence lab][queue-on-sequence]
+    - [x] We have referred to the [5 Beginner Tricks for Writing Your Own Tests][5-tricks-for-testing] article
 
 ## Ongoing Tasks
 
-- [ ] We have followed the project instructions
-  - [ ] We have setup the Eclipse project according to the [project description][project]
-  - [ ] We have completed the private method `createNewRep()`
-  - [ ] We have implemented the four NaturalNumber constructors
-  - [ ] We have implemented all of the kernel methods:
-    - [ ]  We have completed `multiplyBy10()`
-    - [ ]  We have completed `divideBy10()`
-    - [ ]  We have completed `isZero()`
-  - [ ] We have adhered to the representation invariant listed in the `@convention` tag in our methods
+- [x] We have followed the project instructions
+  - [x] We have setup the Eclipse project according to the [project description][project]
+  - [x] We have completed the private method `createNewRep()`
+  - [x] We have implemented the four NaturalNumber constructors
+  - [x] We have implemented all of the kernel methods:
+    - [x]  We have completed `multiplyBy10()`
+    - [x]  We have completed `divideBy10()`
+    - [x]  We have completed `isZero()`
+  - [x] We have adhered to the representation invariant listed in the `@convention` tag in our methods
         (i.e., our methods do not modify the representation in a way that violates the convention)
-  - [ ] We have adhered to the abstraction function listed in the `@correspondence` tag in our methods
+  - [x] We have adhered to the abstraction function listed in the `@correspondence` tag in our methods
         (i.e., our methods do not assume an interpretation of the representation that differs from the correspondence)
-- [ ] We have tested our project code (**note**: tests may fail if not all kernel methods are implemented)
-  - [ ] We have completed the bodies of the four `constructorTest()` methods
-  - [ ] We have completed the bodies of the four `constructorRef()` methods
-  - [ ] We have developed a systematic test plan for the NaturalNumberKernel implementation (**note**: consider a "0, 1, many" approach)
-    - [ ] We have tested `multiplyBy10()`
-    - [ ] We have tested `divideBy10()`
-    - [ ] We have tested `isZero()`
-    - [ ] We have tested the four constructors
-- [ ] We have considered best practices
-  - [ ] We have added our names in separate `@author` tags
-  - [ ] We have addressed all spotbugs and checkstyle warnings
-  - [ ] We have regularly committed changes to the project files using version control with good commit messages
-  - [ ] We have regularly updated our local copies of the project files using version control and handled any merge conflicts
+- [x] We have tested our project code (**note**: tests may fail if not all kernel methods are implemented)
+  - [x] We have completed the bodies of the four `constructorTest()` methods
+  - [x] We have completed the bodies of the four `constructorRef()` methods
+  - [x] We have developed a systematic test plan for the NaturalNumberKernel implementation (**note**: consider a "0, 1, many" approach)
+    - [x] We have tested `multiplyBy10()`
+    - [x] We have tested `divideBy10()`
+    - [x] We have tested `isZero()`
+    - [x] We have tested the four constructors
+- [x] We have considered best practices
+  - [x] We have added our names in separate `@author` tags
+  - [x] We have addressed all spotbugs and checkstyle warnings
+  - [x] We have regularly committed changes to the project files using version control with good commit messages
+  - [x] We have regularly updated our local copies of the project files using version control and handled any merge conflicts
 
 ## Submission Tasks
 

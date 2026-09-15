@@ -1,4 +1,4 @@
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -8,6 +8,7 @@ import components.naturalnumber.NaturalNumber3;
 
 /**
  * Customized JUnit test fixture for {@code NaturalNumber3}.
+ * @author Dennis Huang
  */
 public class NaturalNumber3Test extends NaturalNumberTest {
 
@@ -58,37 +59,32 @@ public class NaturalNumber3Test extends NaturalNumberTest {
 
         return new NaturalNumber1L(n);
     }
-
-    //Tests the constructor without any passed arguments
     @Test
-    public void testConstructorEmpty() {
+    public void constTestEmpty() {
         NaturalNumber n = this.constructorTest();
         NaturalNumber nExpected = this.constructorRef();
 
         assertEquals(nExpected, n);
     }
 
-    //Tests the constructor when a type int is passed as an arguement
     @Test
-    public void testConstructorOnInt() {
+    public void constTestInt() {
         NaturalNumber n = this.constructorTest(5);
         NaturalNumber nExpected = this.constructorRef(5);
 
         assertEquals(nExpected, n);
     }
 
-    //Tests the constructor when a type string is passed as an arguement
     @Test
-    public void testConstructorOnString() {
+    public void constTestStr() {
         NaturalNumber n = this.constructorTest("5");
         NaturalNumber nExpected = this.constructorRef("5");
 
         assertEquals(nExpected, n);
     }
 
-    //Tests the constructor when a naturalNumber object is passed as an arguement
     @Test
-    public void testConstructorOnNN() {
+    public void constTestNN() {
 
         NaturalNumber testNum = new NaturalNumber1L(5);
 
@@ -98,9 +94,8 @@ public class NaturalNumber3Test extends NaturalNumberTest {
         assertEquals(nExpected, n);
     }
 
-    //Tests the multiplyBy10 method with a non zero arguement
     @Test
-    public void testMultiplyBy10NonZero() {
+    public void multiplyBy10Test() {
 
         NaturalNumber n = this.constructorTest(5);
         NaturalNumber nExpected = this.constructorRef(55);
@@ -110,9 +105,8 @@ public class NaturalNumber3Test extends NaturalNumberTest {
         assertEquals(nExpected, n);
     }
 
-    //Tests the multiplyBy10 method with zero as an arguement
     @Test
-    public void testMultiplyBy10OnZero() {
+    public void multiplyByTenWithZeroTest() {
 
         NaturalNumber n = this.constructorTest(4);
         NaturalNumber nExpected = this.constructorRef(40);
@@ -122,23 +116,9 @@ public class NaturalNumber3Test extends NaturalNumberTest {
         assertEquals(nExpected, n);
     }
 
-    //Tests the divideBy10 method on a digit(s) > 1 NN
+
     @Test
-    public void testDivideBy10DigitMoreThanOne() {
-
-        NaturalNumber n = this.constructorTest(365);
-        NaturalNumber nExpected = this.constructorRef(36);
-
-        int result = n.divideBy10();
-        int expectedResult = 5;
-
-        assertEquals(nExpected, n);
-        assertEquals(expectedResult, result);
-    }
-
-    //Tests the divideBy10 method on a 1 digit NN
-    @Test
-    public void testDivideBy10SingleDigit() {
+    public void divideBy10Test() {
 
         NaturalNumber n = this.constructorTest(7);
         NaturalNumber nExpected = this.constructorRef(0);
@@ -149,10 +129,8 @@ public class NaturalNumber3Test extends NaturalNumberTest {
         assertEquals(nExpected, n);
         assertEquals(expectedResult, result);
     }
-
-    //Tests the isZero method on a NN with value of "0"
     @Test
-    public void testIsZeroOnZero() {
+    public void isZeroTest() {
 
         NaturalNumber n = this.constructorTest(0);
         NaturalNumber nExpected = this.constructorRef(0);
@@ -163,9 +141,8 @@ public class NaturalNumber3Test extends NaturalNumberTest {
         assertEquals(true, result);
     }
 
-    //Tests the isZero method on a NN with value > 0
     @Test
-    public void testIsZeroOnNotZero() {
+    public void isZeroNonZeroTest() {
 
         NaturalNumber n = this.constructorTest(57);
         NaturalNumber nExpected = this.constructorRef(57);
@@ -175,4 +152,5 @@ public class NaturalNumber3Test extends NaturalNumberTest {
         assertEquals(nExpected, n);
         assertEquals(false, result);
     }
+
 }

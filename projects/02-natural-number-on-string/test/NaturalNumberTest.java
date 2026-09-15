@@ -4,7 +4,10 @@ import components.naturalnumber.NaturalNumber;
  * JUnit test fixture for {@code NaturalNumber}'s constructors and kernel
  * methods.
  *
- * @author Put your name here
+ * @author Dennis Huang
+ *
+ * NOTE - OUR TEST CASES ARE IN NN3TEST. JUNIT CANNOT TEST ABSTRACTS, THUS WE WERE
+ * INFORMED TO MOVE THEM TO NN3.
  *
  */
 public abstract class NaturalNumberTest {
@@ -97,7 +100,6 @@ public abstract class NaturalNumberTest {
      */
     protected abstract NaturalNumber constructorRef(NaturalNumber n);
 
-    // TODO - add test cases for four constructors, multiplyBy10, divideBy10, isZero
 
-    //The test cases will be in NaturalNumber3Test.java file
+
 }
