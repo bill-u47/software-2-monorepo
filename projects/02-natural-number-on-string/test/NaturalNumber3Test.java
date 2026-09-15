@@ -121,4 +121,58 @@ public class NaturalNumber3Test extends NaturalNumberTest {
 
         assertEquals(nExpected, n);
     }
+
+    //Tests the divideBy10 method on a digit(s) > 1 NN
+    @Test
+    public void testDivideBy10DigitMoreThanOne() {
+
+        NaturalNumber n = this.constructorTest(365);
+        NaturalNumber nExpected = this.constructorRef(36);
+
+        int result = n.divideBy10();
+        int expectedResult = 5;
+
+        assertEquals(nExpected, n);
+        assertEquals(expectedResult, result);
+    }
+
+    //Tests the divideBy10 method on a 1 digit NN
+    @Test
+    public void testDivideBy10SingleDigit() {
+
+        NaturalNumber n = this.constructorTest(7);
+        NaturalNumber nExpected = this.constructorRef(0);
+
+        int result = n.divideBy10();
+        int expectedResult = 7;
+
+        assertEquals(nExpected, n);
+        assertEquals(expectedResult, result);
+    }
+
+    //Tests the isZero method on a NN with value of "0"
+    @Test
+    public void testIsZeroOnZero() {
+
+        NaturalNumber n = this.constructorTest(0);
+        NaturalNumber nExpected = this.constructorRef(0);
+
+        boolean result = n.isZero();
+
+        assertEquals(nExpected, n);
+        assertEquals(true, result);
+    }
+
+    //Tests the isZero method on a NN with value > 0
+    @Test
+    public void testIsZeroOnNotZero() {
+
+        NaturalNumber n = this.constructorTest(57);
+        NaturalNumber nExpected = this.constructorRef(57);
+
+        boolean result = n.isZero();
+
+        assertEquals(nExpected, n);
+        assertEquals(false, result);
+    }
 }
