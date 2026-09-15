@@ -1,4 +1,9 @@
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
 import components.naturalnumber.NaturalNumber;
+import components.naturalnumber.NaturalNumber1L;
 
 /**
  * JUnit test fixture for {@code NaturalNumber}'s constructors and kernel
@@ -97,7 +102,100 @@ public abstract class NaturalNumberTest {
      */
     protected abstract NaturalNumber constructorRef(NaturalNumber n);
 
-    // TODO - add test cases for four constructors, multiplyBy10, divideBy10, isZero
+   //Tests the constructor without any passed arguments
+    @Test
+    public void constructTestEmpty() {
+        NaturalNumber n = this.constructorTest();
+        NaturalNumber nExpected = this.constructorRef();
 
-    //The test cases will be in NaturalNumber3Test.java file
+        assertEquals(nExpected, n);
+    }
+
+    @Test
+    public void constructTestInt() {
+        NaturalNumber n = this.constructorTest(5);
+        NaturalNumber nExpected = this.constructorRef(5);
+
+        assertEquals(nExpected, n);
+    }
+
+    @Test
+    public void constructTestStr() {
+        NaturalNumber n = this.constructorTest("5");
+        NaturalNumber nExpected = this.constructorRef("5");
+
+        assertEquals(nExpected, n);
+    }
+
+    @Test
+    public void constructTestNN() {
+
+        NaturalNumber testNum = new NaturalNumber1L(5);
+
+        NaturalNumber n = this.constructorTest(testNum);
+        NaturalNumber nExpected = this.constructorRef(testNum);
+
+        assertEquals(nExpected, n);
+    }
+
+    @Test
+    public void multiplyBy10Test() {
+
+        NaturalNumber n = this.constructorTest(5);
+        NaturalNumber nExpected = this.constructorRef(55);
+
+        n.multiplyBy10(5);
+
+        assertEquals(nExpected, n);
+    }
+
+    @Test
+    public void multiplyByTenwithZeroTest() {
+
+        NaturalNumber n = this.constructorTest(4);
+        NaturalNumber nExpected = this.constructorRef(40);
+
+        n.multiplyBy10(0);
+
+        assertEquals(nExpected, n);
+    }
+
+
+    @Test
+    public void divideBy10Test() {
+
+        NaturalNumber n = this.constructorTest(7);
+        NaturalNumber nExpected = this.constructorRef(0);
+
+        int result = n.divideBy10();
+        int expectedResult = 7;
+
+        assertEquals(nExpected, n);
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    public void isZeroNotZeroTest() {
+
+        NaturalNumber n = this.constructorTest(0);
+        NaturalNumber nExpected = this.constructorRef(0);
+
+        boolean result = n.isZero();
+
+        assertEquals(nExpected, n);
+        assertEquals(true, result);
+    }
+
+    @Test
+    public void isZeroTest() {
+
+        NaturalNumber n = this.constructorTest(57);
+        NaturalNumber nExpected = this.constructorRef(57);
+
+        boolean result = n.isZero();
+
+        assertEquals(nExpected, n);
+        assertEquals(false, result);
+    }
+
 }
