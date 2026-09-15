@@ -1,8 +1,8 @@
 # [Homework 9: Map Implementation on Queue][hw9]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **09/15 @1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -50,7 +50,24 @@ have to waste time entering your code during the lab.
  *  then there exists value: V (<(key, value)> is prefix of q)
  * </pre>
  */
-private static <K, V> void moveToFront(Queue<Pair<K, V>> q, K key) {...}
+private static <K, V> void moveToFront(Queue<Pair<K, V>> q, K key) {
+        assert q != null : "Violation of: q is not null";
+        assert key != null : "Violation of: key is not null";
+
+        // TODO - fill in body
+        Queue<Pair<K, V>> temp = q.newInstance();
+        Pair<K, V> keyMatch = null;
+        while (q.length() != 0) {
+            Pair<K, V> qKey = q.dequeue();
+            if (qKey.key().equals(key)) {
+                keyMatch = qKey;
+            } else {
+                temp.enqueue(qKey);
+            }
+        }
+        q.enqueue(keyMatch);
+        q.append(temp);
+    }
 ```
 
 > Note that moveToFront is a static, generic method: it is parameterized
@@ -110,6 +127,8 @@ public abstract class MapTest {
      * @return the new map
      * @ensures constructorRef = {}
      */
+    Map<String, String> newMap = new Map1L<String, String>();
+    return newMap;
     protected abstract Map<String, String> constructorRef();
 
     /**
@@ -162,7 +181,78 @@ public abstract class MapTest {
         return map;
     }
 
-    // TODO - add test cases for constructor, add, remove, removeAny, value, hasKey, and size
+    @Test
+    public void constructorTestTest() {
+        Map<String, String> constTest = this.constructorTest();
+        Map<String, String> constRef = this.constructorRef();
+
+        assertEquals(constRef, constTest);
+    }
+    @Test
+    public void addTest() {
+        Map<String, String> addTester = this.createFromArgsTest();
+        Map<String, String> addExpected = this.createFromArgsRef("ktest", "valTest");
+
+        addTester.add("ktest", "valTest");
+
+        assertEquals(addExpected, addTester);
+    }
+    @Test
+    public void removeTest() {
+        Map<String, String> remTest = this.createFromArgsTest("ktest", "valTest");
+        Map<String, String> remExpected = this.createFromArgsRef();
+
+        Map.Pair<String, String> removedPair = remTest.remove("ktest");
+
+        assertEquals("ktest", removedPair.key());
+        assertEquals("valTest", removedPair.value());
+        assertEquals(remExpected, remTest);
+    }
+    @Test
+    public void removeAnyTest(){
+        Map<String, String> remAnyTest = this.createFromArgsTest("ktest",
+        "valTest", "test2", "valTest2", "test3", "valTest3");
+        Map<String, String> remAnyExpected = this.createFromArgsRef("ktest",
+        "valTest", "test2", "valTest2", "test3", "valTest3");
+
+        Map.Pair<String, String> remAnyPair = remAnyTest.removeAny();
+
+        remAnyExpected.remove(remAnyPair.key());
+
+        assertEquals(remAnyExpected, remAnyTest);
+    }
+    @Test
+    public void valueTest() {
+        Map<String, String> valTest = this.createFromArgsTest("ktest", "valTest");
+        Map<String, String> valExpected = this.createFromArgsRef("ktest", "valTest");
+
+        String valTestPair = valTest.value("ktest");
+        String valExpPair = valExpected.value("ktest");
+
+        assertEquals(valExpPair, valTestPair);
+    }
+    @Test
+    public void hasKeyTest() {
+        Map<String, String> valTest = this.createFromArgsTest("ktest", "valTest");
+        Map<String, String> valExpected = this.createFromArgsRef("ktest", "valTest");
+
+        boolean valTestKey = valTest.hasKey("ktest");
+        boolean valExpKey = valExpected.hasKey("ktest");
+
+        assertEquals(valExpKey, valTestKey);
+
+    }
+    @Test
+    public void sizeTest() {
+        Map<String, String> sizeTest = this.createFromArgsTest("ktest", "valTest");
+        Map<String, String> sizeExpected = this.createFromArgsRef("ktest", "valTest");
+
+        int lenOfST = sizeTest.size();
+        int lenOfSE = sizeExpected.size();
+
+        assertEquals(lenOfSE, lenOfST);
+    }
+
 
 }
 ```
@@ -189,27 +279,27 @@ public abstract class MapTest {
 | Statement                                   | Variable Values    |
 | ------------------------------------------- | ------------------ |
 | Map<String, Integer> m = new Map1L<>();     |                    |
-|                                             | m = `?`            |
+|                                             | m = `{}`            |
 | m.add("one", 1);                            |                    |
-|                                             | m = `?`            |
+|                                             | m = `{("one", 1)}`            |
 | m.add("zero", 0);                           |                    |
-|                                             | m = `?`            |
+|                                             | m = `{("one", 1), ("zero", 0)}`            |
 | m.add("negative one", -1);                  |                    |
-|                                             | m = `?`            |
+|                                             | m = `{("one", 1), ("zero", 0), ("negative one", -1)}`            |
 | Pair<String, Integer> p = m.remove("zero"); |                    |
-|                                             | m = `?`<br>p = `?` |
+|                                             | m = `{("one", 1), ("negative one", -1)}`<br>p = `("zero", 0)` |
 | m.remove("one");                            |                    |
-|                                             | m = `?`<br>p = `?` |
+|                                             | m = `{("negative one", -1)}`<br>p = `("zero", 0)` |
 | m.add("cipher", p.value());                 |                    |
-|                                             | m = `?`<br>p = `?` |
+|                                             | m = `{("negative one", -1), ("cipher", 0)}`<br>p = `("zero", 0)` |
 | m.add(p.key(), p.value());                  |                    |
-|                                             | m = `?`<br>p = `?` |
+|                                             | m = `{("negative one", -1), ("cipher", 0), ("zero", 0)}`<br>p = `("zero", 0)` |
 | m.remove("negative one");                   |                    |
-|                                             | m = `?`<br>p = `?` |
+|                                             | m = `{("cipher", 0), ("zero", 0)}`<br>p = `("zero", 0)` |
 | m.remove("cipher");                         |                    |
-|                                             | m = `?`<br>p = `?` |
+|                                             | m = `{("zero", 0)}`<br>p = `("zero", 0)` |
 | p = m.removeAny();                          |                    |
-|                                             | m = `?`<br>p = `?` |
+|                                             | m = `{}`<br>p = `("zero", 0)` |
 
 ## Submission
 
