@@ -97,4 +97,28 @@ public class NaturalNumber3Test extends NaturalNumberTest {
 
         assertEquals(nExpected, n);
     }
+
+    //Tests the multiplyBy10 method with a non zero arguement
+    @Test
+    public void testMultiplyBy10NonZero() {
+
+        NaturalNumber n = this.constructorTest(5);
+        NaturalNumber nExpected = this.constructorRef(55);
+
+        n.multiplyBy10(5);
+
+        assertEquals(nExpected, n);
+    }
+
+    //Tests the multiplyBy10 method with zero as an arguement
+    @Test
+    public void testMultiplyBy10OnZero() {
+
+        NaturalNumber n = this.constructorTest(4);
+        NaturalNumber nExpected = this.constructorRef(40);
+
+        n.multiplyBy10(0);
+
+        assertEquals(nExpected, n);
+    }
 }
