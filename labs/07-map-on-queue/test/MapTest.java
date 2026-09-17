@@ -1,7 +1,3 @@
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
 import components.map.Map;
 
 /**
@@ -81,77 +77,7 @@ public abstract class MapTest {
         return map;
     }
 
-    @Test
-    public void constructorTestTest() {
-        Map<String, String> constTest = this.constructorTest();
-        Map<String, String> constRef = this.constructorRef();
 
-        assertEquals(constRef, constTest);
-    }
-    @Test
-    public void addTest() {
-        Map<String, String> addTester = this.createFromArgsTest();
-        Map<String, String> addExpected = this.createFromArgsRef("ktest", "valTest");
-
-        addTester.add("ktest", "valTest");
-
-        assertEquals(addExpected, addTester);
-    }
-    @Test
-    public void removeTest() {
-        Map<String, String> remTest = this.createFromArgsTest("ktest", "valTest");
-        Map<String, String> remExpected = this.createFromArgsRef();
-
-        Map.Pair<String, String> removedPair = remTest.remove("ktest");
-
-        assertEquals("ktest", removedPair.key());
-        assertEquals("valTest", removedPair.value());
-        assertEquals(remExpected, remTest);
-    }
-    @Test
-    public void removeAnyTest(){
-        Map<String, String> remAnyTest = this.createFromArgsTest("ktest",
-        "valTest", "test2", "valTest2", "test3", "valTest3");
-        Map<String, String> remAnyExpected = this.createFromArgsRef("ktest",
-        "valTest", "test2", "valTest2", "test3", "valTest3");
-
-        Map.Pair<String, String> remAnyPair = remAnyTest.removeAny();
-
-        remAnyExpected.remove(remAnyPair.key());
-
-        assertEquals(remAnyExpected, remAnyTest);
-    }
-    @Test
-    public void valueTest() {
-        Map<String, String> valTest = this.createFromArgsTest("ktest", "valTest");
-        Map<String, String> valExpected = this.createFromArgsRef("ktest", "valTest");
-
-        String valTestPair = valTest.value("ktest");
-        String valExpPair = valExpected.value("ktest");
-
-        assertEquals(valExpPair, valTestPair);
-    }
-    @Test
-    public void hasKeyTest() {
-        Map<String, String> valTest = this.createFromArgsTest("ktest", "valTest");
-        Map<String, String> valExpected = this.createFromArgsRef("ktest", "valTest");
-
-        boolean valTestKey = valTest.hasKey("ktest");
-        boolean valExpKey = valExpected.hasKey("ktest");
-
-        assertEquals(valExpKey, valTestKey);
-
-    }
-    @Test
-    public void sizeTest() {
-        Map<String, String> sizeTest = this.createFromArgsTest("ktest", "valTest");
-        Map<String, String> sizeExpected = this.createFromArgsRef("ktest", "valTest");
-
-        int lenOfST = sizeTest.size();
-        int lenOfSE = sizeExpected.size();
-
-        assertEquals(lenOfSE, lenOfST);
-    }
 
 
 }

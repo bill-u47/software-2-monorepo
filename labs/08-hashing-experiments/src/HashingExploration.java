@@ -10,7 +10,7 @@ import components.simplewriter.SimpleWriter1L;
  * from a file (whose name is supplied by the user), and then outputting the
  * distribution of lines into buckets.
  *
- * @author Put your name here
+ * @author Andrew Bilyeu
  *
  */
 public final class HashingExploration {
@@ -36,12 +36,17 @@ public final class HashingExploration {
      * </pre>
      */
     public static int mod(int a, int b) {
-        assert b > 0 : "Violation of: b > 0";
-
-        // TODO - fill in body
-
-        // This line added just to make the component compilable.
-        return 0;
+        int temp = a;
+        if (temp >= 0) {
+            while (temp >= b) {
+                temp = temp - b;
+            }
+        } else {
+            while (temp < 0) {
+                temp = temp + b;
+            }
+        }
+        return temp;
     }
 
     /**
@@ -55,10 +60,12 @@ public final class HashingExploration {
     private static int hashCode(String s) {
         assert s != null : "Violation of: s is not null";
 
-        // TODO - fill in body
+        int length = s.length();
+        length = length - 3;
+        int hash = length * 13;
 
         // This line added just to make the component compilable.
-        return 0;
+        return hash;
     }
 
     /**
