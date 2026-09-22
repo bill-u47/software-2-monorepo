@@ -1,8 +1,8 @@
 # [Homework 13: Binary Tree and Recursion 2][hw13]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **09/23 @1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -44,7 +44,18 @@ additional activities.
  * @ensures treeToString = [the String prefix representation of t]
  */
 public static <T> String treeToString(BinaryTree<T> t) {
-    // TODO: fill out
+    BinaryTree<T> left = t.newInstance();
+    BinaryTree<T> right = t.newInstance();
+
+    String tConc = "";
+    if (t.size() != 0) {
+        T root = t.disassemble(left, right);
+        tConc = tConc + root.toString() + '(' + left.treeToString() + right.treeToString() + ')';
+        t.assemble(root, left, right);
+    } else {
+        tConc = tConc + '()';
+    }
+    return tConc;
 }
 ```
 
@@ -79,7 +90,16 @@ public static <T> String treeToString(BinaryTree<T> t) {
  * @ensures copy = t
  */
 public static BinaryTree<Integer> copy(BinaryTree<Integer> t) {
-    // TODO: fill out
+    BinaryTree<Integer> copier = t.newInstance();
+    BinaryTree<Integer> right =  t.newInstance();
+    BinaryTree<Integer> left = t.newInstance();
+
+    if (t.size != 0) {
+        int root = t.disassemble(left, right);
+        copier.assemble(root, copy(left), copy(right));
+        t.assemble(root, left, right);
+    }
+    return copier;
 }
 ```
 

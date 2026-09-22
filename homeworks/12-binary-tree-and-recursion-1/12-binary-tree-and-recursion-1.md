@@ -43,7 +43,18 @@ have to waste time entering your code during the lab.
  * @return the size of the given {@code BinaryTree}
  * @ensures size = |t|
  */
-public static <T> int size(BinaryTree<T> t) {...}
+public static <T> int size(BinaryTree<T> t) {
+    BinaryTree<T> right = t.newInstance();
+    BinaryTree<T> left = t.newInstance();
+
+    int i = 0;
+    if (t.height() != 0) {
+        T root = t.disassemble(left, right);
+        i = 1 + size(left) + size(right);
+        t.assemble(root, left, right);
+    }
+    return i;
+}
 ```
 
 ### Problem 2
@@ -63,7 +74,13 @@ public static <T> int size(BinaryTree<T> t) {...}
  * @return the size of the given {@code BinaryTree}
  * @ensures size = |t|
  */
-public static <T> int size(BinaryTree<T> t) {...}
+public static <T> int size(BinaryTree<T> t) {
+    int i = 0;
+    for (T item : t) {
+        i = i + 1;
+    }
+    return i;
+}
 ```
 
 ## Submission

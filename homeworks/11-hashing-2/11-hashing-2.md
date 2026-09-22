@@ -1,8 +1,8 @@
 # [Homework 11: Hashing 2][hw11]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **09/18 @1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -51,11 +51,16 @@ public class PhoneNumber {
     ...
  
     @Override
-    public int hashCode() {
- 
-        // TODO - fill in body
- 
-    }
+    public int hashCode() {
+        int hash = 0;
+        for (int i = 0; i < this.rep.length(); i++) {
+            int digitValue = Character.digit(this.rep.charAt(i), 10);
+            if (digitValue != -1) {
+                hash = hash * 10 + digitValue;
+            }
+        }
+    return hash;
+}
  
     ...
 }
@@ -85,18 +90,33 @@ public class PhoneNumber {
 > could be applied to both of them, and therefore you actually decided
 > to use that hash function for both of them.
 
+The problem that would arise if the hash function tried to hash both numbers and letters
+is that the letters do not have an assigned number, thus the letters must be hashed
+into numbers first before they can be hashed as a whole. If this step was not
+followed, then the function would throw an error as it's not designed to handle both
+integer strings and letter strings.
+
 #### Problem 2B
 
 > Explain how you could change the hash function to correct this
 > problem; i.e., explain what the hash function would have to do
 > to handle phone numbers like "292-OHIO" and "292-6446" in a proper
 > way.
+All that would have to happen is the index of each letter in the alphabet would
+be hashed by taking the integer, using the remainder operator of the length of
+the number (in this case, it would be 7) to get the R, then pass that value into the
+phone number to hash as a whole.
 
 #### Problem 2C
 
 > While you're at it, you might as well also handle smoothly the case
 > where the phone number is typed in as "292-ohio". Explain how you
 > could further change the hash function to handle this situation, too.
+
+I mean, it wouldn't really be any different given that OHIO and ohio have the same
+letter indexes. In the first place, the input would be sanitized as capitals don't matter,
+so the initialization of the function would have "string_input_or_whatever.toLowerCase();"
+which would handle those cases.
 
 ## Submission
 
