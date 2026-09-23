@@ -43,7 +43,19 @@ have to waste time entering your code during the lab.
  * there exists k: integer (a = k * b + mod)
  * </pre>
  */
-public static int mod(int a, int b) {...}
+public static int mod(int a, int b) {
+    if (a >= 0){
+        while (a >= b){
+            a = a - b;
+        }
+    } else {
+        while (a < 0) {
+            a = a + b;
+        }
+    }
+
+    return a;
+}
 ```
 
 > Note that, although you can use the remainder operator % in your
@@ -76,16 +88,16 @@ public static int mod(int a, int b) {
 
 | Bucket | Integers Hashed |
 | ------ | --------------- |
-| 0      |                 |
+| 0      | 432, 54, 0, 90                |
 | 1      |                 |
 | 2      |                 |
-| 3      |                 |
-| 4      |                 |
+| 3      | 84, –195                |
+| 4      | –788                |
 | 5      |                 |
 | 6      |                 |
-| 7      |                 |
-| 8      |                 |
-| 9      |                 |
+| 7      | –101                |
+| 8      | 17                |
+| 9      | –6                |
 
 #### Problem 2B
 
@@ -95,17 +107,30 @@ public static int mod(int a, int b) {
 > how the elements of the set above are distributed among the buckets by
 > this hash function.
 
+ ```java
+    public static int hashCodeNew(int a){
+        while (a < 0 || a > 9){
+            if (a < 0){
+                a = a + 9;
+            } else {
+                a = a - 9;
+            }
+        }
+        return a;
+    }
+ ```
+
 | Bucket | Integers Hashed |
 | ------ | --------------- |
-| 0      |                 |
+| 0      | 432, 54, 0, 90                |
 | 1      |                 |
 | 2      |                 |
-| 3      |                 |
-| 4      |                 |
+| 3      | 84, –195, -6                |
+| 4      | –788                |
 | 5      |                 |
 | 6      |                 |
-| 7      |                 |
-| 8      |                 |
+| 7      | –101                |
+| 8      | 17                |
 | 9      |                 |
 
 ## Submission

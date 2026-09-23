@@ -31,11 +31,25 @@ public final class BinaryTreeMethods {
      */
     public static <T> int height(BinaryTree<T> t) {
         assert t != null : "Violation of: t is not null";
+        BinaryTree<T> left = t.newInstance();
+        BinaryTree<T> right = t.newInstance();
+        int heightL = 0;
+        int heightR = 0;
+        int height = 0;
 
-        // TODO - fill in body
+        if (t.size() != 0) {
+            T root = t.disassemble(left, right);
+            heightL = 1 + heightL + height(left);
+            heightR = 1 + heightR + height(right);
+            t.assemble(root, left, right);
+        }
 
-        // This line added just to make the component compilable.
-        return 0;
+        if (heightL >= heightR) {
+            height = height + heightL;
+        } else {
+            height = height + heightR;
+        }
+        return height;
     }
 
     /**
@@ -55,11 +69,25 @@ public final class BinaryTreeMethods {
     public static <T> boolean isInTree(BinaryTree<T> t, T x) {
         assert t != null : "Violation of: t is not null";
         assert x != null : "Violation of: x is not null";
+        BinaryTree<T> left = t.newInstance();
+        BinaryTree<T> right = t.newInstance();
 
-        // TODO - fill in body
+        boolean inTree = false;
 
-        // This line added just to make the component compilable.
-        return false;
+        if (t.height() != 0) {
+            T root = t.disassemble(left, right);
+            if (root.equals(x)) {
+                inTree = true;
+            }
+            if (isInTree(right, x)) {
+                inTree = true;
+            } else if (isInTree(left, x)) {
+                inTree = true;
+            }
+            t.assemble(root, left, right);
+        }
+
+        return inTree;
     }
 
     /**

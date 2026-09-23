@@ -1,3 +1,5 @@
+import org.junit.Test;
+
 import components.map.Map;
 
 /**
@@ -75,6 +77,35 @@ public abstract class MapTest {
             map.add(args[i], args[i + 1]);
         }
         return map;
+    }
+
+    @Test
+    public void constructTest() {
+
+    }
+    @Test
+    public void addTest() {
+
+    }
+    @Test
+    public void removeTest() {
+
+    }
+    @Test
+    public void removeAnyTest() {
+
+    }
+    @Test
+    public void valueTest() {
+
+    }
+    @Test
+    public void hasKeyTest() {
+
+    }
+    @Test
+    public void sizeTest() {
+
     }
 
     // TODO - add test cases for constructor, add, remove, removeAny, value,

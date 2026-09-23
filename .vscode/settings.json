@@ -45,12 +45,6 @@
         ".vscode/markdown.css"
     ],
     "print.sourcecode.colourScheme": "A11 Y",
-    "java.project.sourcePaths": [
-        "labs\\03-junit-testing\\test",
-        "labs\\04-version-control\\test",
-        "labs\\06-set-on-queue\\test",
-        "projects\\01-word-counter\\src",
-        "projects\\02-natural-number-on-string\\test"
-    ],
+
     "java.debug.settings.onBuildFailureProceed": true
 }

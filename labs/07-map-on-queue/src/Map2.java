@@ -56,7 +56,22 @@ public class Map2<K, V> extends MapSecondary<K, V> {
         assert q != null : "Violation of: q is not null";
         assert key != null : "Violation of: key is not null";
 
+        assert q != null : "Violation of: q is not null";
+        assert key != null : "Violation of: key is not null";
+
         // TODO - fill in body
+        Queue<Pair<K, V>> temp = q.newInstance();
+        Pair<K, V> keyMatch = null;
+        while (q.length() != 0) {
+            Pair<K, V> qKey = q.dequeue();
+            if (qKey.key().equals(key)) {
+                keyMatch = qKey;
+            } else {
+                temp.enqueue(qKey);
+            }
+        }
+        q.enqueue(keyMatch);
+        q.append(temp);
 
     }
 
@@ -123,8 +138,10 @@ public class Map2<K, V> extends MapSecondary<K, V> {
         assert key != null : "Violation of: key is not null";
         assert value != null : "Violation of: value is not null";
         assert !this.hasKey(key) : "Violation of: key is not in DOMAIN(this)";
+        Pair<K, V> newPair = new SimplePair<>(key, value);
 
-        // TODO - fill in body
+        this.pairsQueue.enqueue(newPair);
+
 
     }
 
@@ -133,20 +150,21 @@ public class Map2<K, V> extends MapSecondary<K, V> {
         assert key != null : "Violation of: key is not null";
         assert this.hasKey(key) : "Violation of: key is in DOMAIN(this)";
 
-        // TODO - fill in body
+        moveToFront(this.pairsQueue, key);
+        Pair<K, V> returnPair = this.pairsQueue.dequeue();
 
         // This line added just to make the component compilable.
-        return null;
+        return returnPair;
     }
 
     @Override
     public final Pair<K, V> removeAny() {
         assert this.size() > 0 : "Violation of: |this| > 0";
 
-        // TODO - fill in body
+        Pair<K, V> newItem = this.pairsQueue.dequeue();
 
         // This line added just to make the component compilable.
-        return null;
+        return newItem;
     }
 
     @Override
@@ -154,8 +172,17 @@ public class Map2<K, V> extends MapSecondary<K, V> {
         assert key != null : "Violation of: key is not null";
         assert this.hasKey(key) : "Violation of: key is in DOMAIN(this)";
 
-        // TODO - fill in body
 
+        Map<K, V> testItem = this.newInstance();
+        testItem.transferFrom(this);
+        for (Pair<K, V> item : testItem) {
+            if (!item.key().equals(key)) {
+                testItem.add(item.key(), item.value());
+            } else {
+                testItem.add(item.key(), item.value());
+                return item.value();
+            }
+        }
         // This line added just to make the component compilable.
         return null;
     }
