@@ -34,7 +34,7 @@ import components.map.MapSecondary;
  *          (pf)
  * </pre>
  *
- * @author Put your name here
+ * @author Andrew Bilyeu
  *
  */
 public class Map4<K, V> extends MapSecondary<K, V> {
@@ -199,7 +199,8 @@ public class Map4<K, V> extends MapSecondary<K, V> {
         assert this.hasKey(key) : "Violation of: key is in DOMAIN(this)";
 
         int bucketIdx = key.hashCode();
-        Map.Pair<K, V> removedItem = this.hashTable[bucketIdx].remove(key);
+        int bucketIdxMod = mod(bucketIdx, this.hashTable.length);
+        Map.Pair<K, V> removedItem = this.hashTable[bucketIdxMod].remove(key);
         this.size = this.size - 1;
 
         // This line added just to make the component compilable.
@@ -210,9 +211,17 @@ public class Map4<K, V> extends MapSecondary<K, V> {
     public final Pair<K, V> removeAny() {
         assert this.size() > 0 : "Violation of: this /= empty_set";
 
+        int possibleSize = this.hashTable.length;
+        if (mod(possibleSize, 2) == 0) {
+            possibleSize = possibleSize/2;
+        } else {
+            possibleSize = possibleSize - 1;
+            possibleSize = possibleSize/2;
+        }
+        Map.Pair<K, V> removedItem = this.hashTable[possibleSize].removeAny();
 
         // This line added just to make the component compilable.
-        return null;
+        return removedItem;
     }
 
     @Override
