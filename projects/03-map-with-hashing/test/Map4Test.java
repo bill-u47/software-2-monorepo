@@ -1,5 +1,3 @@
-import org.junit.Test;
-
 import components.map.Map;
 import components.map.Map1L;
 

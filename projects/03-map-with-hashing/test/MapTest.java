@@ -129,7 +129,13 @@ public abstract class MapTest {
 
     @Test
     public void sizeTest() {
+        Map<String, String> m = this.createFromArgsTest("courage", "dog",
+                "garfield", "cat");
 
+        int size = m.size();
+        int sizeExpected = 2;
+
+        assertEquals(sizeExpected, size);
     }
 
     // TODO - add test cases for constructor, add, remove, removeAny, value,
