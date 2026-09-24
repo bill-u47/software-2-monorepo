@@ -47,7 +47,7 @@
         "c:\\Users\\bilye\\software-2-monorepo\\lib\\BWClient.jar"
     ],
     "java.project.sourcePaths": [
-        "projects\\03-map-with-hashing\\src",
-        "projects\\03-map-with-hashing\\test"
+        "labs\\10-binary-search-trees\\src",
+        "labs\\10-binary-search-trees\\test"
     ],
 }
