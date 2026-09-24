@@ -124,7 +124,13 @@ public abstract class MapTest {
 
     @Test
     public void hasKeyTest() {
+        Map<String, String> m = this.createFromArgsTest("courage", "dog",
+                "garfield", "cat");
 
+        boolean result = m.hasKey("courage");
+        boolean expectedResult = true;
+
+        assertEquals(expectedResult, result);
     }
 
     @Test
