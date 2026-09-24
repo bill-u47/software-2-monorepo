@@ -213,10 +213,10 @@ public class Map4<K, V> extends MapSecondary<K, V> {
 
         int possibleSize = this.hashTable.length;
         if (mod(possibleSize, 2) == 0) {
-            possibleSize = possibleSize/2;
+            possibleSize = possibleSize / 2;
         } else {
             possibleSize = possibleSize - 1;
-            possibleSize = possibleSize/2;
+            possibleSize = possibleSize / 2;
         }
         Map.Pair<K, V> removedItem = this.hashTable[possibleSize].removeAny();
 

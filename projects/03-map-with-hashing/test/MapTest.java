@@ -1,3 +1,5 @@
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 import components.map.Map;
@@ -81,28 +83,50 @@ public abstract class MapTest {
 
     @Test
     public void constructTest() {
+        Map<String, String> m = this.constructorTest();
+        Map<String, String> mExpected = this.constructorRef();
 
+        assertEquals(mExpected, m);
     }
+
     @Test
     public void addTest() {
+        Map<String, String> m = this.createFromArgsTest("courage", "dog");
+        Map<String, String> mExpected = this.createFromArgsRef("courage", "dog",
+                "garfield", "cat");
 
+        m.add("yellow", "cat");
+
+        assertEquals(mExpected, m);
     }
+
     @Test
     public void removeTest() {
+        Map<String, String> m = this.createFromArgsTest("courage", "dog",
+                "garfield", "cat");
+        Map<String, String> mExpected = this.createFromArgsRef("garfield",
+                "cat");
 
+        m.remove("courage");
+
+        assertEquals(mExpected, m);
     }
+
     @Test
     public void removeAnyTest() {
 
     }
+
     @Test
     public void valueTest() {
 
     }
+
     @Test
     public void hasKeyTest() {
 
     }
+
     @Test
     public void sizeTest() {
 
