@@ -1,4 +1,4 @@
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -30,7 +30,7 @@ public final class BinarySearchTreeMethodsTest {
     }
 
     @Test
-    public void sampleTest() {
+    public void isInTreeTest() {
         /*
          * Set up variables
          */
@@ -46,6 +46,25 @@ public final class BinarySearchTreeMethodsTest {
         assertEquals(true, inTree);
         assertEquals(t2, t1);
     }
+    @Test
+    public void removeSmallestTest() {
+        /*
+         * Set up variables
+         */
+        BinaryTree<String> t1 = createBSTFromArgs("b", "a", "c");
+        BinaryTree<String> t1result = createBSTFromArgs("b", "c");
+
+        /*
+         * Call method under test
+         */
+        String smallest = BinarySearchTreeMethods.removeSmallest(t1);
+        /*
+         * Assert that values of variables match expectations
+         */
+        assertEquals("a", smallest);
+        assertEquals(t1result, t1);
+    }
+
 
     // TODO: add here other test cases for BinarySearchTreeMethods.isInTree
     // (and for BinarySearchTreeMethods.removeSmallest)

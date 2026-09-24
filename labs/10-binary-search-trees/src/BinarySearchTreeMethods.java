@@ -51,12 +51,12 @@ public final class BinarySearchTreeMethods {
         if (t.height() != 0) {
             T root = t.disassemble(left, right);
             int compare = x.compareTo(root);
-            if (x.equals(root)) {
+            if (compare == 0) {
                 inTree = true;
             } else if (compare < 0) {
-                isInTree(left, x);
-            } else if (compare > 0) {
-                isInTree(right, x);
+                inTree = isInTree(left, x);
+            } else {
+                inTree = isInTree(right, x);
             }
             t.assemble(root, left, right);
         }
@@ -79,11 +79,22 @@ public final class BinarySearchTreeMethods {
      * </pre>
      */
     public static <T> T removeSmallest(BinaryTree<T> t) {
+        BinaryTree<T> left = t.newInstance();
+        BinaryTree<T> right = t.newInstance();
+        T smallest = null;
+        if (t.height() != 0) {
+            T root = t.disassemble(left, right);
+        if (left.height() != 0) {
+            smallest = removeSmallest(left);
+            t.assemble(root, left, right);
+        } else {
+            smallest = root;
+            t.transferFrom(right);
+        }
 
-        // TODO - fill in body
+        }
+        return smallest;
 
-        // This line added just to make the component compilable.
-        return null;
     }
 
     /**
