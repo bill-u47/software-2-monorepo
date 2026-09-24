@@ -114,7 +114,41 @@ public abstract class MapTest {
 
     @Test
     public void removeAnyTest() {
+        /*
+         * Sets up map objects for the tests
+         */
+        Map<String, String> m = this.createFromArgsTest("courage", "dog",
+                "garfield", "cat");
+        Map<String, String> mExpected = this.createFromArgsRef("courage", "dog",
+                "garfield", "cat");
+        Map<String, String> mOriginal = this.createFromArgsTest("courage",
+                "dog", "garfield", "cat");
+        Map<String, String> mExpectedOriginal = this
+                .createFromArgsRef("courage", "dog", "garfield", "cat");
 
+        /*
+         * Removes an arbitrary pair and checks if the key of the pair exists in
+         * #m and #mExpected. Additionally, makes sure |m| = |#m| - 1 and
+         * |mExpected| = |#mExpected| - 1
+         */
+        Map.Pair<String, String> anyPair1 = m.removeAny();
+        Map.Pair<String, String> anyPair2 = mExpected.removeAny();
+
+        String pairKey1 = anyPair1.key();
+        String pairKey2 = anyPair2.key();
+
+        Boolean mHasKey = mOriginal.hasKey(pairKey1);
+        Boolean mExpectedHasKey = mExpectedOriginal.hasKey(pairKey2);
+        Boolean expectedResult = true;
+
+        int size1 = m.size();
+        int size2 = mExpected.size();
+        int sizeExpected = 1;
+
+        assertEquals(expectedResult, mHasKey);
+        assertEquals(expectedResult, mExpectedHasKey);
+        assertEquals(sizeExpected, size1);
+        assertEquals(sizeExpected, size2);
     }
 
     @Test
