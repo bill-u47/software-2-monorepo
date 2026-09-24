@@ -42,13 +42,25 @@ public final class BinarySearchTreeMethods {
      * @requires IS_BST(t)
      * @ensures isInTree = (x is in labels(t))
      */
-    public static <T extends Comparable<T>> boolean isInTree(BinaryTree<T> t,
-            T x) {
+    public static <T extends Comparable<T>> boolean isInTree(BinaryTree<T> t, T x) {
+        boolean inTree = false;
+        BinaryTree<T> left = t.newInstance();
+        BinaryTree<T> right = t.newInstance();
 
-        // TODO - fill in body
 
-        // This line added just to make the component compilable.
-        return false;
+        if (t.height() != 0) {
+            T root = t.disassemble(left, right);
+            int compare = x.compareTo(root);
+            if (x.equals(root)) {
+                inTree = true;
+            } else if (compare < 0) {
+                isInTree(left, x);
+            } else if (compare > 0) {
+                isInTree(right, x);
+            }
+            t.assemble(root, left, right);
+        }
+        return inTree;
     }
 
     /**

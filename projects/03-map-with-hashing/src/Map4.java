@@ -211,15 +211,12 @@ public class Map4<K, V> extends MapSecondary<K, V> {
     public final Pair<K, V> removeAny() {
         assert this.size() > 0 : "Violation of: this /= empty_set";
 
-        int possibleSize = this.hashTable.length;
-        if (mod(possibleSize, 2) == 0) {
-            possibleSize = possibleSize/2;
-        } else {
-            possibleSize = possibleSize - 1;
-            possibleSize = possibleSize/2;
+        int idx = 0;
+        while (this.hashTable[idx].size() == 0) {
+            idx = idx + 1;
         }
-        Map.Pair<K, V> removedItem = this.hashTable[possibleSize].removeAny();
 
+        Map.Pair<K, V> removedItem = this.hashTable[idx].removeAny();
         // This line added just to make the component compilable.
         return removedItem;
     }
