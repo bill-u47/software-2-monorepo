@@ -38,17 +38,16 @@
     ],
     "print.sourcecode.colourScheme": "A11 Y",
     "java.debug.settings.onBuildFailureProceed": true,
+    "java.project.referencedLibraries": [
+        "c:\\Users\\bilye\\software-2-monorepo\\lib\\BWServer.jar",
+        "c:\\Users\\bilye\\software-2-monorepo\\lib\\binary-tree-utility.jar",
+        "c:\\Users\\bilye\\software-2-monorepo\\lib\\components.jar",
+        "c:\\Users\\bilye\\software-2-monorepo\\lib\\junit-4.13.2.jar",
+        "c:\\Users\\bilye\\software-2-monorepo\\lib\\hamcrest-core-1.3.jar",
+        "c:\\Users\\bilye\\software-2-monorepo\\lib\\BWClient.jar"
+    ],
     "java.project.sourcePaths": [
         "projects\\03-map-with-hashing\\src",
         "projects\\03-map-with-hashing\\test"
-    ],
-    "java.project.referencedLibraries": [
-        "c:\\Users\\Dennis\\Documents\\software-2-monorepo-Classes\\lib\\binary-tree-utility.jar",
-        "c:\\Users\\Dennis\\Documents\\software-2-monorepo-Classes\\lib\\BWClient.jar",
-        "c:\\Users\\Dennis\\Documents\\software-2-monorepo-Classes\\lib\\BWServer.jar",
-        "c:\\Users\\Dennis\\Documents\\software-2-monorepo-Classes\\lib\\components.jar",
-        "c:\\Users\\Dennis\\Documents\\software-2-monorepo-Classes\\lib\\hamcrest-core-1.3.jar",
-        "c:\\Users\\Dennis\\Documents\\software-2-monorepo-Classes\\lib\\junit-4.13.2.jar",
-        "c:\\Users\\Dennis\\Documents\\GitHub\\software-2-monorepo-groupProjects\\lib\\junit-platform-console-standalone-6.1.3.jar"
     ],
 }

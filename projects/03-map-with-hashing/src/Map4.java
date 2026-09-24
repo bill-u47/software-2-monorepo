@@ -2,6 +2,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import components.map.Map;
+import components.map.Map1L;
 import components.map.MapSecondary;
 
 /**
@@ -78,10 +79,12 @@ public class Map4<K, V> extends MapSecondary<K, V> {
         if (a >= 0) {
             while (a >= b) {
                 totalMod = a - b;
+                a -= b;
             }
         } else {
             while (a < 0) {
                 totalMod = a + b;
+                a += b;
             }
         }
 
@@ -110,9 +113,11 @@ public class Map4<K, V> extends MapSecondary<K, V> {
          * compile; as shown, it results in a warning about an unchecked
          * conversion, though it cannot fail.
          */
+        this.hashTable = new Map[hashTableSize];
         for (int i = 0; i < hashTableSize; i++) {
-            this.hashTable[i] = new Map4<K, V>();
+            this.hashTable[i] = new Map1L<K, V>();
         }
+        this.size = 0;
     }
 
     /*
@@ -200,8 +205,9 @@ public class Map4<K, V> extends MapSecondary<K, V> {
 
         int bucketIdx = key.hashCode();
         int bucketIdxMod = mod(bucketIdx, this.hashTable.length);
+        this.size--;
         Map.Pair<K, V> removedItem = this.hashTable[bucketIdxMod].remove(key);
-        this.size = this.size - 1;
+
 
         // This line added just to make the component compilable.
         return removedItem;
@@ -215,6 +221,7 @@ public class Map4<K, V> extends MapSecondary<K, V> {
         while (this.hashTable[idx].size() == 0) {
             idx = idx + 1;
         }
+        this.size--;
 
         Map.Pair<K, V> removedItem = this.hashTable[idx].removeAny();
         // This line added just to make the component compilable.
@@ -227,7 +234,8 @@ public class Map4<K, V> extends MapSecondary<K, V> {
         assert this.hasKey(key) : "Violation of: key is in DOMAIN(this)";
 
         int bucketIdx = key.hashCode();
-        V value = this.hashTable[bucketIdx].value(key);
+        int tblIdx = mod(bucketIdx, this.hashTable.length);
+        V value = this.hashTable[tblIdx].value(key);
 
         // This line added just to make the component compilable.
         return value;
@@ -237,11 +245,9 @@ public class Map4<K, V> extends MapSecondary<K, V> {
     public final boolean hasKey(K key) {
         assert key != null : "Violation of: key is not null";
         boolean keyIn = false;
-        int bucketIdx = key.hashCode();
-        for (int i = 0; i < this.hashTable.length; i++) {
-            if (this.hashTable[i].equals(this.hashTable[bucketIdx])) {
-                keyIn = true;
-            }
+        int bucketIdx = mod(key.hashCode(), this.hashTable.length);
+        if (this.hashTable[bucketIdx].hasKey(key)) {
+            keyIn = true;
         }
 
         // This line added just to make the component compilable.
@@ -250,13 +256,8 @@ public class Map4<K, V> extends MapSecondary<K, V> {
 
     @Override
     public final int size() {
-        int j = 0;
-        for (int i = 0; i < this.hashTable.length; i++) {
-            j = j + 1;
-        }
-
         // This line added just to make the component compilable.
-        return j;
+        return this.size;
     }
 
     @Override
