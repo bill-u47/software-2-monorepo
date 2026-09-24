@@ -119,29 +119,47 @@ public abstract class MapTest {
 
     @Test
     public void valueTest() {
+        Map<String, String> m = this.createFromArgsTest("courage", "dog",
+                "garfield", "cat");
+        Map<String, String> mExpected = this.createFromArgsRef("courage", "dog",
+                "garfield", "cat");
 
+        String value1 = m.value("garfield");
+        String value2 = mExpected.value("garfield");
+        String valueExpected = "cat";
+
+        assertEquals(valueExpected, value1);
+        assertEquals(valueExpected, value2);
     }
 
     @Test
     public void hasKeyTest() {
         Map<String, String> m = this.createFromArgsTest("courage", "dog",
                 "garfield", "cat");
+        Map<String, String> mExpected = this.createFromArgsRef("courage", "dog",
+                "garfield", "cat");
 
-        boolean result = m.hasKey("courage");
+        boolean result1 = m.hasKey("courage");
+        boolean result2 = mExpected.hasKey("courage");
         boolean expectedResult = true;
 
-        assertEquals(expectedResult, result);
+        assertEquals(expectedResult, result1);
+        assertEquals(expectedResult, result2);
     }
 
     @Test
     public void sizeTest() {
         Map<String, String> m = this.createFromArgsTest("courage", "dog",
                 "garfield", "cat");
+        Map<String, String> mExpected = this.createFromArgsRef("courage", "dog",
+                "garfield", "cat");
 
-        int size = m.size();
+        int size1 = m.size();
+        int size2 = mExpected.size();
         int sizeExpected = 2;
 
-        assertEquals(sizeExpected, size);
+        assertEquals(sizeExpected, size1);
+        assertEquals(sizeExpected, size2);
     }
 
     // TODO - add test cases for constructor, add, remove, removeAny, value,
