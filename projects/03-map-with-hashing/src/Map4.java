@@ -208,7 +208,6 @@ public class Map4<K, V> extends MapSecondary<K, V> {
         this.size--;
         Map.Pair<K, V> removedItem = this.hashTable[bucketIdxMod].remove(key);
 
-
         // This line added just to make the component compilable.
         return removedItem;
     }

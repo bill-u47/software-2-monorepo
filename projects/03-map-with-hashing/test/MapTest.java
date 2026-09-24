@@ -1,6 +1,5 @@
 import components.map.Map;
 
-
 /**
  * JUnit test fixture for {@code Map<String, String>}'s constructor and kernel
  * methods.
@@ -76,6 +75,5 @@ public abstract class MapTest {
             map.add(args[i], args[i + 1]);
         }
         return map;
+    }
 }
-}
-
