@@ -1,8 +1,8 @@
 # [Homework 14: Binary Search Trees][hw14]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **09/24 @ 1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -65,7 +65,26 @@ have to waste time entering your code during the lab.
  * @requires IS_BST(t)
  * @ensures isInTree = (x is in labels(t))
  */
-public static <T extends Comparable<T>> boolean isInTree(BinaryTree<T> t, T x) {...}
+public static <T extends Comparable<T>> boolean isInTree(BinaryTree<T> t, T x) {
+        boolean inTree = false;
+        BinaryTree<T> left = t.newInstance();
+        BinaryTree<T> right = t.newInstance();
+
+
+        if (t.height() != 0) {
+            T root = t.disassemble(left, right);
+            int compare = x.compareTo(root);
+            if (x.equals(root)) {
+                inTree = true;
+            } else if (compare < 0) {
+                isInTree(left, x);
+            } else if (compare > 0) {
+                isInTree(right, x);
+            }
+            t.assemble(root, left, right);
+        }
+        return inTree;
+    }
 ```
 
 > The isInTree method has a new and interesting property:
@@ -89,26 +108,28 @@ public static <T extends Comparable<T>> boolean isInTree(BinaryTree<T> t, T x) {
 > search tree:
 >
 > Matt, Zeke, Pete, Lon, John, Mei, Larry, Bess, Merv, Adam, Kate
-
+(Matt(Lon(John(Bess Adam())(Larry Kate()))())(Zeke(Pete(Mei() Merv)())()))
 #### Problem 2B
 
 > Draw the binary search tree resulting from removing Pete
 > from the binary search tree in A.
-
+(Matt(Lon(John(Bess Adam())(Larry Kate()))())(Zeke(Mei()Merv)()))
 #### Problem 2C
 
 > Draw the binary search tree resulting from removing John
 > from the binary search tree in B.
-
+(Matt(Lon(Bess Adam())(Larry Kate()))())(Zeke(Mei()Merv)())
 #### Problem 2D
 
 > Draw the binary search tree resulting from removing Lon
 > from the binary search tree in C.
+(Matt(Bess Adam())(Larry Kate()))()(Zeke(Mei()Merv)())
 
 #### Problem 2E
 
 > Draw the binary search tree resulting from removing Matt
 > from the binary search tree in D.
+(Bess Adam())(Larry Kate())()(Zeke(Mei()Merv)())
 
 ## Submission
 
