@@ -84,14 +84,13 @@ public final class BinarySearchTreeMethods {
         T smallest = null;
         if (t.height() != 0) {
             T root = t.disassemble(left, right);
-        if (left.height() != 0) {
-            smallest = removeSmallest(left);
-            t.assemble(root, left, right);
-        } else {
-            smallest = root;
-            t.transferFrom(right);
-        }
-
+            if (left.height() != 0) {
+                smallest = removeSmallest(left);
+                t.assemble(root, left, right);
+            } else {
+                smallest = root;
+                t.transferFrom(right);
+            }
         }
         return smallest;
 
