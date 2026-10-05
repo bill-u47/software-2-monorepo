@@ -106,6 +106,27 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
         BinaryTree<T> left = t.newInstance();
         BinaryTree<T> right = t.newInstance();
 
+        if (t.size() > 1) {
+            T root = t.disassemble(left, right);
+
+            if (root.compareTo(x) > 0) {
+                insertInTree(right, x);
+            }
+            if (root.compareTo(x) < 0) {
+                insertInTree(left, x);
+            }
+
+        } else {
+            T root = t.root();
+            if (root.compareTo(x) > 0) {
+                right.replaceRoot(x);
+            }
+            if (root.compareTo(x) < 0) {
+                left.replaceRoot(x);
+            }
+            t.assemble(root, left, right);
+        }
+
     }
 
     /**
