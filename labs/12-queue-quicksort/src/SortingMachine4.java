@@ -94,7 +94,16 @@ public class SortingMachine4<T> extends SortingMachineSecondary<T> {
         assert back != null : "Violation of: back is not null";
         assert order != null : "Violation of: order is not null";
 
-        // TODO #1 - fill in body
+        front.clear();
+        back.clear();
+        while (q.length() != 0) {
+            T item = q.dequeue();
+            if (order.compare(partitioner, item) <= 0) {
+                back.enqueue(item);
+            } else {
+                front.enqueue(item);
+            }
+        }
 
     }
 
@@ -112,12 +121,38 @@ public class SortingMachine4<T> extends SortingMachineSecondary<T> {
      * @requires IS_TOTAL_PREORDER([relation computed by order.compare method])
      * @ensures IS_SORTED(q, [relation computed by order.compare method])
      */
-    private static <T> void sort(Queue<T> q, Comparator<T> order) {
-        assert order != null : "Violation of: order is not null";
+        public void sort(Comparator<T> order) {
+            assert order != null : "Violation of: order is not null";
+            if (this.size() > 1) {
 
-        // TODO #2 - fill in body
+                T partitioner = this.removeFirst();
 
-    }
+                /*
+                * Dequeue the partitioning entry from this
+                */
+                Queue<T> left = this.entries.newInstance();
+                Queue<T> right = this.entries.newInstance();
+
+                partition(this.entries, partitioner, left, right, order);
+                /*
+                * Partition this into two queues as discussed above (you will need
+                * to declare and initialize two new queues)
+                */
+                left.sort(order);
+                right.sort(order);
+                /*
+                * Recursively sort the two queues
+                */
+                this.entries.append(left);
+                this.entries.enqueue(partitioner);
+                this.entries.append(right);
+                /*
+                * Reconstruct this by combining the two sorted queues and the
+                * partitioning entry in the proper order
+                */
+
+            }
+        }
 
     /**
      * Creator of initial representation.
@@ -194,7 +229,7 @@ public class SortingMachine4<T> extends SortingMachineSecondary<T> {
         assert x != null : "Violation of: x is not null";
         assert this.isInInsertionMode() : "Violation of: this.insertion_mode";
 
-        // TODO #3 - fill in body
+        this.entries.enqueue(x);
 
     }
 
@@ -202,7 +237,8 @@ public class SortingMachine4<T> extends SortingMachineSecondary<T> {
     public final void changeToExtractionMode() {
         assert this.isInInsertionMode() : "Violation of: this.insertion_mode";
 
-        // TODO #4 - fill in body
+        this.insertionMode = false;
+        this.entries.sort(this.machineOrder);
 
     }
 
@@ -211,37 +247,30 @@ public class SortingMachine4<T> extends SortingMachineSecondary<T> {
         assert !this.isInInsertionMode() : "Violation of: not this.insertion_mode";
         assert this.size() > 0 : "Violation of: this.contents /= {}";
 
-        // TODO #5 - fill in body
+        T item = this.entries.dequeue();
 
         // This line added just to make the component compilable.
-        return null;
+        return item;
     }
 
     @Override
     public final boolean isInInsertionMode() {
-
-        // TODO #6 - fill in body
-
         // This line added just to make the component compilable.
-        return false;
+        return this.insertionMode;
     }
 
     @Override
     public final Comparator<T> order() {
-
-        // TODO #7 - fill in body
-
         // This line added just to make the component compilable.
-        return null;
+        return this.machineOrder;
     }
 
     @Override
     public final int size() {
 
-        // TODO #8 - fill in body
 
         // This line added just to make the component compilable.
-        return 0;
+        return this.entries.length();
     }
 
     @Override

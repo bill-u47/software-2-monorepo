@@ -1,4 +1,4 @@
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.Comparator;
 
@@ -135,6 +135,10 @@ public abstract class SortingMachineTest {
                 this.createFromArgsRef(ORDER, true, "green");
         m.add("green");
         assertEquals(mExpected, m);
+    }
+    @Test
+    public final void addTest() {
+
     }
 
     // TODO - add test cases for add, changeToExtractionMode, removeFirst,

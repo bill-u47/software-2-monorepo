@@ -1,8 +1,8 @@
 # [Homework 16: Quicksort][hw16]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **10/01/26 @1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -63,8 +63,21 @@ have to waste time entering your code during the lab.
  *  (not [relation computed by order.compare method](x, partitioner))
  * </pre>
  */
-private static <T> void partition(Queue<T> q, T partitioner,
-        Queue<T> front, Queue<T> back, Comparator<T> order) {...}
+    private static <T> void partition(Queue<T> q, T partitioner, Queue<T> front,
+            Queue<T> back, Comparator<T> order) {
+
+        front.clear();
+        back.clear();
+        while (q.length() != 0) {
+            T item = q.dequeue();
+            if (order.compare(partitioner, item) <= 0) {
+                back.append(item);
+            } else {
+                front.append(item);
+            }
+        }
+
+    }
 ```
 
 ### Problem 2
@@ -101,26 +114,35 @@ private static <T> void partition(Queue<T> q, T partitioner,
  * </pre>
  */
 public void sort(Comparator<T> order) {
-    if (this.length() > 1) {
-        /*
-         * Dequeue the partitioning entry from this
-         */
- 
-        /*
-         * Partition this into two queues as discussed above
-         * (you will need to declare and initialize two new queues)
-         */
- 
-        /*
-         * Recursively sort the two queues
-         */
- 
-        /*
-         * Reconstruct this by combining the two sorted queues and the
-         * partitioning entry in the proper order
-         */
- 
-    }
+    if (this.length() > 1) {
+
+        T partitioner = this.dequeue();
+
+        /*
+            * Dequeue the partitioning entry from this
+            */
+        Queue<T> left = this.newInstance();
+        Queue<T> right = this.newInstance();
+
+        partition(this, partitioner, left, right, order);
+        /*
+            * Partition this into two queues as discussed above (you will need
+            * to declare and initialize two new queues)
+            */
+        left.sort(order);
+        right.sort(order);
+        /*
+            * Recursively sort the two queues
+            */
+        this.enqueue(left);
+        this.enqueue(partitioner);
+        this.enqueue(right);
+        /*
+            * Reconstruct this by combining the two sorted queues and the
+            * partitioning entry in the proper order
+            */
+
+    }
 }
 ```
 

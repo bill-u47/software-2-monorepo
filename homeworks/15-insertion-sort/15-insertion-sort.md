@@ -1,8 +1,8 @@
 # [Homework 15: Insertion Sort][hw15]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **09/29 @1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -55,7 +55,23 @@ have to waste time entering your code during the lab.
  * IS_SORTED(q, [relation computed by order.compare method])
  * </pre>
  */
-private static <T> void insertInOrder(Queue<T> q, T x, Comparator<T> order) {...}
+private static <T> void insertInOrder(Queue<T> q, T x, Comparator<T> order) {
+    Queue<T> temp = q.newInstance();
+    boolean xInsert = false;
+    while (q.length() != 0) {
+        T item = q.dequeue();
+        if (!xInsert && order.compare(x, item) <= 0) {
+            xInsert = true;
+            temp.enqueue(x);
+        }
+        temp.enqueue(item);
+
+    }
+    if (!xInsert) {
+        temp.enqueue(x);
+    }
+    q.transferFrom(temp);
+}
 ```
 
 ### Problem 2
@@ -81,7 +97,15 @@ private static <T> void insertInOrder(Queue<T> q, T x, Comparator<T> order) {...
  * IS_SORTED(this, [relation computed by order.compare method])
  * </pre>
  */
-public void sort(Comparator<T> order) {...}
+public void sort(Comparator<T> order) {
+    Queue<T> temp = this.newInstance();
+
+    while (this.length() != 0) {
+        T item = this.dequeue();
+        insertInOrder(temp, item, order);
+    }
+    this.transferFrom(temp);
+}
 ```
 
 ### Problem 3
@@ -120,19 +144,19 @@ private static class IntegerGE implements Comparator<Integer> {
 | Statement                                                               | Variable Values     |
 | ----------------------------------------------------------------------- | ------------------- |
 | `SortingMachine<Integer> sm = new SortingMachine1L<>(new IntegerGE());` |                     |
-|                                                                         | sm = `?`            |
+|                                                                         | sm = `(true, >=, {})`            |
 | `sm.add(0);`                                                            |                     |
-|                                                                         | sm = `?`            |
+|                                                                         | sm = `(true, >=, {0})`            |
 | `sm.add(2);`                                                            |                     |
-|                                                                         | sm = `?`            |
+|                                                                         | sm = `(true, >=, {0, 2})`            |
 | `sm.add(-1);`                                                           |                     |
-|                                                                         | sm = `?`            |
+|                                                                         | sm = `(true, >=, {0, 2, -1})`            |
 | `sm.changeToExtractionMode();`                                          |                     |
-|                                                                         | sm = `?`            |
+|                                                                         | sm = `(false, >=, {0, 2, -1})`            |
 | `int i = sm.removeFirst();`                                             |                     |
-|                                                                         | sm = `?`<br>i = `?` |
+|                                                                         | sm = `(false, >=, {0, 2})`<br>i = `-1` |
 | `sm.clear();`                                                           |                     |
-|                                                                         | sm = `?`<br>i = `?` |
+|                                                                         | sm = `(true, >=, {})`<br>i = `-1` |
 
 > For completeness, here are the math definitions used in the contracts above.
 

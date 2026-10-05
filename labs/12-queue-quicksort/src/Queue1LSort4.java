@@ -69,7 +69,16 @@ public final class Queue1LSort4<T> extends Queue1L<T> {
         assert back != null : "Violation of: back is not null";
         assert order != null : "Violation of: order is not null";
 
-        // TODO - fill in body
+        front.clear();
+        back.clear();
+        while (q.length() != 0) {
+            T item = q.dequeue();
+            if (order.compare(partitioner, item) <= 0) {
+                back.enqueue(item);
+            } else {
+                front.enqueue(item);
+            }
+        }
 
     }
 
@@ -78,21 +87,27 @@ public final class Queue1LSort4<T> extends Queue1L<T> {
         assert order != null : "Violation of: order is not null";
         if (this.length() > 1) {
 
-            // TODO - fill in body
+            T partitioner = this.dequeue();
 
             /*
              * Dequeue the partitioning entry from this
              */
+            Queue<T> left = this.newInstance();
+            Queue<T> right = this.newInstance();
 
+            partition(this, partitioner, left, right, order);
             /*
              * Partition this into two queues as discussed above (you will need
              * to declare and initialize two new queues)
              */
-
+            left.sort(order);
+            right.sort(order);
             /*
              * Recursively sort the two queues
              */
-
+            this.append(left);
+            this.enqueue(partitioner);
+            this.append(right);
             /*
              * Reconstruct this by combining the two sorted queues and the
              * partitioning entry in the proper order

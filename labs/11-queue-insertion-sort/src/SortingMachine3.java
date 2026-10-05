@@ -92,14 +92,22 @@ public class SortingMachine3<T> extends SortingMachineSecondary<T> {
      * IS_SORTED(q, [relation computed by order.compare method])
      * </pre>
      */
-    private static <T> void insertInOrder(Queue<T> q, T x,
-            Comparator<T> order) {
-        assert q != null : "Violation of: q is not null";
-        assert x != null : "Violation of: x is not null";
-        assert order != null : "Violation of: order is not null";
+    private static <T> void insertInOrder(Queue<T> q, T x, Comparator<T> order) {
+        Queue<T> temp = q.newInstance();
+        boolean xInsert = false;
+        while (q.length() != 0) {
+            T item = q.dequeue();
+            if (!xInsert && order.compare(x, item) <= 0) {
+                xInsert = true;
+                temp.enqueue(x);
+            }
+            temp.enqueue(item);
 
-        // TODO #1 - fill in body
-
+        }
+        if (!xInsert) {
+            temp.enqueue(x);
+        }
+        q.transferFrom(temp);
     }
 
     /*
@@ -165,6 +173,7 @@ public class SortingMachine3<T> extends SortingMachineSecondary<T> {
         assert x != null : "Violation of: x is not null";
         assert this.isInInsertionMode() : "Violation of: this.insertion_mode";
 
+        insertInOrder(this.entries, x, this.machineOrder);
         // TODO #2 - insert x into machine contents (keep it sorted)
 
     }
@@ -173,6 +182,7 @@ public class SortingMachine3<T> extends SortingMachineSecondary<T> {
     public final void changeToExtractionMode() {
         assert this.isInInsertionMode() : "Violation of: this.insertion_mode";
 
+        this.insertionMode = false;
         // TODO #3 - switch machine from insertion to extraction mode
 
     }
@@ -183,37 +193,31 @@ public class SortingMachine3<T> extends SortingMachineSecondary<T> {
                 .isInInsertionMode() : "Violation of: not this.insertion_mode";
         assert this.size() > 0 : "Violation of: this.contents /= {}";
 
-        // TODO #4 - remove and return first entry in machine contents
+        T item = this.entries.dequeue();
 
         // This line added just to make the component compilable.
-        return null;
+        return item;
     }
 
     @Override
     public final boolean isInInsertionMode() {
 
-        // TODO #5 - report whether machine is in insertion mode
 
-        // This line added just to make the component compilable.
-        return false;
+        return this.insertionMode;
     }
 
     @Override
     public final Comparator<T> order() {
 
-        // TODO #6 - report order used by machine
-
-        // This line added just to make the component compilable.
-        return null;
+        return this.machineOrder;
     }
 
     @Override
     public final int size() {
 
-        // TODO #7 - report size of machine contents
 
         // This line added just to make the component compilable.
-        return 0;
+        return this.entries.length();
     }
 
     @Override
