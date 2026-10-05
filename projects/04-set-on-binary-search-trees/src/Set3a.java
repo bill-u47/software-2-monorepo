@@ -21,7 +21,7 @@ import components.set.SetSecondary;
  * @convention IS_BST($this.tree)
  * @correspondence this = labels($this.tree)
  *
- * @author Put your name here
+ * @author Dennis Huang
  *
  */
 public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
@@ -53,10 +53,27 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
         assert t != null : "Violation of: t is not null";
         assert x != null : "Violation of: x is not null";
 
-        // TODO - fill in body
+        boolean result = false;
 
-        // This line added just to make the component compilable.
-        return false;
+        BinaryTree<T> left = t.newInstance();
+        BinaryTree<T> right = t.newInstance();
+
+        if (t.size() > 1) {
+            T root = t.disassemble(left, right);
+            if (root.equals(x)) {
+                result = true;
+            }
+            result = isInTree(left);
+            result = isInTree(right);
+            assemble(root, left, right);
+        } else {
+            T root = t.root();
+            if (root.equals(x)) {
+                result = true;
+            }
+        }
+
+        return result;
     }
 
     /**
