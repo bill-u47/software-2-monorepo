@@ -1,4 +1,5 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -19,16 +20,18 @@ public class Map4Test extends MapTest {
     protected final Map<String, String> constructorRef() {
         return new Map1L<String, String>();
     }
+
     private Map<String, String> createFromArgsRef(String... args) {
-            assert args.length % 2 == 0 : "Violation of: args.length is even";
-            Map<String, String> map = this.constructorRef();
-            for (int i = 0; i < args.length; i += 2) {
-                assert !map.hasKey(args[i]) : ""
-                        + "Violation of: the 'key' entries in args are unique";
-                map.add(args[i], args[i + 1]);
-            }
-            return map;
+        assert args.length % 2 == 0 : "Violation of: args.length is even";
+        Map<String, String> map = this.constructorRef();
+        for (int i = 0; i < args.length; i += 2) {
+            assert !map.hasKey(args[i]) : ""
+                    + "Violation of: the 'key' entries in args are unique";
+            map.add(args[i], args[i + 1]);
         }
+        return map;
+    }
+
     @Test
     public void constructTest() {
         Map<String, String> m = this.constructorTest();
@@ -36,6 +39,7 @@ public class Map4Test extends MapTest {
 
         assertEquals(mExpected, m);
     }
+
     private Map<String, String> createFromArgsTest(String... args) {
         assert args.length % 2 == 0 : "Violation of: args.length is even";
         Map<String, String> map = this.constructorTest();
@@ -46,6 +50,7 @@ public class Map4Test extends MapTest {
         }
         return map;
     }
+
     @Test
     public void addTest() {
         Map<String, String> m = this.createFromArgsTest("courage", "dog");
@@ -70,7 +75,7 @@ public class Map4Test extends MapTest {
     }
 
     @Test
-        public void removeAnyTest() {
+    public void removeAnyTest() {
         Map<String, String> m = this.createFromArgsTest("courage", "dog",
                 "garfield", "cat");
         Map<String, String> mOriginal = this.createFromArgsRef("courage", "dog",
@@ -83,7 +88,7 @@ public class Map4Test extends MapTest {
 
         mOriginal.remove(removed.key());
         assertEquals(mOriginal, m);
-        }
+    }
 
     @Test
     public void valueTest() {
@@ -134,4 +139,3 @@ public class Map4Test extends MapTest {
     // hasKey, and size
 
 }
-
