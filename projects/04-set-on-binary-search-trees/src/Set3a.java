@@ -60,11 +60,19 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
 
         if (t.size() > 1) {
             T root = t.disassemble(left, right);
+
+            /**
+             * Checks if the original root matches our desired label Also checks
+             * to search down the correct branch based on BST
+             */
             if (root.equals(x)) {
                 result = true;
+            } else if (root.compareTo(x) > 0) {
+                result = isInTree(right);
+            } else {
+                result = isInTree(left);
             }
-            result = isInTree(left);
-            result = isInTree(right);
+
             assemble(root, left, right);
         } else {
             T root = t.root();
@@ -95,7 +103,8 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
         assert t != null : "Violation of: t is not null";
         assert x != null : "Violation of: x is not null";
 
-        // TODO - fill in body
+        BinaryTree<T> left = t.newInstance();
+        BinaryTree<T> right = t.newInstance();
 
     }
 
