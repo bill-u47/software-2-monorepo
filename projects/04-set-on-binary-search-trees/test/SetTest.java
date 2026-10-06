@@ -8,7 +8,7 @@ import components.set.Set;
 /**
  * JUnit test fixture for {@code Set<String>}'s constructor and kernel methods.
  *
- * @author Put your name here
+ * @author Dennis Huang
  *
  */
 public abstract class SetTest {
