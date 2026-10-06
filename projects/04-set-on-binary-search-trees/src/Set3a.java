@@ -1,6 +1,7 @@
 import java.util.Iterator;
 
 import components.binarytree.BinaryTree;
+import components.binarytree.BinaryTree1;
 import components.set.Set;
 import components.set.SetSecondary;
 
@@ -55,32 +56,20 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
 
         boolean result = false;
 
-        BinaryTree<T> left = t.newInstance();
-        BinaryTree<T> right = t.newInstance();
-
-        if (t.size() > 1) {
+        if (t.size() > 0) {
+            BinaryTree<T> left = t.newInstance();
+            BinaryTree<T> right = t.newInstance();
             T root = t.disassemble(left, right);
 
-            /**
-             * Checks if the original root matches our desired label Also checks
-             * to search down the correct branch based on BST
-             */
-            if (root.equals(x)) {
+            if (x.compareTo(root) == 0) {
                 result = true;
-            } else if (root.compareTo(x) > 0) {
-                result = isInTree(right);
+            } else if (x.compareTo(root) > 0) {
+                result = isInTree(right, x);
             } else {
-                result = isInTree(left);
+                result = isInTree(left, x);
             }
-
-            assemble(root, left, right);
-        } else {
-            T root = t.root();
-            if (root.equals(x)) {
-                result = true;
-            }
+            t.assemble(root, left, right);
         }
-
         return result;
     }
 
@@ -99,34 +88,24 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
      * @ensures IS_BST(t) and labels(t) = labels(#t) union {x}
      */
     private static <T extends Comparable<T>> void insertInTree(BinaryTree<T> t,
-            T x) {
+        T x) {
         assert t != null : "Violation of: t is not null";
         assert x != null : "Violation of: x is not null";
 
         BinaryTree<T> left = t.newInstance();
         BinaryTree<T> right = t.newInstance();
 
-        if (t.size() > 1) {
-            T root = t.disassemble(left, right);
-
-            if (root.compareTo(x) > 0) {
-                insertInTree(right, x);
-            }
-            if (root.compareTo(x) < 0) {
-                insertInTree(left, x);
-            }
-
+        if (t.size() == 0) {
+            t.assemble(x, left, right);
         } else {
-            T root = t.root();
-            if (root.compareTo(x) > 0) {
-                right.replaceRoot(x);
-            }
-            if (root.compareTo(x) < 0) {
-                left.replaceRoot(x);
+            T root = t.disassemble(left, right);
+            if (x.compareTo(root) < 0) {
+                insertInTree(left, x);
+            } else {
+                insertInTree(right, x);
             }
             t.assemble(root, left, right);
         }
-
     }
 
     /**
@@ -155,6 +134,7 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
             T root = t.disassemble(left, right);
             if (left.size() == 0) {
                 smallest = root;
+                t.transferFrom(right);
             } else {
                 smallest = removeSmallest(left);
                 t.assemble(root, left, right);
@@ -184,28 +164,35 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
      * </pre>
      */
     private static <T extends Comparable<T>> T removeFromTree(BinaryTree<T> t,
-            T x) {
+        T x) {
         assert t != null : "Violation of: t is not null";
         assert x != null : "Violation of: x is not null";
         assert t.size() > 0 : "Violation of: x is in labels(t)";
 
         BinaryTree<T> left = t.newInstance();
         BinaryTree<T> right = t.newInstance();
-        T removedItem = null;
-        if (t.size() != 0) {
-            T root = t.disassemble(left, right);
-            if (x.compareTo(root) == 0) {
-                removedItem = x;
-            } else if (x.compareTo(root) > 0) {
-                removedItem = removeFromTree(right, x);
-                t.assemble(root, left, right);
-            } else if (x.compareTo(root) < 0) {
-                removedItem = removeFromTree(left, x);
-                t.assemble(root, left, right);
+        T root = t.disassemble(left, right);
+        T removedItem;
+
+        if (x.compareTo(root) == 0) {
+            removedItem = root;
+            if (left.size() == 0) {
+                t.transferFrom(right);
+            } else if (right.size() == 0) {
+                t.transferFrom(left);
+            } else {
+                T smallest = removeSmallest(right);
+                t.assemble(smallest, left, right);
             }
+        } else {
+            if (x.compareTo(root) < 0) {
+                removedItem = removeFromTree(left, x);
+            } else {
+                removedItem = removeFromTree(right, x);
+            }
+            t.assemble(root, left, right);
         }
 
-        // This line added just to make the component compilable.
         return removedItem;
     }
 
@@ -214,7 +201,7 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
      */
     private void createNewRep() {
 
-        this.tree = new BinaryTree<T>();
+        this.tree = new BinaryTree1<T>();
 
     }
 
@@ -276,7 +263,7 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
         assert x != null : "Violation of: x is not null";
         assert !this.contains(x) : "Violation of: x is not in this";
 
-        this.insertInTree(this, x);
+        insertInTree(this.tree, x);
 
     }
 
@@ -285,7 +272,7 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
         assert x != null : "Violation of: x is not null";
         assert this.contains(x) : "Violation of: x is in this";
 
-        return this.removeFromTree(x);
+        return removeFromTree(this.tree, x);
     }
 
     @Override

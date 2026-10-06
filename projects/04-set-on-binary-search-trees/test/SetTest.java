@@ -1,5 +1,4 @@
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -71,7 +70,6 @@ public abstract class SetTest {
         return set;
     }
 
-    // TODO - add test cases for constructor, add, remove, removeAny, contains, and size
     @Test
     public void constructTest() {
         Set<String> s = this.constructorTest();

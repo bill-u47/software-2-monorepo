@@ -10,7 +10,7 @@ import components.simplewriter.SimpleWriter1L;
  * @class wordCounter
  *  I wanna get rid of the javadoc comment warning augh
  */
-public class wordCounter {
+private class wordCounter {
 
 
 
