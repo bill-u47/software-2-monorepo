@@ -1,3 +1,8 @@
+import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.Test;
+
 import components.set.Set;
 
 /**
@@ -67,5 +72,73 @@ public abstract class SetTest {
     }
 
     // TODO - add test cases for constructor, add, remove, removeAny, contains, and size
+    @Test
+    public void constructTest() {
+        Set<String> s = this.constructorTest();
+        Set<String> sExpected = this.constructorRef();
+
+        assertEquals(sExpected, s);
+    }
+
+    @Test
+    public void addTest() {
+        Set<String> s = this.createFromArgsTest("snek");
+        Set<String> sExpected = this.createFromArgsRef("snek", "birb");
+
+        s.add("birb");
+
+        assertEquals(sExpected, s);
+    }
+
+    @Test
+    public void removeTest() {
+        Set<String> s = this.createFromArgsTest("snek", "birb", "ears");
+        Set<String> sExpected = this.createFromArgsRef("snek", "birb");
+
+        String result = s.remove("ears");
+        String expectedResult = "ears";
+
+        assertEquals(sExpected, s);
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    public void removeAnyTest() {
+        Set<String> s = this.createFromArgsTest("snek", "birb", "ears");
+        Set<String> sOriginal = this.createFromArgsRef("snek", "birb", "ears");
+
+        String removedItem = s.removeAny();
+
+        assertTrue(sOriginal.contains(removedItem));
+
+        sOriginal.remove(removedItem);
+        assertEquals(sOriginal, s);
+    }
+
+    @Test
+    public void containsTest() {
+        Set<String> s = this.createFromArgsTest("snek", "birb", "ears");
+        Set<String> sExpected = this.createFromArgsRef("snek", "birb", "ears");
+
+        boolean result1 = s.contains("snek");
+        boolean result2 = sExpected.contains("snek");
+        boolean expectedResult = true;
+
+        assertEquals(expectedResult, result1);
+        assertEquals(expectedResult, result2);
+    }
+
+    @Test
+    public void sizeTest() {
+        Set<String> s = this.createFromArgsTest("snek", "birb", "ears");
+        Set<String> sExpected = this.createFromArgsRef("snek", "birb", "ears");
+
+        int size1 = s.size();
+        int size2 = sExpected.size();
+        int expectedSize = 3;
+
+        assertEquals(expectedSize, size1);
+        assertEquals(expectedSize, size2);
+    }
 
 }
