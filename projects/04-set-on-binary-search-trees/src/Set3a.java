@@ -148,15 +148,20 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
         assert t != null : "Violation of: t is not null";
         assert t.size() > 0 : "Violation of: |t| > 0";
 
-        T smallest;
-
         BinaryTree<T> left = t.newInstance();
         BinaryTree<T> right = t.newInstance();
-
-        if (t.size() > 1) {
+        T smallest = null;
+        if (t.size() != 0) {
             T root = t.disassemble(left, right);
+            if (left.size() == 0) {
+                smallest = root;
+            } else {
+                smallest = removeSmallest(left);
+                t.assemble(root, left, right);
+            }
         }
 
+        // This line added just to make the component compilable.
         return smallest;
     }
 
@@ -184,10 +189,24 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
         assert x != null : "Violation of: x is not null";
         assert t.size() > 0 : "Violation of: x is in labels(t)";
 
-        // TODO - fill in body
+        BinaryTree<T> left = t.newInstance();
+        BinaryTree<T> right = t.newInstance();
+        T removedItem = null;
+        if (t.size() != 0) {
+            T root = t.disassemble(left, right);
+            if (x.compareTo(root) == 0) {
+                removedItem = x;
+            } else if (x.compareTo(root) > 0) {
+                removedItem = removeFromTree(right, x);
+                t.assemble(root, left, right);
+            } else if (x.compareTo(root) < 0) {
+                removedItem = removeFromTree(left, x);
+                t.assemble(root, left, right);
+            }
+        }
 
         // This line added just to make the component compilable.
-        return null;
+        return removedItem;
     }
 
     /**
@@ -195,7 +214,7 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
      */
     private void createNewRep() {
 
-        // TODO - fill in body
+        this.tree = new BinaryTree<T>();
 
     }
 
@@ -208,7 +227,7 @@ public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
      */
     public Set3a() {
 
-        // TODO - fill in body
+        this.createNewRep();
 
     }
 
