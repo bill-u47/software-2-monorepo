@@ -1,3 +1,7 @@
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
 import components.stack.Stack;
 
 /**
@@ -63,6 +67,44 @@ public abstract class StackTest {
         }
         stack.flip();
         return stack;
+    }
+    @Test
+    public final void constTest() {
+        Stack<String> testT = this.constructorTest();
+        Stack<String> testR = this.constructorRef();
+
+        assertEquals(testR, testT);
+    }
+    @Test
+    public final void pushTest() {
+        Stack<String> testT = this.createFromArgsTest("1");
+        Stack<String> testR = this.createFromArgsRef("2", "1");
+
+        testT.push("2");
+
+        assertEquals(testR, testT);
+    }
+    @Test
+    public final void popTest() {
+        Stack<String> testT = this.createFromArgsTest("1", "2");
+        Stack<String> testR = this.createFromArgsRef("2");
+
+        String test = testT.pop();
+
+
+        assertEquals(testR, testT);
+        assertEquals("1", test);
+    }
+    @Test
+    public final void lengthTest() {
+        Stack<String> testT = this.createFromArgsTest("1", "2");
+        Stack<String> testR = this.createFromArgsRef("1", "2");
+
+        int lenT = testT.length();
+        int lenR = testR.length();
+
+        assertEquals(testR, testT);
+        assertEquals(lenR, lenT);
     }
 
     // TODO - add test cases for constructor, push, pop, and length

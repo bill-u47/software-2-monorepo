@@ -1,8 +1,8 @@
 # [Homework 18: Stack Implementation with Singly-Linked List][hw18]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **10/8/26 @ 1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -31,7 +31,7 @@ have to waste time entering your code during the lab.
 > and the constructor, and draw a picture (in the style used in the Linked Data
 > Structures slides) of the Queue2 representation right after the constructor
 > is executed.
-
+![alt text](image.png)
 ### Problem 2
 
 > Carefully review the Stack2 skeleton of Stack kernel represented as a
@@ -39,7 +39,7 @@ have to waste time entering your code during the lab.
 > and the convention and correspondence, and draw a picture (in the style used
 > in the Linked Data Structures slides) of the representation a Stack2 object
 > should have right after the constructor is executed.
-
+![alt text](image-1.png)
 ### Problem 3
 
 > Complete the implementation of the Stack kernel represented as a singly-linked
@@ -119,7 +119,8 @@ public class Stack2<T> extends StackSecondary<T> {
      */
     private void createNewRep() {
 
-        // TODO - fill in body
+        this.top = null;
+        this.length = 0;
 
     }
 
@@ -146,7 +147,11 @@ public class Stack2<T> extends StackSecondary<T> {
     public final void push(T x) {
         assert x != null : "Violation of: x is not null";
 
-        // TODO - fill in body
+        Node pushItem = new Node();
+        pushItem.data = x;
+        pushItem.next = this.top;
+        this.top = pushItem;
+        this.length++;
 
     }
 
@@ -154,14 +159,17 @@ public class Stack2<T> extends StackSecondary<T> {
     public final T pop() {
         assert this.length() > 0 : "Violation of: this /= <>";
 
-        // TODO - fill in body
+        T result = this.top.data;
+        this.top = this.top.next;
+
+        return result;
 
     }
 
     @Override
     public final int length() {
 
-        // TODO - fill in body
+        return this.length;
 
     }
 
@@ -245,7 +253,82 @@ public abstract class StackTest {
         return stack;
     }
 
-    // TODO - add test cases for constructor, push, pop, and length
+    @Test
+    public final void constTest() {
+        Stack<String> s = this.constructorTest();
+        Stack<String> sExpected = this.constructorRef();
+
+        assertEquals(sExpected, s);
+    }
+
+    @Test
+    public final void pushTestwhenEmpty() {
+        Stack<String> s = this.createFromArgsTest();
+        Stack<String> sExpected = this.createFromArgsRef("1");
+
+        s.push("1");
+
+        assertEquals(sExpected, s);
+    }
+
+    /**
+     * Tests Push-non empty.
+     */
+    @Test
+    public final void pushTestNotEmpty() {
+        Stack<String> s = this.createFromArgsTest("1");
+        Stack<String> sExpected = this.createFromArgsRef("1", "2");
+
+        s.push("2");
+
+        assertEquals(sExpected, s);
+    }
+    /*
+    * Pop Tests --------------------------------------------------
+    */
+
+    /**
+     * Tests Pop.
+     */
+    @Test
+    public final void testPopToEmpty() {
+        Stack<String> s = this.createFromArgsTest("1");
+        Stack<String> sExpected = this.createFromArgsRef();
+
+        String ans = s.pop();
+
+        assertEquals(sExpected, s);
+        assertEquals("1", ans);
+    }
+
+    /**
+     * Tests Pop-non empty.
+     */
+    @Test
+    public final void testPopToNonEmpty() {
+        Stack<String> s = this.createFromArgsTest("1", "2");
+        Stack<String> sExpected = this.createFromArgsRef("2");
+
+        String ans = s.pop();
+
+        assertEquals(sExpected, s);
+        assertEquals("1", ans);
+    }
+    /*
+    * Length Tests --------------------------------------------------
+    */
+
+    /**
+     * Tests Length.
+     */
+    @Test
+    public final void testLength() {
+        Stack<String> s = this.createFromArgsTest("1");
+
+        int l = s.length();
+
+        assertEquals(1, l);
+    }
 
 }
 ```

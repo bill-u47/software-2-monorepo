@@ -35,7 +35,7 @@ The following problems will give you practice with heaps and heapsort.
 > Draw the five heaps resulting from removing each of the first five
 > items in the ordering using the algorithm discussed in class (see slides
 > 26-32 in Heaps and Heapsort).
-
+![alt text](image.png)
 ### Problem 2
 
 > Write the body of the following static method, which returns true if
@@ -57,13 +57,30 @@ The following problems will give you practice with heaps and heapsort.
  * satisfiesHeapOrdering = [t satisfies the heap ordering property]
  * </pre>
  */
-private static boolean satisfiesHeapOrdering(BinaryTree<Integer> t) {...}
+private static boolean satisfiesHeapOrdering(BinaryTree<Integer> t) {
+    boolean isSated = false;
+    BinaryTree<Integer> left = t.newInstance();
+    BinaryTree<Integer> right = t.newInstance();
+    BinaryTree<Integer> leftLeft = t.newInstance();
+    BinaryTree<Integer> leftRight = t.newInstance();
+
+
+    if (t.height() != 0) {
+        int root = t.disassemble(left, right);
+        int leftRoot = left.disassemble(leftLeft, leftRight);
+        if (root - leftRoot <= 0) {
+            isSated = true;
+        } else {
+            satisfiesHeapOrdering(t) = isSated;
+        }
+    }
+}
 ```
 
 ### Problem 3
 
 > Draw and complete the commutativity diagram on slides 18-23 in More About Heaps.
-
+![alt text](image-1.png)
 ## Submission
 
 If you have completed the assignment using this template, VS Code should

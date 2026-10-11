@@ -189,7 +189,19 @@ public final class ArraySiftDownMain {
          */
 
         // TODO - fill in body using recursive algorithm from slides
+        int left = 2 * top + 1;
+        int right = left + 1;
 
+        if (left <= last){
+            int smaller = left;
+            if (right <= last && array[right] < array[left]) {
+                smaller = right;
+            }
+            if (array[top] > array[smaller]) {
+                exchangeEntries(array, top, smaller);
+                siftDown(array, smaller, last);
+            }
+        }
     }
 
     /**
