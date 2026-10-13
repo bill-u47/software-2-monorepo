@@ -1,8 +1,8 @@
 # [Homework 19: List Implementation with Singly-Linked List and Two Smart Nodes][hw19]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **10/13/26 @1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -39,27 +39,27 @@ have to waste time entering your code during the lab.
 | Statement                              | Variable Values       |
 | -------------------------------------- | --------------------- |
 | `List<Integer> list = new List1L<>();` |                       |
-|                                        | list = `?`            |
+|                                        | list = `<>, <>`            |
 | `list.addRightFront(1);`               |                       |
-|                                        | list = `?`            |
+|                                        | list = `<>, <1>`            |
 | `list.addRightFront(0);`               |                       |
-|                                        | list = `?`            |
+|                                        | list = `<>, <0, 1>`            |
 | `list.addRightFront(2);`               |                       |
-|                                        | list = `?`            |
+|                                        | list = `<>, <2, 0, 1>`            |
 | `list.advance();`                      |                       |
-|                                        | list = `?`            |
+|                                        | list = `<2>, <0, 1>`            |
 | `list.addRightFront(-1);`              |                       |
-|                                        | list = `?`            |
+|                                        | list = `<2>, <-1, 0, 1>`            |
 | `list.advance();`                      |                       |
-|                                        | list = `?`            |
+|                                        | list = `<2, -1>, <0, 1>`            |
 | `list.moveToFinish();`                 |                       |
-|                                        | list = `?`            |
+|                                        | list = `<2, -1, 0, 1>, <>`            |
 | `list.retreat();`                      |                       |
-|                                        | list = `?`            |
+|                                        | list = `<2, -1, 0>, <1>`            |
 | `int i = list.rightFront();`           |                       |
-|                                        | list = `?`<br>i = `?` |
+|                                        | list = `<2, -1, 0>, <1>`<br>i = `1` |
 | `list.moveToStart();`                  |                       |
-|                                        | list = `?`<br>i = `?` |
+|                                        | list = `<>, <2, -1, 0 1>`<br>i = `1` |
 
 ### Problem 2
 
@@ -78,7 +78,16 @@ have to waste time entering your code during the lab.
  * |this.left| = |#this.left| - 1
  * </pre>
  */
-public void retreat() {...}
+public void retreat() {
+    int j = 0;
+    int len = this.rightLength();
+    this.moveToStart();
+    while (j < len) {
+        this.advance();
+        j = j + 1;
+    }
+    this.rightFront();
+}
 ```
 
 ### Problem 3
@@ -88,6 +97,7 @@ public void retreat() {...}
 > implemented as a singly-linked list of nodes with one "smart" node at
 > the start (slides 14-16) and the modified representation with two "smart"
 > nodes, one at the start and another at the end (slides 19-20).
+No idea what to do for this to add to the homework, so I'll just say I understand.
 
 ### Problem 4
 
@@ -98,11 +108,15 @@ public void retreat() {...}
 > implementation so that it uses an additional smart node at the end
 > of the singly-linked list.
 
+No idea what to do for this to add to the homework, so I'll just say I understand.
+
 ### Problem 5
 
 > Study the Implementing an Iterator slides and review the iterator
 > implementation, List2Iterator, a nested class in List2. If you have
 > any questions, make sure to ask them in class during the lab.
+No idea what to do for this to add to the homework, so I'll just say I understand.
+
 
 ## Submission
 
