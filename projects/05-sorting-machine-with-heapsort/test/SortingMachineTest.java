@@ -10,7 +10,7 @@ import components.sortingmachine.SortingMachine;
  * JUnit test fixture for {@code SortingMachine<String>}'s constructor and
  * kernel methods.
  *
- * @author Put your name here
+ * @author Dennis Huang
  *
  */
 public abstract class SortingMachineTest {
@@ -139,5 +139,15 @@ public abstract class SortingMachineTest {
 
     // TODO - add test cases for add, changeToExtractionMode, removeFirst,
     // isInInsertionMode, order, and size
+
+    @Test
+    public final void testAddNotEmpty() {
+        SortingMachine<String> m = this.createFromArgsTest(ORDER, true, "red",
+                "blue");
+        SortingMachine<String> mExpected = this.createFromArgsRef(ORDER, true,
+                "red", "blue", "green");
+        m.add("green");
+        assertEquals(mExpected, m);
+    }
 
 }
