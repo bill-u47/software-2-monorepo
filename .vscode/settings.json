@@ -54,6 +54,8 @@
         "labs/13-heapsort/src",
         "labs/10-binary-search-trees/test",
         "labs/10-binary-search-trees/src",
-        "projects/01-word-counter/src"
+        "projects/01-word-counter/src",
+        "projects/05-sorting-machine-with-heapsort/src",
+        "projects/05-sorting-machine-with-heapsort/test"
     ],
 }
