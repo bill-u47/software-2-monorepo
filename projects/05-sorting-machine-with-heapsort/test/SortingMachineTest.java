@@ -175,4 +175,16 @@ public abstract class SortingMachineTest {
         assertEquals(mExpected, m);
     }
 
+    @Test
+    public final void testIsInInsertionMode() {
+        SortingMachine<String> m = this.createFromArgsTest(ORDER, true, "red",
+                "blue", "green");
+        SortingMachine<String> mExpected = this.createFromArgsRef(ORDER, true,
+                "red", "blue", "green");
+
+        assertEquals(true, m.isInInsertionMode());
+        assertEquals(true, mExpected.isInInsertionMode());
+        assertEquals(mExpected, m);
+    }
+
 }
