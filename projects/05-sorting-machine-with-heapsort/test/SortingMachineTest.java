@@ -1,5 +1,6 @@
 import static org.junit.Assert.assertEquals;
 
+import java.beans.Transient;
 import java.util.Comparator;
 
 import org.junit.Test;
@@ -147,6 +148,18 @@ public abstract class SortingMachineTest {
         SortingMachine<String> mExpected = this.createFromArgsRef(ORDER, true,
                 "red", "blue", "green");
         m.add("green");
+        assertEquals(mExpected, m);
+    }
+
+    @Test
+    public final void testChangeToExtractionMode() {
+        SortingMachine<String> m = this.createFromArgsTest(ORDER, true, "red",
+                "blue", "green");
+        SortingMachine<String> mExpected = this.createFromArgsRef(ORDER, false,
+                "red", "blue", "green");
+
+        m.changeToExtractionMode();
+
         assertEquals(mExpected, m);
     }
 
