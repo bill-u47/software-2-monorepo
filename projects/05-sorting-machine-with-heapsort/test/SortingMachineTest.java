@@ -187,4 +187,17 @@ public abstract class SortingMachineTest {
         assertEquals(mExpected, m);
     }
 
+    @Test
+    public final void testOrder() {
+        SortingMachine<String> m = this.createFromArgsTest(ORDER, true, "red",
+                "blue", "green");
+        SortingMachine<String> mExpected = this.createFromArgsRef(ORDER, true,
+                "red", "blue", "green");
+
+        Comparator<String> order = m.order();
+        Comparator<String> orderExpected = m.order();
+
+        assertEquals(orderExpected, order);
+    }
+
 }
