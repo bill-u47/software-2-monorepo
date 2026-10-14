@@ -163,4 +163,16 @@ public abstract class SortingMachineTest {
         assertEquals(mExpected, m);
     }
 
+    @Test
+    public final void testRemoveFirst() {
+        SortingMachine<String> m = this.createFromArgsTest(ORDER, false, "red",
+                "blue", "green");
+        SortingMachine<String> mExpected = this.createFromArgsRef(ORDER, false,
+                "blue", "green");
+
+        m.removeFirst();
+
+        assertEquals(mExpected, m);
+    }
+
 }
