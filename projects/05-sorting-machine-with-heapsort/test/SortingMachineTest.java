@@ -200,4 +200,19 @@ public abstract class SortingMachineTest {
         assertEquals(orderExpected, order);
     }
 
+    @Test
+    public final void testSize() {
+        SortingMachine<String> m = this.createFromArgsTest(ORDER, true, "red",
+                "blue", "green");
+        SortingMachine<String> mExpected = this.createFromArgsRef(ORDER, true,
+                "red", "blue", "green");
+
+        int expectedSize = 3;
+        int size1 = m.size();
+        int size2 = mExpected.size();
+
+        assertEquals(expectedSize, size1);
+        assertEquals(expectedSize, size2);
+    }
+
 }
