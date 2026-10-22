@@ -1,0 +1,4 @@
+PROGRAM TryToGuess2 IS
+    BEGIN
+    []
+END TryToGuess2

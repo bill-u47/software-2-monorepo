@@ -1,8 +1,8 @@
 # [Homework 20: BugsWorld][hw20]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **10/20/26 @1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -99,26 +99,41 @@ Make sure to delete the sample code or use it as the
 basis for your own code.
 
 ```generic
-PROGRAM TryToGuess IS
-    INSTRUCTION FindObstacle IS
+PROGRAM bugsWorldCode IS
+
+    INSTRUCTION Reorient IS
+        IF random THEN
+            turnleft
+        ELSE
+            turnright
+        END IF
+    END Reorient
+
+    INSTRUCTION Wander IS
         WHILE next-is-empty DO
             move
+            IF random THEN
+                IF random THEN
+                    IF random THEN
+                        Reorient
+                    END IF
+                END IF
+            END IF
         END WHILE
-    END FindObstacle
+    END Wander
+
 BEGIN
     WHILE true DO
-        FindObstacle
+        Wander
         IF next-is-enemy THEN
             infect
         ELSE
-            IF next-is-wall THEN
-                turnleft
-            ELSE
-                skip
-            END IF
+            Reorient
         END IF
     END WHILE
-END TryToGuess
+END bugsWorldCode
+
+
 ```
 
 ## Additional Lab Preparation

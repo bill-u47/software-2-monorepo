@@ -1,8 +1,8 @@
 # [Homework 23: Statement and Recursion 2][hw23]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **10/23 @1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -44,35 +44,75 @@ The following problems will give you practice with statements and recursion.
 public static void simplifyIfElse(Statement s) {
     switch (s.kind()) {
         case BLOCK: {
- 
-            // TODO - fill in case
+            int len = s.lengthOfBlock();
+            for (int i = 0; i < len; i++) {
+                Statement blockRem = s.removeFromBlock(i);
+                simplifyIfElse(blockRem);
+                s.addToBlock(i, blockRem);
+            }
+            
  
             break;
         }
         case IF: {
  
-            // TODO - fill in case
+            Statement ifRem = s.newInstance();
+            Statement.Condition c = ifRem.disassembleIf(ifRem);
+            simplifyIfElse(ifRem);
+            s.assembleIf(c, ifRem);
  
             break;
         }
         case IF_ELSE: {
  
-            // TODO - fill in case
+            Statement ifR = s.newInstance();
+            Statement elseR = s.newInstance();
+            Statement.Condition c = s.disassembleIfElse(ifR, elseR);
+            switch (condition.name()) {
+                case "NEXT_IS_NOT_EMPTY":
+                    condition = condition.NEXT_IS_NOT_EMPTY;
+                    simplifyIfElse(ifR);
+                    simplifyIfElse(elseR);
+                    s.assembleIfElse(condition, ifR, elseR);
+                    break;
+                case "NEXT_IS_NOT_ENEMY":
+                    condition = condition.NEXT_IS_NOT_ENEMY;
+                    simplifyIfElse(ifR);
+                    simplifyIfElse(elseR);
+                    s.assembleIfElse(condition, ifR, elseR);
+                    break;
+                case "NEXT_IS_NOT_FRIEND":
+                    condition = condition.NEXT_IS_NOT_FRIEND;
+                    simplifyIfElse(ifR);
+                    simplifyIfElse(elseR);
+                    s.assembleIfElse(condition, ifR, elseR);
+                    break;
+                case "NEXT_IS_NOT_WALL":
+                    condition = condition.NEXT_IS_NOT_WALL;
+                    simplifyIfElse(ifR);
+                    simplifyIfElse(elseR);
+                    s.assembleIfElse(condition, ifR, elseR);
+                    break;
+            }
  
             break;
         }
         case WHILE: {
  
-            // TODO - fill in case
+            Statement whileRem = s.newInstance();
+            Statement.Condition c = whileRem.disassembleWhile(whileRem);
+            simplifyIfElse(whileRem);
+            s.assemble(c, whileRem);
  
             break;
         }
         case CALL: {
-            // nothing to do here...can you explain why?
+            I believe that call will never happen due to the nature of the method.
+            You will never be calling a method called simplifyIfElse on a call item.
             break;
         }
         default: {
-            // this will never happen...can you explain why?
+            I think this won't happen due to all prior cases being covered.
             break;
         }
     }
