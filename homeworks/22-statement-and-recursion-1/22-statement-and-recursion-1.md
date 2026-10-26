@@ -1,8 +1,8 @@
 # [Homework 22: Statement and Recursion 1][hw22]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **10/22 @1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -48,7 +48,7 @@ ELSE
     END IF
 END IF
 ```
-
+![alt text](image.png)
 #### Problem 1B
 
 ```generic
@@ -62,6 +62,7 @@ WHILE true DO
     turnleft
 END WHILE
 ```
+![alt text](image-1.png)
 
 #### Problem 1C
 
@@ -73,6 +74,7 @@ WHILE next-is-enemy DO
     turnright
 END WHILE
 ```
+![alt text](image-2.png)
 
 #### Problem 1D
 
@@ -85,7 +87,7 @@ IF next-is-friend THEN
     END WHILE
 END IF
 ```
-
+![alt text](image-3.png)
 #### Problem 1E
 
 ```generic
@@ -102,7 +104,7 @@ ELSE
     skip
 END IF
 ```
-
+![alt text](image-4.png)
 ### Problem 2
 
 > Using recursion, complete the body of the following static method.
@@ -130,7 +132,11 @@ public static int countOfPrimitiveCalls(Statement s) {
              * Add up the number of calls to primitive instructions
              * in each nested statement in the BLOCK.
              */
- 
+            int len = lengthOfBlock();
+            for (int i = 0; i < len; i++)
+                Statement callNum = s.removeFromBlock(i);
+                count = count + countOfPrimitiveCalls(callNum);
+                s.addToBlock(callNum);
             // TODO - fill in case
  
             break;
@@ -141,7 +147,10 @@ public static int countOfPrimitiveCalls(Statement s) {
              * the body of the IF.
              */
  
-            // TODO - fill in case
+            Statement ifNum = s.newInstance();
+            Statement.Condition c = s.disassembleIf(ifNum);
+            count = countOfPrimitiveCalls(ifNum);
+            s.assembleIf(c, ifNum);
  
             break;
         }
@@ -151,7 +160,12 @@ public static int countOfPrimitiveCalls(Statement s) {
              * the "then" and "else" bodies of the IF_ELSE.
              */
  
-            // TODO - fill in case
+            Statement ifC = s.newInstance();
+            Statement elseC = s.newInstance();
+            Statement.Condition c = s.disassembleIfElse(if, else);
+            count = countOfPrimitiveCalls(ifC) + countOfPrimitiveCalls(elseC);
+            s.assemble(c, ifC, elseC);
+
  
             break;
         }
@@ -161,7 +175,11 @@ public static int countOfPrimitiveCalls(Statement s) {
              * the body of the WHILE.
              */
  
-            // TODO - fill in case
+            Statement whileC = s.newInstance();
+            Statement.Condition c = s.disassembleWhile(whileC);
+            count = countOfPrimitiveCalls(whileC);
+
+            s.assembleWhile(c, whileC);
  
             break;
         }
@@ -171,12 +189,20 @@ public static int countOfPrimitiveCalls(Statement s) {
              * whether this is a call to a primitive instruction or not.
              */
  
-            // TODO - fill in case
+            Statement callC = s.disassembleCall();
+            if (callC.equals("move") || callC.equals("infect")
+                       || callC.equals("turnright") || callC.equals("turnleft")
+                       || callC.equals("skip")) {
+                   count++;
+               }
+               s.assembleCall(label);
  
             break;
         }
         default: {
             // this will never happen...can you explain why?
+            Is it because the first switch in the series contains all the possible
+            cases so that the program never goes to the default?
             break;
         }
     }

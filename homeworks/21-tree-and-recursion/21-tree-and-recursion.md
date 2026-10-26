@@ -1,8 +1,8 @@
 # [Homework 21: Tree and Recursion][hw21]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **10/21 @ 1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -40,7 +40,18 @@ The following problems will give you practice with trees and recursion.
  * @return the size of the given {@code Tree}
  * @ensures size = |t|
  */
-public static <T> int size(Tree<T> t) {...}
+public static <T> int size(Tree<T> t) {
+    int count = 1;
+
+    Sequence<Tree<T>> children = new Sequence1L();
+    T root = t.disassemble(children);
+    for (Tree<T> child : children) {
+        count += size(child)
+    }
+    t.assemble(root, children);
+
+    return count;
+}
 ```
 
 ### Problem 2
@@ -48,7 +59,21 @@ public static <T> int size(Tree<T> t) {...}
 > Provide a second implementation of the size method above but
 > this time make it an iterative (non-recursive) solution. You
 > still cannot use the size kernel method in your solution.
-
+```java
+public static <T> int sizeIter(Tree<T> t) {
+    int i = 0;
+    int totalSum = 0;
+    Tree<T> temp = t.newInstance();
+    while (i < t.numberOfSubtrees()) {
+        Tree<T> subT = t.removeSubtree(i);
+        totalSum = totalSum + subT.height();
+        temp.addSubtree(i, subT);
+        i++;
+    }
+    t.transferFrom(temp);
+    return totalSum;
+}
+```
 ### Problem 3
 
 > Write a recursive body for the following static, generic method
@@ -69,7 +94,22 @@ public static <T> int size(Tree<T> t) {...}
  * @return the height of the given {@code Tree}
  * @ensures height = ht(t)
  */
-public static <T> int height(Tree<T> t) {...}
+public static <T> int height(Tree<T> t) {
+    int tallest = 0;
+    int currentH = 0;
+    Sequence<Tree<T>> children = new Sequence1L<Tree<T>>();
+
+    T root = t.disassemble(children);
+    for (Tree<T> child : children) {
+        currentH = 1 + height(child);
+        if (currentH > tallest) {
+            tallest = tallest + h;
+        }
+    }
+    t.assemble(root, children);
+    return tallest;
+
+}
 ```
 
 ### Problem 4
@@ -92,7 +132,19 @@ public static <T> int height(Tree<T> t) {...}
  * for all i: integer where (i is in labels(t)) (i <= max)
  * </pre>
  */
-public static int max(Tree<Integer> t) {...}
+public static int max(Tree<Integer> t) {
+    Sequence<Tree<Integer>> children = new Sequence1L<Tree<Integer>>();
+
+    int root = t.disassemble(children);
+    for (Tree<Integer> child : children) {
+        int childMax = max(child);
+        if (childMax > biggest){
+            biggest = childMax;
+        }
+    }
+    t.assemble(root, children);
+    return biggest;
+}
 ```
 
 ## Submission

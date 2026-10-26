@@ -1,0 +1,33 @@
+PROGRAM bugsWorldCode IS
+
+    INSTRUCTION Reorient IS
+        IF random THEN
+            turnleft
+        ELSE
+            turnright
+        END IF
+    END Reorient
+
+    INSTRUCTION Wander IS
+        WHILE next-is-empty DO
+            move
+            IF random THEN
+                IF random THEN
+                    IF random THEN
+                        Reorient
+                    END IF
+                END IF
+            END IF
+        END WHILE
+    END Wander
+
+BEGIN
+    WHILE true DO
+        Wander
+        IF next-is-enemy THEN
+            infect
+        ELSE
+            Reorient
+        END IF
+    END WHILE
+END bugsWorldCode
