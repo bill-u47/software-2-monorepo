@@ -39,12 +39,12 @@
     "print.sourcecode.colourScheme": "A11 Y",
     "java.debug.settings.onBuildFailureProceed": true,
     "java.project.referencedLibraries": [
-        "lib/binary-tree-utility.jar",
-        "lib/BWClient.jar",
-        "lib/BWServer.jar",
-        "lib/components.jar",
-        "lib/hamcrest-core-1.3.jar",
-        "lib/junit-4.13.2.jar"
+        "c:\\Users\\bilye\\software-2-monorepo\\lib\\BWServer.jar",
+        "c:\\Users\\bilye\\software-2-monorepo\\lib\\binary-tree-utility.jar",
+        "c:\\Users\\bilye\\software-2-monorepo\\lib\\components.jar",
+        "c:\\Users\\bilye\\software-2-monorepo\\lib\\junit-4.13.2.jar",
+        "c:\\Users\\bilye\\software-2-monorepo\\lib\\hamcrest-core-1.3.jar",
+        "c:\\Users\\bilye\\software-2-monorepo\\lib\\BWClient.jar"
     ],
     "java.project.sourcePaths": [
         "projects/04-set-on-binary-search-trees/test",
@@ -54,6 +54,8 @@
         "labs/13-heapsort/src",
         "labs/10-binary-search-trees/test",
         "labs/10-binary-search-trees/src",
-        "projects/01-word-counter/src"
+        "projects/01-word-counter/src",
+        "projects\\06-list-with-retreat\\src",
+        "projects\\06-list-with-retreat\\test"
     ],
 }
