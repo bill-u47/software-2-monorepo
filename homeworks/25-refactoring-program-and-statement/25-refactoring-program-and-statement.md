@@ -1,8 +1,8 @@
 # [Homework 25: Program and Statement renameInstruction][hw25]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **10/30/26 @1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -45,7 +45,16 @@ The following problems will give you practice with statements and recursion.
  * </pre>
  */
 public static void renameInstruction(Statement s, String oldName,
-        String newName) {...}
+        String newName) {
+    Statement g = s.newInstance();
+    int len = s.length();
+    for (int i = 0; i < len; i++) {
+        Statement p = s.removeFromBlock(0);
+        s.renameInstruction(p, oldName, newName);
+        g.addToBlock(p);
+    }
+    s.transferFrom(g);
+}
 ```
 
 ### Problem 2
@@ -76,7 +85,24 @@ public static void renameInstruction(Statement s, String oldName,
  * </pre>
  */
 public static void renameInstruction(Program p, String oldName,
-        String newName) {...}
+        String newName) {
+    Statement body = p.newBody();
+    Map<String, Statement> context = p.newContext();
+    p.swapBody(body);
+    p.swapContext(context);
+
+    renameInstruction(body, oldName, newName);
+
+    for (Map.Pair<String, Statement> pair : context) {
+        renameInstruction(pair.value(), oldName, newName);
+    }
+    Map.Pair<String, Statement> old = context.remove(oldName);
+    context.add(newName, old.value());
+
+    p.swapContext(context);
+    p.swapBody(body);
+
+}
 ```
 
 ### Problem 3
@@ -106,11 +132,12 @@ s.assembleCall("move");
 block.addToBlock(block.lengthOfBlock(), s);
 context.add("run", block);
 s.assembleCall("move");
-block = block.newInstance();
+block = block.newInstance(); //line 19
 block.addToBlock(0, s);
 context.add("walk", block);
 p.swapContext(context);
 ```
+![alt text](image.png)
 
 ### Problem 4
 
@@ -123,6 +150,7 @@ p.swapContext(context);
 > an alias to a mutable object? (Hint: all contracts in our components
 > catalog advertise every introduction of an alias to a mutable object.))
 
+![alt text](image-1.png)
 ## Submission
 
 If you have completed the assignment using this template, VS Code should
