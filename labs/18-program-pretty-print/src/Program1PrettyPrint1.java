@@ -1,9 +1,12 @@
+import components.map.Map;
 import components.program.Program;
 import components.program.Program1;
 import components.simplereader.SimpleReader;
 import components.simplereader.SimpleReader1L;
 import components.simplewriter.SimpleWriter;
 import components.simplewriter.SimpleWriter1L;
+import components.statement.Statement;
+
 
 /**
  * Layered implementation of secondary method {@code prettyPrint} for
@@ -70,7 +73,35 @@ public final class Program1PrettyPrint1 extends Program1 {
         assert out != null : "Violation of: out is not null";
         assert out.isOpen() : "Violation of: out.is_open";
 
-        // TODO - fill in body
+        Map<String, Statement> copyContext = this.newContext();
+        Map<String, Statement> temp = this.newContext();
+        this.swapContext(copyContext);
+
+        out.println(" " + this.name() + " IS");
+        out.println();
+
+        while (copyContext.size() > 0) {
+            Map.Pair<String, Statement> p = copyContext.removeAny();
+            printSpaces(out, INDENT_SIZE);
+            out.print("INSTRUCTION " + p.key() + " IS");
+            out.println();
+            p.value().prettyPrint(out, 2 * INDENT_SIZE);
+            temp.add(p.key(), p.value());
+            printSpaces(out, INDENT_SIZE);
+            out.println("END " + p.key());
+            out.println();
+        }
+        this.swapContext(temp);
+
+        Statement copyBody = this.newBody();
+        this.swapBody(copyBody);
+
+        out.println("BEGIN");
+        copyBody.prettyPrint(out, INDENT_SIZE);
+        this.swapBody(copyBody);
+
+        out.println("END " + this.name());
+
 
     }
 

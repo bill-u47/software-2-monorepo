@@ -47,15 +47,17 @@
         "c:\\Users\\bilye\\software-2-monorepo\\lib\\BWClient.jar"
     ],
     "java.project.sourcePaths": [
+        "projects/06-list-with-retreat/test",
+        "projects/06-list-with-retreat/src",
         "projects/04-set-on-binary-search-trees/test",
         "projects/04-set-on-binary-search-trees/src",
+        "projects/01-word-counter/src",
+        "labs/18-program-pretty-print/src",
         "labs/14-stack-with-linked-list/test",
         "labs/14-stack-with-linked-list/src",
         "labs/13-heapsort/src",
         "labs/10-binary-search-trees/test",
         "labs/10-binary-search-trees/src",
-        "projects/01-word-counter/src",
-        "projects\\06-list-with-retreat\\src",
-        "projects\\06-list-with-retreat\\test"
+        "labs/19-statement-pretty-print/src"
     ],
 }

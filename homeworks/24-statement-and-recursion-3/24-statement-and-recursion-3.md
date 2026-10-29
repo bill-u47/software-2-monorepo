@@ -1,8 +1,8 @@
 # [Homework 24: Statement and Recursion 3][hw24]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **10/29/26 @ 1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -49,44 +49,92 @@ have to waste time entering your code during the lab.
  *                   using Program.INDENT_SIZE spaces for indentation]
  * </pre>
  */
-public void prettyPrint(SimpleWriter out, int offset) {
-    switch (this.kind()) {
-        case BLOCK: {
- 
-            // TODO - fill in case
- 
-            break;
-        }
-        case IF: {
- 
-            // TODO - fill in case
- 
-            break;
-        }
-        case IF_ELSE: {
- 
-            // TODO - fill in case
- 
-            break;
-        }
-        case WHILE: {
- 
-            // TODO - fill in case
- 
-            break;
-        }
-        case CALL: {
- 
-            // TODO - fill in case
- 
-            break;
-        }
-        default: {
-            // this will never happen...
-            break;
-        }
-    }
-}
+    public void prettyPrint(SimpleWriter out, int offset) {
+        assert out != null : "Violation of: out is not null";
+        assert out.isOpen() : "Violation of: out.is_open";
+        assert offset >= 0 : "Violation of: 0 <= offset";
+
+        switch (this.kind()) {
+            case BLOCK: {
+                int len = this.lengthOfBlock();
+                for (int i = 0; i < len; i++) {
+                    Statement c = this.removeFromBlock(i);
+                    c.prettyPrint(out, offset);
+                    this.addToBlock(i, c);
+                }
+
+                break;
+            }
+            case IF: {
+
+                Statement c = this.newInstance();
+                Statement p = this.disassembleIf(c);
+
+                out.print(out, offset);
+
+                out.println("IF " + toStringCondition(p));
+                c.prettyPrint(out, offset + INDENT_SIZE);
+
+                for (int i = 0; i < offset; i++) {
+                    out.print(" ");
+                }
+                out.println("END IF");
+                this.assembleIf(p, c);
+
+                break;
+            }
+            case IF_ELSE: {
+
+                Statement ifS = this.newInstance();
+                Statement elseS = this.newInstance();
+                Statement p = this.disassembleIfElse(ifS, elseS);
+
+                out.print(out, offset);
+
+                out.println("IF " + toStringCondition(p) + "THEN");
+                ifS.prettyPrint(out, offset + INDENT_SIZE);
+                printSpaces(out, offset);
+                out.println("ELSE");
+                elseS.prettyPrint(out, offset + INDENT_SIZE);
+
+                printSpaces(out, offset);
+                out.println("END IF");
+                this.assembleIfElse(p, ifS, elseS);
+
+
+                break;
+            }
+            case WHILE: {
+
+                Statement c = this.newInstance();
+                Statement p = this.disassembleWhile(c);
+
+                out.print(out, offset);
+                out.println("WHILE " + toStringCondition(p) + "DO");
+                c.prettyPrint(out, offset + INDENT_SIZE);
+                printSpaces(out, offset);
+                out.println("END WHILE");
+
+                this.assembleWhile(p, c);
+
+                break;
+            }
+            case CALL: {
+
+                String call = this.disassembleCall();
+                printSpaces(out, offset);
+                out.println(call);
+                this.assembleCall(call);
+
+                break;
+            }
+            default: {
+                // this will never happen...
+                break;
+            }
+        }
+    }
+
 ```
 
 > Here is an example of what prettyPrint should output
@@ -133,7 +181,12 @@ END IF
  * @requires out.is_open  and  spaces >= 0
  * @ensures out.content = #out.content * [numSpaces spaces]
  */
-private static void printSpaces(SimpleWriter out, int numSpaces) {...}
+private static void printSpaces(SimpleWriter out, int numSpaces) {
+
+    for (int i = 0; i < numSpaces; i++) {
+        out.print(' ');
+    }
+}
 ```
 
 ```java
@@ -145,7 +198,57 @@ private static void printSpaces(SimpleWriter out, int numSpaces) {...}
  * @return the BL condition corresponding to c
  * @ensures toStringCondition = [BL condition corresponding to c]
  */
-private static String toStringCondition(Condition c) {...}
+private static String toStringCondition(Condition c) {
+    String result;
+    switch (c) {
+        case NEXT_IS_EMPTY: {
+            result = "next-is-empty";
+            break;
+        }
+        case NEXT_IS_NOT_EMPTY: {
+            result = "next-is-not-empty";
+            break;
+        }
+        case NEXT_IS_ENEMY: {
+            result = "next-is-enemy";
+            break;
+        }
+        case NEXT_IS_NOT_ENEMY: {
+            result = "next-is-not-enemy";
+            break;
+        }
+        case NEXT_IS_FRIEND: {
+            result = "next-is-friend";
+            break;
+        }
+        case NEXT_IS_NOT_FRIEND: {
+            result = "next-is-not-friend";
+            break;
+        }
+        case NEXT_IS_WALL: {
+            result = "next-is-wall";
+            break;
+        }
+        case NEXT_IS_NOT_WALL: {
+            result = "next-is-not-wall";
+            break;
+        }
+        case RANDOM: {
+            result = "random";
+            break;
+        }
+        case TRUE: {
+            result = "true";
+            break;
+        }
+        default: {
+            // this will never happen...
+            result = "";
+            break;
+        }
+    }
+    return result;
+}
 ```
 
 ## Submission

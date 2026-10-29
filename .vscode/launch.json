@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Statement1PrettyPrint1",
+            "request": "launch",
+            "mainClass": "Statement1PrettyPrint1",
+            "projectName": "software-2-monorepo_2b7bf099"
+        },
+        {
+            "type": "java",
+            "name": "Program1PrettyPrint1",
+            "request": "launch",
+            "mainClass": "Program1PrettyPrint1",
+            "projectName": "software-2-monorepo_2b7bf099"
+        },
+        {
+            "type": "java",
             "name": "ArraySiftDownMain",
             "request": "launch",
             "mainClass": "ArraySiftDownMain",
