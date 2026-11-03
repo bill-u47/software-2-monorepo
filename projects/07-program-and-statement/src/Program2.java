@@ -112,7 +112,7 @@ public class Program2 extends ProgramSecondary {
 
         this.name = "Unnamed";
         this.context = new Map1L<String, Statement>();
-        this.body = new Statement1L();
+        this.body = new Statement1();
 
     }
 
@@ -216,7 +216,7 @@ public class Program2 extends ProgramSecondary {
     public final Statement newBody() {
 
         // TODO - fill in body
-        this.body = new Statement1L();
+        this.body = new Statement1();
         // Fix this line to return the result.
         return this.body;
     }

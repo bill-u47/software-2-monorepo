@@ -47,15 +47,16 @@
         "c:\\Users\\Dennis\\Documents\\software-2-monorepo-Classes\\lib\\junit-4.13.2.jar"
     ],
     "java.project.sourcePaths": [
-        "labs\\10-binary-search-trees\\src",
-        "labs\\10-binary-search-trees\\test",
-        "labs\\13-heapsort\\src",
-        "labs\\14-stack-with-linked-list\\src",
-        "labs\\14-stack-with-linked-list\\test",
-        "projects\\01-word-counter\\src",
-        "projects\\04-set-on-binary-search-trees\\src",
-        "projects\\04-set-on-binary-search-trees\\test",
-        "projects\\06-list-with-retreat\\src",
-        "projects\\06-list-with-retreat\\test"
+        "projects/06-list-with-retreat/test",
+        "projects/06-list-with-retreat/src",
+        "projects/04-set-on-binary-search-trees/test",
+        "projects/04-set-on-binary-search-trees/src",
+        "projects/01-word-counter/src",
+        "labs/14-stack-with-linked-list/test",
+        "labs/14-stack-with-linked-list/src",
+        "labs/13-heapsort/src",
+        "labs/10-binary-search-trees/test",
+        "labs/10-binary-search-trees/src",
+        "projects/07-program-and-statement/src"
     ],
 }
