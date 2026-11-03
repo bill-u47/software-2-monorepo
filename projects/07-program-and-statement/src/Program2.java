@@ -187,9 +187,8 @@ public class Program2 extends ProgramSecondary {
     public final Map<String, Statement> newContext() {
 
         // TODO - fill in body
-        this.context = new Map1L<>();
 
-        return this.context;
+        return this.context.newInstance();
     }
 
     @Override
@@ -216,9 +215,8 @@ public class Program2 extends ProgramSecondary {
     public final Statement newBody() {
 
         // TODO - fill in body
-        this.body = new Statement1();
         // Fix this line to return the result.
-        return this.body;
+        return this.body.newInstance();
     }
 
     @Override
