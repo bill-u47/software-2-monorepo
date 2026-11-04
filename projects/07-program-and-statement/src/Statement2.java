@@ -12,7 +12,7 @@ import components.utilities.Tokenizer;
  * @convention [$this.rep is a valid representation of a Statement]
  * @correspondence this = $this.rep
  *
- * @author Put your name here
+ * @author Andrew Bilyeu
  *
  */
 public class Statement2 extends StatementSecondary {
