@@ -1,14 +1,15 @@
+import java.util.Iterator;
+import java.util.Set;
+
 import components.binarytree.BinaryTree;
-import components.binarytree.BinaryTree1;
-import components.simplereader.SimpleReader;
-import components.simplereader.SimpleReader1L;
-import components.simplewriter.SimpleWriter;
-import components.simplewriter.SimpleWriter1L;
+import components.set.SetSecondary;
 
 /**
- * Utility class with implementation of binary search tree static, generic
- * methods isInTree (and removeSmallest).
+ * {@code Set} represented as a {@code BinaryTree} (maintained as a binary
+ * search tree) of elements with implementations of primary methods.
  *
+ * @param <T>
+ *            type of {@code Set} elements
  * @mathdefinitions <pre>
  * IS_BST(
  *   tree: binary tree of T
@@ -17,17 +18,22 @@ import components.simplewriter.SimpleWriter1L;
  *   slides with the ordering reported by compareTo for T, including that
  *   it has no duplicate labels]
  * </pre>
+ * @convention IS_BST($this.tree)
+ * @correspondence this = labels($this.tree)
  *
- * @author Put your name here
+ * @author Dennis Huang
  *
  */
-public final class BinarySearchTreeMethods {
+public class Set3a<T extends Comparable<T>> extends SetSecondary<T> {
+
+    /*
+     * Private members --------------------------------------------------------
+     */
 
     /**
-     * Private constructor so this utility class cannot be instantiated.
+     * Elements included in {@code this}.
      */
-    private BinarySearchTreeMethods() {
-    }
+    private BinaryTree<T> tree;
 
     /**
      * Returns whether {@code x} is in {@code t}.
@@ -42,25 +48,85 @@ public final class BinarySearchTreeMethods {
      * @requires IS_BST(t)
      * @ensures isInTree = (x is in labels(t))
      */
-    public static <T extends Comparable<T>> boolean isInTree(BinaryTree<T> t, T x) {
-        boolean inTree = false;
+    private static <T extends Comparable<T>> boolean isInTree(BinaryTree<T> t,
+            T x) {
+        assert t != null : "Violation of: t is not null";
+        assert x != null : "Violation of: x is not null";
+
+        boolean result = false;
+
         BinaryTree<T> left = t.newInstance();
         BinaryTree<T> right = t.newInstance();
 
-
-        if (t.height() != 0) {
+        if (t.size() > 1) {
             T root = t.disassemble(left, right);
-            int compare = x.compareTo(root);
-            if (compare == 0) {
-                inTree = true;
-            } else if (compare < 0) {
-                inTree = isInTree(left, x);
+
+            /**
+             * Checks if the original root matches our desired label Also checks
+             * to search down the correct branch based on BST
+             */
+            if (root.equals(x)) {
+                result = true;
+            } else if (root.compareTo(x) > 0) {
+                result = isInTree(right);
             } else {
-                inTree = isInTree(right, x);
+                result = isInTree(left);
+            }
+
+            assemble(root, left, right);
+        } else {
+            T root = t.root();
+            if (root.equals(x)) {
+                result = true;
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Inserts {@code x} in {@code t}.
+     *
+     * @param <T>
+     *            type of {@code BinaryTree} labels
+     * @param t
+     *            the {@code BinaryTree} to be searched
+     * @param x
+     *            the label to be inserted
+     * @aliases reference {@code x}
+     * @updates t
+     * @requires IS_BST(t) and x is not in labels(t)
+     * @ensures IS_BST(t) and labels(t) = labels(#t) union {x}
+     */
+    private static <T extends Comparable<T>> void insertInTree(BinaryTree<T> t,
+            T x) {
+        assert t != null : "Violation of: t is not null";
+        assert x != null : "Violation of: x is not null";
+
+        BinaryTree<T> left = t.newInstance();
+        BinaryTree<T> right = t.newInstance();
+
+        if (t.size() > 1) {
+            T root = t.disassemble(left, right);
+
+            if (root.compareTo(x) > 0) {
+                insertInTree(right, x);
+            }
+            if (root.compareTo(x) < 0) {
+                insertInTree(left, x);
+            }
+
+        } else {
+            T root = t.root();
+            if (root.compareTo(x) > 0) {
+                right.replaceRoot(x);
+            }
+            if (root.compareTo(x) < 0) {
+                left.replaceRoot(x);
             }
             t.assemble(root, left, right);
         }
-        return inTree;
+
     }
 
     /**
@@ -78,80 +144,179 @@ public final class BinarySearchTreeMethods {
      *  labels(t) = labels(#t) \ {removeSmallest}
      * </pre>
      */
-    public static <T> T removeSmallest(BinaryTree<T> t) {
+    private static <T> T removeSmallest(BinaryTree<T> t) {
+        assert t != null : "Violation of: t is not null";
+        assert t.size() > 0 : "Violation of: |t| > 0";
+
         BinaryTree<T> left = t.newInstance();
         BinaryTree<T> right = t.newInstance();
         T smallest = null;
-        if (t.height() != 0) {
+        if (t.size() != 0) {
             T root = t.disassemble(left, right);
-            if (left.height() != 0) {
+            if (left.size() == 0) {
+                smallest = root;
+            } else {
                 smallest = removeSmallest(left);
                 t.assemble(root, left, right);
-            } else {
-                smallest = root;
-                t.transferFrom(right);
             }
         }
-        return smallest;
 
+        // This line added just to make the component compilable.
+        return smallest;
     }
 
     /**
-     * Main method.
+     * Finds label {@code x} in {@code t}, removes it from {@code t}, and
+     * returns it.
      *
-     * @param args
-     *            the command line arguments
+     * @param <T>
+     *            type of {@code BinaryTree} labels
+     * @param t
+     *            the {@code BinaryTree} from which to remove label {@code x}
+     * @param x
+     *            the label to be removed
+     * @return the removed label
+     * @updates t
+     * @requires IS_BST(t) and x is in labels(t)
+     * @ensures <pre>
+     * IS_BST(t)  and  removeFromTree = x  and
+     *  labels(t) = labels(#t) \ {x}
+     * </pre>
      */
-    public static void main(String[] args) {
-        SimpleReader in = new SimpleReader1L();
-        SimpleWriter out = new SimpleWriter1L();
+    private static <T extends Comparable<T>> T removeFromTree(BinaryTree<T> t,
+            T x) {
+        assert t != null : "Violation of: t is not null";
+        assert x != null : "Violation of: x is not null";
+        assert t.size() > 0 : "Violation of: x is in labels(t)";
 
-        /*
-         * Input tree labels and construct BST.
-         */
-        out.println("Input the distinct labels for a binary search tree "
-                + "in the order in which you want them inserted.");
-        out.println("Press Enter on an empty line to terminate your input.");
-        out.println();
-        out.print("Next label: ");
-        String str = in.nextLine();
-        BinaryTree<String> t = new BinaryTree1<String>();
-        while (str.length() > 0) {
-            BinaryTreeUtility.insertInTree(t, str);
-            out.println();
-            out.println("t = " + BinaryTreeUtility.treeToString(t));
-            out.println();
-            out.print("Next label: ");
-            str = in.nextLine();
-        }
-        /*
-         * Input strings and check whether each is in the BST or not.
-         */
-        out.println();
-        out.print("  Input a label to search "
-                + "(or just press Enter to input a new tree): ");
-        String label = in.nextLine();
-        while (label.length() > 0) {
-            if (isInTree(t, label)) {
-                out.println("    \"" + label + "\" is in the tree");
-            } else {
-                out.println("    \"" + label + "\" is not in the tree");
+        BinaryTree<T> left = t.newInstance();
+        BinaryTree<T> right = t.newInstance();
+        T removedItem = null;
+        if (t.size() != 0) {
+            T root = t.disassemble(left, right);
+            if (x.compareTo(root) == 0) {
+                removedItem = x;
+            } else if (x.compareTo(root) > 0) {
+                removedItem = removeFromTree(right, x);
+                t.assemble(root, left, right);
+            } else if (x.compareTo(root) < 0) {
+                removedItem = removeFromTree(left, x);
+                t.assemble(root, left, right);
             }
-            out.print("  Input a label to search "
-                    + "(or just press Enter to terminate the program): ");
-            label = in.nextLine();
         }
-        /*
-         * Output BST labels in order.
-         */
-//        out.println();
-//        out.println("Labels in BST in order:");
-//        while (t.size() > 0) {
-//            label = removeSmallest(t);
-//            out.println("  " + label);
-//        }
 
-        in.close();
-        out.close();
+        // This line added just to make the component compilable.
+        return removedItem;
     }
+
+    /**
+     * Creator of initial representation.
+     */
+    private void createNewRep() {
+
+        this.tree = new BinaryTree<T>();
+
+    }
+
+    /*
+     * Constructors -----------------------------------------------------------
+     */
+
+    /**
+     * No-argument constructor.
+     */
+    public Set3a() {
+
+        this.createNewRep();
+
+    }
+
+    /*
+     * Standard methods -------------------------------------------------------
+     */
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Set<T> newInstance() {
+        try {
+            return this.getClass().getConstructor().newInstance();
+        } catch (ReflectiveOperationException e) {
+            throw new AssertionError(
+                    "Cannot construct object of type " + this.getClass());
+        }
+    }
+
+    @Override
+    public final void clear() {
+        this.createNewRep();
+    }
+
+    @Override
+    public final void transferFrom(Set<T> source) {
+        assert source != null : "Violation of: source is not null";
+        assert source != this : "Violation of: source is not this";
+        assert source instanceof Set3a<?> : ""
+                + "Violation of: source is of dynamic type Set3<?>";
+        /*
+         * This cast cannot fail since the assert above would have stopped
+         * execution in that case: source must be of dynamic type Set3a<?>, and
+         * the ? must be T or the call would not have compiled.
+         */
+        Set3a<T> localSource = (Set3a<T>) source;
+        this.tree = localSource.tree;
+        localSource.createNewRep();
+    }
+
+    /*
+     * Kernel methods ---------------------------------------------------------
+     */
+
+    @Override
+    public final void add(T x) {
+        assert x != null : "Violation of: x is not null";
+        assert !this.contains(x) : "Violation of: x is not in this";
+
+        this.insertInTree(this, x);
+
+    }
+
+    @Override
+    public final T remove(T x) {
+        assert x != null : "Violation of: x is not null";
+        assert this.contains(x) : "Violation of: x is in this";
+
+        // This line added just to make the component compilable.
+        return this.removeFromTree(x);
+    }
+
+    @Override
+    public final T removeAny() {
+        assert this.size() > 0 : "Violation of: this /= empty_set";
+        // This line added just to make the component compilable.
+        return removeSmallest(this.tree);
+    }
+
+    @Override
+    public final boolean contains(T x) {
+        assert x != null : "Violation of: x is not null";
+        boolean inThere = false;
+        if (isInTree(this.tree, x)) {
+            inThere = true;
+        }
+        // This line added just to make the component compilable.
+        return inThere;
+    }
+
+    @Override
+    public final int size() {
+
+        // This line added just to make the component compilable.
+        return this.tree.size();
+    }
+
+    @Override
+    public final Iterator<T> iterator() {
+        return this.tree.iterator();
+    }
+
 }

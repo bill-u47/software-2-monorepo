@@ -1,4 +1,4 @@
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.Comparator;
 
@@ -10,7 +10,7 @@ import components.sortingmachine.SortingMachine;
  * JUnit test fixture for {@code SortingMachine<String>}'s constructor and
  * kernel methods.
  *
- * @author Put your name here
+ * @author Dennis Huang
  *
  */
 public abstract class SortingMachineTest {
@@ -139,5 +139,79 @@ public abstract class SortingMachineTest {
 
     // TODO - add test cases for add, changeToExtractionMode, removeFirst,
     // isInInsertionMode, order, and size
+
+    @Test
+    public final void testAddNotEmpty() {
+        SortingMachine<String> m = this.createFromArgsTest(ORDER, true, "red",
+                "blue");
+        SortingMachine<String> mExpected = this.createFromArgsRef(ORDER, true,
+                "red", "blue", "green");
+        m.add("green");
+        assertEquals(mExpected, m);
+    }
+
+    @Test
+    public final void testChangeToExtractionMode() {
+        SortingMachine<String> m = this.createFromArgsTest(ORDER, true, "red",
+                "blue", "green");
+        SortingMachine<String> mExpected = this.createFromArgsRef(ORDER, false,
+                "red", "blue", "green");
+
+        m.changeToExtractionMode();
+
+        assertEquals(mExpected, m);
+    }
+
+    @Test
+    public final void testRemoveFirst() {
+        SortingMachine<String> m = this.createFromArgsTest(ORDER, false, "red",
+                "blue", "green");
+        SortingMachine<String> mExpected = this.createFromArgsRef(ORDER, false,
+                "green", "red");
+
+        m.removeFirst();
+
+        assertEquals(mExpected, m);
+    }
+
+    @Test
+    public final void testIsInInsertionMode() {
+        SortingMachine<String> m = this.createFromArgsTest(ORDER, true, "red",
+                "blue", "green");
+        SortingMachine<String> mExpected = this.createFromArgsRef(ORDER, true,
+                "red", "blue", "green");
+
+        assertEquals(true, m.isInInsertionMode());
+        assertEquals(true, mExpected.isInInsertionMode());
+        assertEquals(mExpected, m);
+    }
+
+    @Test
+    public final void testOrder() {
+        SortingMachine<String> m = this.createFromArgsTest(ORDER, true, "red",
+                "blue", "green");
+        SortingMachine<String> mExpected = this.createFromArgsRef(ORDER, true,
+                "red", "blue", "green");
+
+        Comparator<String> order = m.order();
+        Comparator<String> orderExpected = m.order();
+
+        assertEquals(orderExpected, order);
+    }
+
+    @Test
+    public final void testSize() {
+        SortingMachine<String> m = this.createFromArgsTest(ORDER, true, "red",
+                "blue", "green");
+        SortingMachine<String> mExpected = this.createFromArgsRef(ORDER, true,
+                "red", "blue", "green");
+
+        int expectedSize = 3;
+        int size1 = m.size();
+        int size2 = mExpected.size();
+
+        assertEquals(expectedSize, size1);
+        assertEquals(expectedSize, size2);
+    }
 
 }
