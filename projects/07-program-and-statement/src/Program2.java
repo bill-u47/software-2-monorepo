@@ -106,10 +106,6 @@ public class Program2 extends ProgramSecondary {
      */
     private void createNewRep() {
 
-        // TODO - fill in body
-        // Make sure to use Statement1 from the library
-        // Use Map1L for the context if you want the asserts below to match
-
         this.name = "Unnamed";
         this.context = new Map1L<String, Statement>();
         this.body = new Statement1();
@@ -186,8 +182,6 @@ public class Program2 extends ProgramSecondary {
     @Override
     public final Map<String, Statement> newContext() {
 
-        // TODO - fill in body
-
         return this.context.newInstance();
     }
 
@@ -214,8 +208,6 @@ public class Program2 extends ProgramSecondary {
     @Override
     public final Statement newBody() {
 
-        // TODO - fill in body
-        // Fix this line to return the result.
         return this.body.newInstance();
     }
 
