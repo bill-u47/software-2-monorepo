@@ -1,8 +1,8 @@
 # [Homework 26: Tokenizer][hw26]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **11/3/26 @ 1:50pm est**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -62,7 +62,14 @@ have to waste time entering your code during the lab.
  *      is not subset of entries(SEPARATORS))
  * </pre>
  */
-private static String nextWordOrSeparator(String text, int position) {...}
+private static String nextWordOrSeparator(String text, int position) {
+        boolean inWord = isWordChar(text.charAt(position));
+        int end = position + 1;
+        while (end < text.length() && isWordChar(text.charAt(end)) == inWord) {
+            end++;
+        }
+        return text.substring(position, end);
+    }
 ```
 
 > This is a modified version of the method you wrote in a homework and lab in Software I.
@@ -100,7 +107,20 @@ private static final String SEPARATORS = " \t\n\r";
  * in.content = <>
  * </pre>
  */
-public static Queue<String> tokens(SimpleReader in) {...}
+public static Queue<String> tokens(SimpleReader in) {
+    Queue<String> newQ = new Queue1L<String>();
+    while (!in.atEOS()) {
+        String nextL = in.nextLine();
+        int i = 0;
+        while (i < nextL.length()) {
+            String item = nextWordOrSeparator(line, i);
+            newQ.enqueue(item);
+        }
+        i+= item.length();
+    newQ.enqueue(END_OF_INPUT);
+    return newQ;
+    }
+}
 ```
 
 > The END_OF_INPUT token used in the ensures clause is defined as a

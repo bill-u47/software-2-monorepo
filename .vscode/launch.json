@@ -6,17 +6,17 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Statement1PrettyPrint1",
+            "name": "StatementTester",
             "request": "launch",
-            "mainClass": "Statement1PrettyPrint1",
+            "mainClass": "StatementTester",
             "projectName": "software-2-monorepo_2b7bf099"
         },
         {
             "type": "java",
-            "name": "Program1PrettyPrint1",
+            "name": "ProgramTester",
             "request": "launch",
-            "mainClass": "Program1PrettyPrint1",
-            "projectName": "software-2-monorepo_2b7bf099"
+            "mainClass": "ProgramTester",
+            "projectName": "software-2-monorepo-groupProjects_9ba8a752"
         },
         {
             "type": "java",

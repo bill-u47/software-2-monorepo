@@ -15,7 +15,7 @@ import components.utilities.Tokenizer;
  *             and [$this.body is a BLOCK statement]
  * @correspondence this = ($this.name, $this.context, $this.body)
  *
- * @author Put your name here
+ * @author Dennis Huang
  *
  */
 public class Program2 extends ProgramSecondary {
@@ -110,6 +110,10 @@ public class Program2 extends ProgramSecondary {
         // Make sure to use Statement1 from the library
         // Use Map1L for the context if you want the asserts below to match
 
+        this.name = "Unnamed";
+        this.context = new Map1L<String, Statement>();
+        this.body = new Statement1();
+
     }
 
     /*
@@ -169,17 +173,14 @@ public class Program2 extends ProgramSecondary {
         assert Tokenizer.isIdentifier(n) : ""
                 + "Violation of: n is a valid IDENTIFIER";
 
-        // TODO - fill in body
+        this.name = n;
 
     }
 
     @Override
     public final String name() {
 
-        // TODO - fill in body
-
-        // Fix this line to return the result.
-        return null;
+        return this.name;
     }
 
     @Override
@@ -187,8 +188,7 @@ public class Program2 extends ProgramSecondary {
 
         // TODO - fill in body
 
-        // Fix this line to return the result.
-        return null;
+        return this.context.newInstance();
     }
 
     @Override
@@ -203,17 +203,20 @@ public class Program2 extends ProgramSecondary {
         assert allBlocks(c) : "Violation of: bodies in c"
                 + " are all BLOCK statements";
 
-        // TODO - fill in body
+        //A temporary map to aid in swapping
+        Map<String, Statement> temp = c.newInstance();
 
+        temp.transferFrom(c);
+        c.transferFrom(this.context);
+        this.context.transferFrom(temp);
     }
 
     @Override
     public final Statement newBody() {
 
         // TODO - fill in body
-
         // Fix this line to return the result.
-        return null;
+        return this.body.newInstance();
     }
 
     @Override
@@ -222,7 +225,10 @@ public class Program2 extends ProgramSecondary {
         assert b instanceof Statement1 : "Violation of: b is a Statement1";
         assert b.kind() == Kind.BLOCK : "Violation of: b is a BLOCK statement";
 
-        // TODO - fill in body
+        Statement temp = b.newInstance();
+        temp.transferFrom(b);
+        b.transferFrom(this.body);
+        this.body.transferFrom(temp);
 
     }
 

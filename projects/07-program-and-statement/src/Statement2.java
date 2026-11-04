@@ -2,6 +2,7 @@ import components.sequence.Sequence;
 import components.statement.Statement;
 import components.statement.StatementSecondary;
 import components.tree.Tree;
+import components.tree.Tree1;
 import components.utilities.Tokenizer;
 
 /**
@@ -116,10 +117,12 @@ public class Statement2 extends StatementSecondary {
      */
     private void createNewRep() {
 
-        // TODO - fill in body
+        this.rep = new Tree1<StatementLabel>();
+        StatementLabel label = new StatementLabel(Kind.BLOCK);
+        Sequence<Tree<StatementLabel>> children = this.rep.newSequenceOfTree();
+        this.rep.assemble(label, children);
 
     }
-
     /*
      * Constructors -----------------------------------------------------------
      */
@@ -172,10 +175,8 @@ public class Statement2 extends StatementSecondary {
     @Override
     public final Kind kind() {
 
-        // TODO - fill in body
-
         // Fix this line to return the result.
-        return null;
+        return this.rep.root().kind;
     }
 
     @Override
@@ -190,7 +191,12 @@ public class Statement2 extends StatementSecondary {
                 + "Violation of: pos <= [length of this BLOCK]";
         assert s.kind() != Kind.BLOCK : "Violation of: [s is not a BLOCK statement]";
 
-        // TODO - fill in body
+        Statement2 localS = (Statement2) s;
+        Sequence<Tree<StatementLabel>> children = this.rep.newSequenceOfTree();
+        StatementLabel label = this.rep.disassemble(children);
+        children.add(pos, localS.rep);
+        this.rep.assemble(label, children);
+        localS.createNewRep();
 
     }
 
@@ -209,9 +215,13 @@ public class Statement2 extends StatementSecondary {
          */
         Statement2 s = this.newInstance();
 
-        // TODO - fill in body
+        Sequence<Tree<StatementLabel>> children = this.rep.newSequenceOfTree();
+        StatementLabel label = this.rep.disassemble(children);
+        s.rep = children.remove(pos);
+        this.rep.assemble(label, children);
 
         return s;
+
     }
 
     @Override
@@ -219,10 +229,13 @@ public class Statement2 extends StatementSecondary {
         assert this.kind() == Kind.BLOCK : ""
                 + "Violation of: [this is a BLOCK statement]";
 
-        // TODO - fill in body
+        Sequence<Tree<StatementLabel>> children = this.rep.newSequenceOfTree();
+        StatementLabel label = this.rep.disassemble(children);
+        int length = children.length();
+        this.rep.assemble(label, children);
 
-        // Fix this line to return the result.
-        return 0;
+        return length;
+
     }
 
     @Override
@@ -271,7 +284,15 @@ public class Statement2 extends StatementSecondary {
         assert s2
                 .kind() == Kind.BLOCK : "Violation of: [s2 is a BLOCK statement]";
 
-        // TODO - fill in body
+        Statement2 localS1 = (Statement2) s1;
+        Statement2 localS2 = (Statement2) s2;
+        StatementLabel label = new StatementLabel(Kind.IF_ELSE, c);
+        Sequence<Tree<StatementLabel>> children = this.rep.newSequenceOfTree();
+        children.add(0, localS1.rep);
+        children.add(1, localS2.rep);
+        this.rep.assemble(label, children);
+        localS1.createNewRep();
+        localS2.createNewRep();
 
     }
 
@@ -287,10 +308,16 @@ public class Statement2 extends StatementSecondary {
         assert this.kind() == Kind.IF_ELSE : ""
                 + "Violation of: [this is an IF_ELSE statement]";
 
-        // TODO - fill in body
+        Statement2 localS1 = (Statement2) s1;
+        Statement2 localS2 = (Statement2) s2;
+        Sequence<Tree<StatementLabel>> children = this.rep.newSequenceOfTree();
+        StatementLabel label = this.rep.disassemble(children);
+        localS1.rep = children.remove(0);
+        localS2.rep = children.remove(0);
+        this.createNewRep(); // clears this
 
-        // Fix this line to return the result.
-        return null;
+        return label.condition;
+
     }
 
     @Override
@@ -301,7 +328,12 @@ public class Statement2 extends StatementSecondary {
         assert s instanceof Statement2 : "Violation of: s is a Statement2";
         assert s.kind() == Kind.BLOCK : "Violation of: [s is a BLOCK statement]";
 
-        // TODO - fill in body
+        Statement2 localS = (Statement2) s;
+        StatementLabel label = new StatementLabel(Kind.WHILE, c);
+        Sequence<Tree<StatementLabel>> children = this.rep.newSequenceOfTree();
+        children.add(0, localS.rep);
+        this.rep.assemble(label, children);
+        localS.createNewRep();
 
     }
 
@@ -313,10 +345,14 @@ public class Statement2 extends StatementSecondary {
         assert this.kind() == Kind.WHILE : ""
                 + "Violation of: [this is a WHILE statement]";
 
-        // TODO - fill in body
+        Statement2 localS = (Statement2) s;
+        Sequence<Tree<StatementLabel>> children = this.rep.newSequenceOfTree();
+        StatementLabel label = this.rep.disassemble(children);
+        localS.rep = children.remove(0);
+        this.createNewRep(); // clears this
 
-        // Fix this line to return the result.
-        return null;
+        return label.condition;
+
     }
 
     @Override
@@ -325,7 +361,9 @@ public class Statement2 extends StatementSecondary {
         assert Tokenizer.isIdentifier(inst) : ""
                 + "Violation of: inst is a valid IDENTIFIER";
 
-        // TODO - fill in body
+        StatementLabel label = new StatementLabel(Kind.CALL, inst);
+        Sequence<Tree<StatementLabel>> children = this.rep.newSequenceOfTree();
+        this.rep.assemble(label, children);
 
     }
 
@@ -334,10 +372,12 @@ public class Statement2 extends StatementSecondary {
         assert this.kind() == Kind.CALL : ""
                 + "Violation of: [this is a CALL statement]";
 
-        // TODO - fill in body
+        Sequence<Tree<StatementLabel>> children = this.rep.newSequenceOfTree();
+        StatementLabel label = this.rep.disassemble(children);
+        this.createNewRep(); // clears this
 
-        // Fix this line to return the result.
-        return null;
+        return label.instruction;
+
     }
 
 }
