@@ -1,8 +1,8 @@
 # [Homework 30: BugsWorld Virtual Machine ByteCode Generator and Interpreter][hw30]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **11/12/26 @ 1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -46,11 +46,11 @@ END Example1
 
 | Loc | Instruction |
 | --- | ----------- |
-| 0   |             |
-| 1   |             |
-| 2   |             |
-| 3   |             |
-| 4   |             |
+| 0   |   9          |
+| 1   |   2          |
+| 2   |   2          |
+| 3   |   3          |
+| 4   |   5          |
 | 5   |             |
 | 6   |             |
 | 7   |             |
@@ -74,17 +74,17 @@ END Example2
 
 | Loc | Instruction |
 | --- | ----------- |
-| 0   |             |
-| 1   |             |
-| 2   |             |
-| 3   |             |
-| 4   |             |
-| 5   |             |
-| 6   |             |
-| 7   |             |
-| 8   |             |
-| 9   |             |
-| 10  |             |
+| 0   |    9         |
+| 1   |    8         |
+| 2   |    2         |
+| 3   |    2         |
+| 4   |    3         |
+| 5   |    6         |
+| 6   |    3         |
+| 7   |    0         |
+| 8   |    9         |
+| 9   |    3         |
+| 10  |    0         |
 
 ```bl
 PROGRAM Example3 IS
@@ -104,16 +104,16 @@ END Example3
 
 | Loc | Instruction |
 | --- | ----------- |
-| 0   |             |
-| 1   |             |
-| 2   |             |
-| 3   |             |
-| 4   |             |
-| 5   |             |
-| 6   |             |
-| 7   |             |
-| 8   |             |
-| 9   |             |
+| 0   |    7         |
+| 1   |    9        |
+| 2   |    9         |
+| 3   |    2         |
+| 4   |    2         |
+| 5   |    3         |
+| 6   |    7         |
+| 7   |    3         |
+| 8   |    0         |
+| 9   |    7         |
 | 10  |             |
 | 11  |             |
 | 12  |             |
@@ -166,32 +166,48 @@ END Example4
 > Review your code carefully and trace it on some examples.
 
 ```java
-/**
- * Returns the location of the next primitive instruction to execute in
- * compiled program {@code cp} given what the bug sees {@code wbs} and
- * starting from location {@code pc}.
- *
- * @param cp
- *            the compiled program
- * @param wbs
- *            the {@code CellState} indicating what the bug sees
- * @param pc
- *            the program counter
- * @return the location of the next primitive instruction to execute
- * @requires <pre>
- * [cp is a valid compiled BL program]  and
- * 0 <= pc < cp.length  and
- * [pc is the location of an instruction byte code in cp, that is, pc
- *  cannot be the location of an address]
- * </pre>
- * @ensures <pre>
- * [return the address of the next primitive instruction that
- *  should be executed in program cp given what the bug sees wbs and
- *  starting execution at address pc in program cp]
- * </pre>
- */
-public static int nextPrimitiveInstructionAddress(int[] cp, CellState wbs,
-        int pc) {...}
+    /**
+     * Returns the location of the next primitive instruction to execute in
+     * compiled program {@code cp} given what the bug sees {@code wbs} and
+     * starting from location {@code pc}.
+     *
+     * @param cp
+     *            the compiled program
+     * @param wbs
+     *            the {@code CellState} indicating what the bug sees
+     * @param pc
+     *            the program counter
+     * @return the location of the next primitive instruction to execute
+     * @requires <pre>
+     * [cp is a valid compiled BL program]  and
+     * 0 <= pc < cp.length  and
+     * [pc is the location of an instruction byte code in cp, that is, pc
+     *  cannot be the location of an address]
+     * </pre>
+     * @ensures <pre>
+     * [return the address of the next primitive instruction that
+     *  should be executed in program cp given what the bug sees wbs and
+     *  starting execution at address pc in program cp]
+     * </pre>
+     */
+    public static int nextPrimitiveInstructionAddress(int[] cp, CellState wbs,
+            int pc) {
+                while (!isPrimitiveInstructionByteCode(cp[pc])) {
+                    if (cp[pc] != Instruction.JUMP) {
+                        pc = cp[pc + 1]
+                    } else {
+                        if (conditionalJumpCondition(wbs, cp[pc])) {
+
+                            pc = pc + 2
+                        } else {
+                            pc = cp[pc + 1]
+                        }
+                    }
+                }
+
+
+            return pc;
+        }
 ```
 
 > In implementing nextPrimitiveInstructionAddress, you will need the
@@ -220,7 +236,13 @@ enum CellState {
  *  [true iff byteCode is the byte code of a primitive instruction]
  * </pre>
  */
-private static boolean isPrimitiveInstructionByteCode(int byteCode) {...}
+private static boolean isPrimitiveInstructionByteCode(int byteCode) {
+    boolean isPrim = false;
+    if (byteCode <= 5) {
+        isPrim = true;
+    }
+    return isPrim;
+}
  
 /**
  * Returns the value of the condition in the given conditional jump
@@ -240,7 +262,41 @@ private static boolean isPrimitiveInstructionByteCode(int byteCode) {...}
  *  [the value of the condition of condJump given what the bug sees wbs]
  * </pre>
  */
-private static boolean conditionalJumpCondition(CellState wbs, int condJump) {...}
+private static boolean conditionalJumpCondition(CellState wbs, int condJump) {
+    boolean jumpCnd = false;
+
+    switch (condJump) {
+        case 7:
+            jumpCnd = wbs == CellState.EMPTY;
+            break;
+        case 8:
+            jumpCnd = wbs != CellState.EMPTY;
+            break;
+        case 9:
+            jumpCnd = wbs == CellState.WALL;
+            break;
+        case 10:
+            jumpCnd = wbs != CellState.WALL;
+            break;
+        case 11:
+            jumpCnd = wbs == CellState.FRIEND;
+            break;
+        case 12:
+            jumpCnd = wbs != CellState.FRIEND;
+            break;
+        case 13:
+            jumpCnd = wbs == CellState.ENEMY;
+            break;
+        case 14:
+            jumpCnd = wbs != CellState.ENEMY;
+            break;
+        case 15:
+            jumpCnd = wbs == CellState.RANDOM;
+            break;
+    }
+    return jumpCnd;
+
+}
 ```
 
 ## Submission

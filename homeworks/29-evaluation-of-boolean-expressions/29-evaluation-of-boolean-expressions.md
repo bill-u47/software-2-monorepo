@@ -1,8 +1,8 @@
 # [Homework 29: Evaluation of Boolean Expressions][hw29]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **11/10/26 @ 1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -90,7 +90,31 @@ The following problems will give you practice with statements and recursion.
  * #tokens = [longest bool-expr string at start of #tokens] * tokens
  * </pre>
  */
-public static boolean valueOfBoolExpr(Queue<String> tokens) {...}
+public static boolean valueOfBoolExpr(Queue<String> tokens) {
+    boolean value;
+    String token = tokens.dequeue();
+
+    if (token.equals("T")) {
+        value = true;
+    } else if (token.equals("F")) {
+        value = false;
+    } else if (token.equals("NOT")) {
+        tokens.dequeue();
+        value = !valueOfBoolExpr(tokens);
+        tokens.dequeue();
+    } else {
+        boolean left = valueOfBoolExpr(tokens);
+        String op = tokens.dequeue();
+        boolean right = valueOfBoolExpr(tokens);
+        tokens.dequeue();
+        if (op.equals("AND")) {
+            value = left && right;
+        } else {
+            value = left || right;
+        }
+    }
+    return value;
+}
 ```
 
 > As practice for the final exam (recursive-descent parsers will not be
