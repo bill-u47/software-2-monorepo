@@ -38,7 +38,7 @@ public final class Randomizer {
     }
 
     /**
-     * Makes shuffles reproducible - used for easy re- and de-shuffling
+     * Makes shuffles reproducible - used for easy re- and de-shuffling.
      *
      * @param seed
      *            the seed to use
@@ -183,6 +183,9 @@ public final class Randomizer {
     /**
      * Appends the labels of {@code t} to {@code labels} in pre-order,
      * leaving {@code t} unchanged.
+     * @param t
+     * @param <T>
+     * @param labels
      */
     private static <T> void collect(Tree<T> t, Sequence<T> labels) {
         if (t.size() > 0) {
@@ -203,6 +206,9 @@ public final class Randomizer {
      * pre-order, keeping the shape. Root gets the first label.
      *
      * @requires labels.length() = t.size()
+     * @param labels
+     * @param t
+     * @param <T>
      */
     private static <T> void fill(Tree<T> t, Sequence<T> labels) {
         if (t.size() > 0) {
