@@ -3,6 +3,9 @@ import java.util.NoSuchElementException;
 
 import components.list.List;
 import components.list.ListSecondary;
+import components.sequence.Sequence;
+import components.sequence.Sequence1L;
+import components.tree.Tree;
 
 /**
  * {@code List} represented as a doubly linked list, done "bare-handed", with
@@ -242,15 +245,12 @@ public class List3<T> extends ListSecondary<T> {
     public final void addRightFront(T x) {
         assert x != null : "Violation of: x is not null";
 
-        Node insert = new Node();
-        insert.data = x;
+        Node n = new Node();
+        n.data = x;
 
-        Node nextIns = this.lastLeft.next;
+        n.next = this.leftLength.next;
+        this.leftLength.next = n;
 
-        insert.previous = this.lastLeft;
-        insert.next = nextIns;
-        this.lastLeft.next = insert;
-        nextIns.previous = insert;
         this.rightLength++;
 
         assert this.conventionHolds();
@@ -263,12 +263,8 @@ public class List3<T> extends ListSecondary<T> {
         T item = this.lastLeft.next.data;
 
         this.lastLeft.next = this.lastLeft.next.next;
-        this.lastLeft.next.previous = this.lastLeft;
 
         this.rightLength--;
-
-
-        assert this.conventionHolds();
         // Fix this line to return the result after checking the convention.
         return item;
     }
@@ -278,11 +274,8 @@ public class List3<T> extends ListSecondary<T> {
         assert this.rightLength() > 0 : "Violation of: this.right /= <>";
 
         this.lastLeft = this.lastLeft.next;
-        this.lastLeft.next.previous = this.lastLeft;
-
         this.leftLength++;
         this.rightLength--;
-
 
         assert this.conventionHolds();
     }
@@ -290,9 +283,9 @@ public class List3<T> extends ListSecondary<T> {
     @Override
     public final void moveToStart() {
 
-        this.rightLength = this.leftLength + this.rightLength;
-        this.leftLength = 0;
         this.lastLeft = this.preStart;
+        this.rightLength += this.leftLength;
+        this.leftLength = 0;
 
         assert this.conventionHolds();
     }
@@ -374,23 +367,39 @@ public class List3<T> extends ListSecondary<T> {
     @Override
     public final void moveToFinish() {
 
-        this.leftLength = this.leftLength + this.rightLength;
+        while (this.lastLeft != null) {
+            this.lastLeft = this.lastLeft.next;
+        }
+        this.leftLength += this.rightLength;
         this.rightLength = 0;
 
-        this.lastLeft = this.postFinish.previous;
-
         assert this.conventionHolds();
+    }
+
+    public final int treeCursion(Tree<T> t) {
+        Sequence<Tree<T>> children = new Sequence1L<Tree<T>>();
+        int count = 0;
+        if (t.size() != 0) {
+            T root = t.disassemble(children);
+            for (Tree<T> child : children) {
+                count += this.treeCursion(child);
+            }
+            t.assemble(root, children);
+        } else {
+            count += 1;
+        }
+        return count;
     }
 
     @Override
     public final void retreat() {
         assert this.leftLength() > 0 : "Violation of: this.left /= <>";
 
-        this.lastLeft = this.lastLeft.previous;
-        this.leftLength--;
-        this.rightLength++;
-
-        assert this.conventionHolds();
+        int len = this.leftLength;
+        this.moveToStart();
+        for (int i = 0; i < len - 1; i++) {
+            this.advance();
+        }
     }
 
 }
