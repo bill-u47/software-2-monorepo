@@ -1,8 +1,8 @@
 # [Homework 27: Context-Free Grammars][hw27]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **11/4/26 @ 1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -33,6 +33,15 @@ your own feedback][feedback-form] after completing this assignment.
 > you deem appropriate. Examples of valid signed real-number constants are:
 >
 >       -3.56, +17.E09, 4.95
+signed-real-const → sign real-const | real-const
+sign              → + | -
+real-const        → digit-seq .
+                  → digit-seq . digit-seq
+                  → digit-seq . E exponent
+                  → digit-seq . digit-seq E exponent
+exponent          → digit-seq | sign digit-seq
+digit-seq         → digit digit-seq | digit
+digit             → 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
 ### Problem 2
 
@@ -45,7 +54,13 @@ your own feedback][feedback-form] after completing this assignment.
 >                   → NOT ( bool-exp ) |
 >                   → ( bool-exp AND bool-exp ) |
 >                   → ( bool-exp OR bool-exp )
-
+bool-exp
+⇒ ( bool-exp OR bool-exp )
+⇒ ( NOT ( bool-exp ) OR bool-exp )
+⇒ ( NOT ( ( bool-exp AND bool-exp ) ) OR bool-exp )
+⇒ ( NOT ( ( F AND bool-exp ) ) OR bool-exp )
+⇒ ( NOT ( ( F AND T ) ) OR bool-exp )
+⇒ ( NOT ( ( F AND T ) ) OR F )
 ### Problem 3
 
 > Using the following rewrite rules for Boolean expressions, find two different
@@ -56,7 +71,37 @@ your own feedback][feedback-form] after completing this assignment.
 >                   → NOT ( bool-exp ) |
 >                   → bool-exp AND bool-exp |
 >                   → bool-exp OR bool-exp
+bool-exp
+├── NOT
+├── (
+├── bool-exp
+│   ├── bool-exp
+│   │   └── T
+│   ├── OR
+│   └── bool-exp
+│       ├── bool-exp
+│       │   └── T
+│       ├── AND
+│       └── bool-exp
+│           └── F
+└── )
 
+bool-exp
+├── NOT
+├── (
+├── bool-exp
+│   ├── bool-exp
+│   │   ├── bool-exp
+│   │   │   └── T
+│   │   ├── OR
+│   │   └── bool-exp
+│   │       └── T
+│   ├── AND
+│   └── bool-exp
+│       └── F
+└── )
+
+(I used a tree generator as I am NOT drawing allat out)
 ### Problem 4
 
 > Using the following rewrite rules for arithmetic expressions, draw a derivation
@@ -69,6 +114,36 @@ your own feedback][feedback-form] after completing this assignment.
 >       mult-op     → * | DIV | MOD
 >       digit-seq   → digit digit-seq | digit
 >       digit       → 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+
+expr
+├── expr
+│   ├── expr
+│   │   └── term
+│   │       ├── term
+│   │       │   └── factor
+│   │       │       └── digit-seq
+│   │       │           └── digit
+│   │       │               └── 5
+│   │       ├── mult-op
+│   │       │   └── *
+│   │       └── factor
+│   │           └── digit-seq
+│   │               └── digit
+│   │                   └── 3
+│   ├── add-op
+│   │   └── +
+│   └── term
+│       └── factor
+│           └── digit-seq
+│               └── digit
+│                   └── 1
+├── add-op
+│   └── +
+└── term
+    └── factor
+        └── digit-seq
+            └── digit
+                └── 4
 
 ### Problem 5
 
@@ -97,6 +172,33 @@ your own feedback][feedback-form] after completing this assignment.
 >               → term add-op term add-op term |
 >               → term add-op term add-op term add-op term |
 >               → ...
+
+expr
+├── term
+│   ├── factor
+│   │   └── digit-seq
+│   │       └── digit
+│   │           └── 5
+│   ├── mult-op
+│   │   └── *
+│   └── factor
+│       └── digit-seq
+│           └── digit
+│               └── 3
+├── add-op
+│   └── +
+├── term
+│   └── factor
+│       └── digit-seq
+│           └── digit
+│               └── 1
+├── add-op
+│   └── +
+└── term
+    └── factor
+        └── digit-seq
+            └── digit
+                └── 4
 
 ## Submission
 

@@ -59,6 +59,9 @@
         "projects\\04-set-on-binary-search-trees\\test",
         "projects\\06-list-with-retreat\\src",
         "projects\\06-list-with-retreat\\test",
-        "projects\\07-program-and-statement\\src"
+        "projects\\07-program-and-statement\\src",
+        ".",
+        "Portfolio project\\src",
+        "Portfolio project\\test"
     ],
 }

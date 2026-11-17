@@ -215,10 +215,25 @@ public final class BugsWorldVMInterpreter {
         assert isValidInstructionLocation(cp, pc) : ""
                 + "Violation of: pc is the location of an instruction byte code in cp";
 
-        // TODO - fill in body
+        int item = 0;
+        while (!isPrimitiveInstructionByteCode(cp[pc])) {
 
-        // This line added just to make the program compilable.
-        return 0;
+            if (cp[pc] != Instruction.JUMP.byteCode()) {
+                item = cp[pc + 1];
+            } else {
+                if (conditionalJumpCondition(wbs, cp[pc])) {
+
+                    item = pc + 2;
+                } else {
+                    item = cp[pc + 1];
+                }
+            }
+        }
+
+
+            return item;
+
+        // This line added just to make the program compilable.;
     }
 
     /**
