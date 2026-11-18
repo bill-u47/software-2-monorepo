@@ -12,50 +12,31 @@ import components.tree.Tree;
 import components.tree.Tree1;
 
 /**
- * This thing shuffles any of these following data structures:
- *  {@code Queue}, {@code Stack}, {@code Sequence},
+ * Shuffles a {@code Queue}, {@code Stack}, {@code Sequence},
  * {@code BinaryTree}, or {@code Tree}.
  *
- * <p>
- * For trees, the argument is treated as the root: all labels in the tree are
- * collected, shuffled, and poured back into the same tree shape, starting with
- * the root node (pre-order), so the root receives the first shuffled entry. Good luck!
+ *  <p>
+ * {@code Set} and {@code Map} aren't here because they don't have an order
+ * to shuffle in the first place.
  *
  * <p>
- * {@code Set} and {@code Map} can't really be shuffled, not exactly funny
- *
- * <p>
- * Everything is built only on kernel methods, so it works with ANY
- * implementation (Queue1L, Queue2, BinaryTree1, Tree1, ...).
+ * Only kernel methods are used, so this works with any implementation
+ * (Queue1L, Queue2, BinaryTree1, Tree1, etc).
  */
 public final class Randomizer {
 
-    /** Source of randomness; reseed with {@link #setSeed(long)} for tests. */
+    /** It's where random comes from. */
     private static Random rnd = new Random();
 
-    /** No-argument constructor private to prevent instantiation. */
+    /** Preventing instantiation. */
     private Randomizer() {
     }
 
     /**
-     * Makes shuffles reproducible - used for easy re- and de-shuffling
+     * Randomly shuffles {@code s}.
      *
-     * @param seed
-     *            the seed to use
-     * @updates rnd
-     * @ensures rnd is seeded with seed
-     */
-    public static void setSeed(long seed) {
-        rnd = new Random(seed);
-    }
-
-    /**
-     * Randomly reorders {@code s}.
-     *
-     * @param <T>
-     *            entry type
-     * @param s
-     *            the sequence to shuffle
+     * @param <T> - entry type
+     * @param s - the sequence to shuffle
      * @updates s
      * @ensures s is a uniformly random permutation of #s
      */
@@ -69,14 +50,12 @@ public final class Randomizer {
     }
 
     /**
-     * Randomly reorders {@code q}.
+     * Randomly shuffles {@code q}.
      *
-     * @param <T>
-     *            entry type
-     * @param q
-     *            the queue to shuffle
+     * @param <T> - entry type
+     * @param q - the queue to shuffle
      * @updates q
-     * @ensures q is a uniformly random permutation of #q
+     * @ensures q is a uniformly random permutation of #s
      */
     public static <T> void randomize(Queue<T> q) {
         Sequence<T> temp = new Sequence3<T>();
@@ -90,12 +69,10 @@ public final class Randomizer {
     }
 
     /**
-     * Randomly reorders {@code s}.
+     * Randomly shuffles {@code Stack s}.
      *
-     * @param <T>
-     *            entry type
-     * @param s
-     *            the stack to shuffle
+     * @param <T> - entry type
+     * @param s - the sequence to shuffle
      * @updates s
      * @ensures s is a uniformly random permutation of #s
      */
@@ -111,55 +88,20 @@ public final class Randomizer {
     }
 
     /**
-     * Randomly shuffles the labels of {@code t}, keeping its shape.
+     * Randomly shuffles {@code t}.
      *
-     * @param <T>
-     *            label type
-     * @param t
-     *            the binary tree (its root node is where the data enters)
+     * @param <T> - entry type
+     * @param t - the binary tree to shuffle
      * @updates t
-     * @ensures t has the same shape as #t, and its labels are a uniformly
-     *          random permutation of the labels of #t
+     * @ensures t is a uniformly random permutation of #s
      */
     public static <T> void randomize(BinaryTree<T> t) {
         Sequence<T> labels = new Sequence3<T>();
-        collect(t, labels);
+        for (T label : t) {
+            labels.add(labels.length(), label);
+        }
         randomize(labels);
         fill(t, labels);
-    }
-
-    /**
-     * Appends the labels of {@code t} to {@code labels} in pre-order,
-     * leaving {@code t} unchanged.
-     */
-    private static <T> void collect(BinaryTree<T> t, Sequence<T> labels) {
-        if (t.size() > 0) {
-            BinaryTree<T> left = new BinaryTree1<T>();
-            BinaryTree<T> right = new BinaryTree1<T>();
-            T root = t.disassemble(left, right);
-            labels.add(labels.length(), root);
-            collect(left, labels);
-            collect(right, labels);
-            t.assemble(root, left, right);
-        }
-    }
-
-    /**
-     * Replaces the labels of {@code t} with those of {@code labels} in
-     * pre-order, keeping the shape. Root gets the first label.
-     *
-     * @requires labels.length() = t.size()
-     */
-    private static <T> void fill(BinaryTree<T> t, Sequence<T> labels) {
-        if (t.size() > 0) {
-            BinaryTree<T> left = new BinaryTree1<T>();
-            BinaryTree<T> right = new BinaryTree1<T>();
-            t.disassemble(left, right);
-            T newRoot = labels.remove(0);
-            fill(left, labels);
-            fill(right, labels);
-            t.assemble(newRoot, left, right);
-        }
     }
 
     /**
@@ -175,11 +117,42 @@ public final class Randomizer {
      */
     public static <T> void randomize(Tree<T> t) {
         Sequence<T> labels = new Sequence3<T>();
-        collect(t, labels);
+        for (T label : t) {
+            labels.add(labels.length(), label);
+        }
         randomize(labels);
         fill(t, labels);
     }
+    /**
+     * Appends the labels of {@code t} to {@code labels} in pre-order, so that
+     * I can randomize binary trees and regular trees into different structures
+     */
+    private static <T> void collect(BinaryTree<T> t, Sequence<T> labels) {
+        if (t.size() > 0) {
+            BinaryTree<T> left = new BinaryTree1<T>();
+            BinaryTree<T> right = new BinaryTree1<T>();
+            T root = t.disassemble(left, right);
+            labels.add(labels.length(), root);
+            collect(left, labels);
+            collect(right, labels);
+            t.assemble(root, left, right);
+        }
+    }
 
+    /**
+     * Fills using the collected data - adds the data of {@code labels} to {@code t}
+     */
+    private static <T> void fill(BinaryTree<T> t, Sequence<T> labels) {
+        if (t.size() > 0) {
+            BinaryTree<T> left = new BinaryTree1<T>();
+            BinaryTree<T> right = new BinaryTree1<T>();
+            t.disassemble(left, right);
+            T newRoot = labels.remove(0);
+            fill(left, labels);
+            fill(right, labels);
+            t.assemble(newRoot, left, right);
+        }
+    }
     /**
      * Appends the labels of {@code t} to {@code labels} in pre-order,
      * leaving {@code t} unchanged.
@@ -217,6 +190,8 @@ public final class Randomizer {
             t.assemble(newRoot, children);
         }
     }
+
+
 
     /**
      * Shuffles the data in {@code component} AND secretly moves it into a
@@ -284,11 +259,15 @@ public final class Randomizer {
             }
         } else if (component instanceof BinaryTree) {
             BinaryTree<Object> t = (BinaryTree<Object>) component;
-            collect(t, out);
+            for (Object label : t) {
+                out.add(out.length(), label);
+            }
             t.clear();
         } else if (component instanceof Tree) {
             Tree<Object> t = (Tree<Object>) component;
-            collect(t, out);
+            for (Object label : t) {
+                out.add(out.length(), label);
+            }
             t.clear();
         } else {
             throw new IllegalArgumentException(
@@ -306,7 +285,8 @@ public final class Randomizer {
         return out;
     }
 
-    /** Builds a randomly shaped binary tree from {@code data} (emptied). */
+    /** Builds a randomly shaped binary tree from {@code data} (emptied).
+    */
     private static BinaryTree<Object> buildBinaryTree(Sequence<Object> data) {
         BinaryTree<Object> t = new BinaryTree1<Object>();
         if (data.length() > 0) {

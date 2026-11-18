@@ -1,8 +1,8 @@
 # [Homework 32: WaitingLine Family Interface Design][hw32]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **11/17/26 @ 1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -49,11 +49,55 @@ have to waste time entering your code during the lab.
 ```java
 public interface WaitingLineKernel<T> extends Standard<WaitingLine<T>>, Iterable<T> {
 
+    /**
+     * Adds {@code x} to {@code this} if x not in this
+     * @param x
+     *      the customer/item to be added
+     * @ensures {@code this = #this * <x>}
+     * @requires {@code} x not in {@code this}
+     * @updates {@code this}
+     *
+     * */
+    void addCustomer(T x);
+
+    /**
+     * Removes the first entry in the queue
+     * @return the removed entry
+     * @updates {@code this}
+     * @ensures {@code this = #this - x}
+     * */
+
+    void removeCustomer();
+
+    /**
+     * @return length of {@code this}
+     * @requires {@code |this| != 0}
+     * @ensures {@code this == #this}
+     *
+     * */
+
+    int lengthOfLine();
 }
 ```
 
 ```java
 public interface WaitingLine<T> extends WaitingLineKernel<T> {
+
+    /**
+     * Removes the entry at pos {@code x} and replaces it with {@code pos}
+     * @ensures {@code |this| != 0, 0 <= pos && pos <= |this|}
+     * @updates {@code this}
+     * @clear x
+     * */
+    T removeEntry(T x, int pos);
+
+
+    /**
+     * Finds position of {@code x} in {@code this}
+     * @returns {@code int pos(x) in |this|}
+     * @requires {@code |this| != 0, 0 <= pos(x) <= |this|, x is in this}
+     * */
+    T posFind(T x);
 
 }
 ```

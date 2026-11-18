@@ -16,7 +16,7 @@ import components.statement.StatementKernel.Condition;
  * Layered implementation of secondary method {@code generatedCode} for
  * {@code Program}.
  *
- * @author Put your name here
+ * @author Andrew Bilyeu
  *
  */
 public final class Program1GeneratedCode1 extends Program1 {
@@ -190,8 +190,12 @@ public final class Program1GeneratedCode1 extends Program1 {
 
         switch (s.kind()) {
             case BLOCK: {
-
-                // TODO - fill in case
+                int len = s.lengthOfBlock();
+                for (int i = 0; i < len; i++) {
+                    Statement c = s.removeFromBlock(i);
+                    generateCodeForStatement(c, context, cp);
+                    s.addToBlock(i, c);
+                }
 
                 break;
             }
@@ -207,21 +211,60 @@ public final class Program1GeneratedCode1 extends Program1 {
                 break;
             }
             case IF_ELSE: {
+                Statement c = s.newInstance();
+                Statement j = s.newInstance();
+                Statement.Condition u = s.disassembleIfElse(c, j);
 
-                // TODO - fill in case
+                cp.add(cp.length(), conditionalJump(u).byteCode());
+                int jumpElse = cp.length();
+                cp.add(cp.length(), dummy);
 
+                generateCodeForStatement(c, context, cp);
+
+                cp.add(cp.length(), Instruction.JUMP.byteCode());
+                int jumpToEnd = cp.length();
+                cp.add(cp.length(), dummy);
+
+                cp.replaceEntry(jumpElse, cp.length());
+                generateCodeForStatement(j, context, cp);
+
+                cp.replaceEntry(jumpToEnd, cp.length());
+
+                s.assembleIfElse(u, c, j);
                 break;
             }
             case WHILE: {
+                Statement u = s.newInstance();
+                Statement.Condition c = s.disassembleWhile(u);
 
-                // TODO - fill in case
+                int loopStart = cp.length();
+
+                cp.add(cp.length(), conditionalJump(c).byteCode());
+                int jumpEnd = cp.length();
+                cp.add(cp.length(), dummy);
+
+                generateCodeForStatement(u, context, cp);
+
+                cp.add(cp.length(), Instruction.JUMP.byteCode());
+                cp.add(cp.length(), loopStart);
+
+                cp.replaceEntry(jumpEnd, cp.length());
+                s.assembleWhile(c, u);
 
                 break;
             }
             case CALL: {
+                String label = s.disassembleCall();
 
-                // TODO - fill in case
+                if (context.hasKey(label)) {
+                    cp.add(cp.length(), Instruction.CALL.bytecode());
 
+                    cp.add(cp.length(), dummy);
+
+                } else {
+                    cp.add(cp.length(), Instruction.valueOf(label).byteCode());
+                }
+                s.assembleCall(label);
                 break;
             }
             default: {
