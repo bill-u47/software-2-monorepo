@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Program1Parse1",
+            "request": "launch",
+            "mainClass": "Program1Parse1",
+            "projectName": "software-2-monorepo-groupProjects_9ba8a752"
+        },
+        {
+            "type": "java",
             "name": "StatementTester",
             "request": "launch",
             "mainClass": "StatementTester",
