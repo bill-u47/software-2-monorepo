@@ -45,7 +45,7 @@ public final class CardDealerDemo {
     }
 
     /**
-     * Deals cars to each player's hand.
+     * Deals cards to each player's hand.
      * @param deck - deck of cards
      * @param players - num of players
      * @param cards - num of cards
@@ -89,13 +89,10 @@ public final class CardDealerDemo {
         show(deal(deck, 4, 5));
         System.out.println("  Cards left in deck: " + deck.length());
 
-        //this is what the seed is for - to reproduce shuffles
-        Randomizer.setSeed(42);
         Stack<String> a = newDeck();
         Randomizer.randomize(a);
         Sequence<Queue<String>> first = deal(a, 4, 5);
 
-        Randomizer.setSeed(42);
         Stack<String> b = newDeck();
         Randomizer.randomize(b);
         Sequence<Queue<String>> second = deal(b, 4, 5);

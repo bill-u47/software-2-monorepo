@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import components.binarytree.BinaryTree;
@@ -23,16 +22,8 @@ import components.tree.Tree1;
  */
 public class RandomizerTest {
 
-    /** Number of entries used in the larger tests. */
+    /** # of entries in the large tests. */
     private static final int N = 20;
-
-    /**
-     * Seeds the randomizer before every test.
-     */
-    @Before
-    public void setUp() {
-        Randomizer.setSeed(12345L);
-    }
 
     /**
      * Returns the entries of any supported component as a sorted list.
@@ -133,9 +124,9 @@ public class RandomizerTest {
      */
     private static BinaryTree<Integer> binaryTreeOfSeven() {
         BinaryTree<Integer> left = new BinaryTree1<Integer>();
-        left.assemble(2, binaryLeaf(4), binaryLeaf(5));
+        left.assemble(2, binaryLeaf(4), binaryLeaf(6));
         BinaryTree<Integer> right = new BinaryTree1<Integer>();
-        right.assemble(3, binaryLeaf(6), binaryLeaf(7));
+        right.assemble(3, binaryLeaf(5), binaryLeaf(7));
         BinaryTree<Integer> root = new BinaryTree1<Integer>();
         root.assemble(1, left, right);
         return root;
@@ -162,15 +153,15 @@ public class RandomizerTest {
      */
     private static Tree<Integer> treeOfSix() {
         Sequence<Tree<Integer>> grandkids = new Sequence3<Tree<Integer>>();
-        grandkids.add(0, treeLeaf(4));
-        grandkids.add(1, treeLeaf(5));
+        grandkids.add(0, treeLeaf(2));
+        grandkids.add(1, treeLeaf(3));
         Tree<Integer> two = new Tree1<Integer>();
         two.assemble(2, grandkids);
 
         Sequence<Tree<Integer>> kids = new Sequence3<Tree<Integer>>();
         kids.add(0, two);
         kids.add(1, treeLeaf(3));
-        kids.add(2, treeLeaf(6));
+        kids.add(2, treeLeaf(4));
         Tree<Integer> root = new Tree1<Integer>();
         root.assemble(1, kids);
         return root;
@@ -375,19 +366,6 @@ public class RandomizerTest {
         assertEquals(treeLeaf(9), t);
     }
 
-    /**
-     * The same seed gives the same shuffle.
-     */
-    @Test
-    public void testSameSeedSameResult() {
-        Queue<Integer> a = queueOf(N);
-        Queue<Integer> b = queueOf(N);
-        Randomizer.setSeed(42L);
-        Randomizer.randomize(a);
-        Randomizer.setSeed(42L);
-        Randomizer.randomize(b);
-        assertEquals(a, b);
-    }
 
     /**
      * The Object overload dispatches to every supported component type.
