@@ -1,8 +1,8 @@
 # [Homework 31: Statement and Recursion 4][hw31]
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
+- **Andrew Bilyeu**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) -->
+- **bilyeu.14**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) -->
+- **11/13/26 @ 1:50pm EST**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) -->
 
 ## Preparation
 
@@ -63,39 +63,91 @@ private static void generateCodeForStatement(Statement s,
         Map<String, Statement> context, Sequence<Integer> cp) {
  
     final int dummy = 0;
- 
-    switch (s.kind()) {
-        case BLOCK: {
- 
-            // TODO - fill in case
- 
-            break;
-        }
-        case IF: {
-            Statement b = s.newInstance();
-            Condition c = s.disassembleIf(b);
-            cp.add(cp.length(), conditionalJump(c).byteCode());
-            int jump = cp.length();
-            cp.add(cp.length(), dummy);
-            generateCodeForStatement(b, context, cp);
-            cp.replaceEntry(jump, cp.length());
-            s.assembleIf(c, b);
-            break;
-        }
-        case IF_ELSE: {
- 
-            // TODO - fill in case
- 
-            break;
-        }
-        case WHILE: {
- 
-            // TODO - fill in case
- 
-            break;
-        }
-        // remaining case CALL goes here
-    }
+
+    switch (s.kind()) {
+        case BLOCK: {
+            int len = s.lengthOfBlock();
+            for (int i = 0; i < len; i++) {
+                Statement c = s.removeFromBlock(i);
+                generateCodeForStatement(c, context, cp);
+                s.addToBlock(i, c);
+            }
+
+            break;
+        }
+        case IF: {
+            Statement b = s.newInstance();
+            Condition c = s.disassembleIf(b);
+            cp.add(cp.length(), conditionalJump(c).byteCode());
+            int jump = cp.length();
+            cp.add(cp.length(), dummy);
+            generateCodeForStatement(b, context, cp);
+            cp.replaceEntry(jump, cp.length());
+            s.assembleIf(c, b);
+            break;
+        }
+        case IF_ELSE: {
+            Statement c = s.newInstance();
+            Statement j = s.newInstance();
+            Statement.Condition u = s.disassembleIfElse(c, j);
+
+            cp.add(cp.length(), conditionalJump(u).byteCode());
+            int jumpElse = cp.length();
+            cp.add(cp.length(), dummy);
+
+            generateCodeForStatement(c, context, cp);
+
+            cp.add(cp.length(), Instruction.JUMP.byteCode());
+            int jumpToEnd = cp.length();
+            cp.add(cp.length(), dummy);
+
+            cp.replaceEntry(jumpElse, cp.length());
+            generateCodeForStatement(j, context, cp);
+
+            cp.replaceEntry(jumpToEnd, cp.length());
+
+            s.assembleIfElse(u, c, j);
+            break;
+        }
+        case WHILE: {
+            Statement u = s.newInstance();
+            Statement.Condition c = s.disassembleWhile(u);
+
+            int loopStart = cp.length();
+
+            cp.add(cp.length(), conditionalJump(c).byteCode());
+            int jumpEnd = cp.length();
+            cp.add(cp.length(), dummy);
+
+            generateCodeForStatement(u, context, cp);
+
+            cp.add(cp.length(), Instruction.JUMP.byteCode());
+            cp.add(cp.length(), loopStart);
+
+            cp.replaceEntry(jumpEnd, cp.length());
+            s.assembleWhile(c, u);
+
+            break;
+        }
+        case CALL: {
+            String label = s.disassembleCall();
+
+            if (context.hasKey(label)) {
+                cp.add(cp.length(), Instruction.CALL.bytecode());
+
+                cp.add(cp.length(), dummy);
+
+            } else {
+                cp.add(cp.length(), Instruction.valueOf(label).byteCode());
+            }
+            s.assembleCall(label);
+            break;
+        }
+        default: {
+            // this will never happen...
+            break;
+        }
+    }
 }
 ```
 

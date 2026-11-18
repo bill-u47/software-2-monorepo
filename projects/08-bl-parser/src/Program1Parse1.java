@@ -62,11 +62,11 @@ public final class Program1Parse1 extends Program1 {
         String[] primitives = { "move", "turnleft", "turnright", "infect",
                 "skip" };
 
-        tokens.dequeue(); //This should dequeue "INSTRUCTION"
+        tokens.dequeue();
         String instructionName = tokens.dequeue();
-        tokens.dequeue(); //This should dequeue "IS"
-        body.parseBlock(tokens); //Uses parseBlock from Statement1Parse1 file
-        tokens.dequeue(); //Should dequeue "END"
+        tokens.dequeue();
+        body.parseBlock(tokens);
+        tokens.dequeue();
         String endInstructionName = tokens.dequeue();
 
         for (String primitive : primitives) {
@@ -112,7 +112,7 @@ public final class Program1Parse1 extends Program1 {
 
         // TODO - fill in body
 
-        String program = tokens.dequeue(); //Should dequeue "PROGRAM"
+        String program = tokens.dequeue();
         assert tokens.front().equals(
                 "PROGRAM") : "Violation of: Program must start with PROGRAM";
 
