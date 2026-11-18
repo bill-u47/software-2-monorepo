@@ -133,7 +133,7 @@ public final class Program1Parse1 extends Program1 {
         String begin = tokens.dequeue();
         assert tokens.front().equals("BEGIN") : "Violation of: Expected BEGIN";
 
-        Statement block = this.newBody();
+        Statement body = this.newBody();
         block.parseBlock(tokens);
 
         String end = tokens.dequeue();
@@ -142,6 +142,10 @@ public final class Program1Parse1 extends Program1 {
         String endName = tokens.dequeue();
         assert endName.equals(
                 programName) : "Violation of: Beginning program name must match ending program name";
+
+        this.setName(programName);
+        this.swapContext(context);
+        this.swapBody(body);
 
     }
 
