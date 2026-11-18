@@ -11,7 +11,7 @@ import components.utilities.Tokenizer;
 /**
  * Layered implementation of secondary method {@code parse} for {@code Program}.
  *
- * @author Put your name here
+ * @author Dennis Huang
  *
  */
 public final class Program1Parse1 extends Program1 {
@@ -57,9 +57,27 @@ public final class Program1Parse1 extends Program1 {
                 + "Violation of: <\"INSTRUCTION\"> is proper prefix of tokens";
 
         // TODO - fill in body
+        SimpleWriter out = new SimpleWriter1L();
+        String[] primitives = { "move", "turnleft", "turnright", "infect",
+                "skip" };
+
+        tokens.dequeue(); //This should dequeue "INSTRUCTION"
+        String instructionName = tokens.dequeue();
+        tokens.dequeue(); //This should dequeue "IS"
+        body.parseBlock(tokens); //Uses parseBlock from Statement1Parse1 file
+        tokens.dequeue(); //Should dequeue "END"
+        String endInstructionName = tokens.dequeue();
+
+        for (String primitive : primitives) {
+            assert instructionName != primitive : "Violation of: Instruction "
+                    + "name must not equal name of primitive instruction";
+        }
+
+        assert instructionName == endInstructionName : "Violation of: "
+                + "Beginning Instruction name must match ending Instruction name";
 
         // This line added just to make the program compilable.
-        return null;
+        return instructionName;
     }
 
     /*
